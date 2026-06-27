@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akdeniz Yapı Dekorasyon | Yapınıza Değer Katıyoruz</title>
+  <meta name="description" content="Akdeniz Yapı Dekorasyon - Isı yalıtımı, dış cephe mantolama, boya, alçı, tadilat. Antalya'nın güvenilir inşaat firması. Ücretsiz keşif." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;}
+    .hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.12;filter:blur(1px);}
+    .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.97) 0%,rgba(253,248,238,.95) 50%,rgba(249,242,212,.88) 100%);}
+    .hero-content{position:relative;z-index:1;}
+    .hero-split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;min-height:calc(100svh - 64px);padding:60px 0;}
+    .hero-right{position:relative;z-index:1;}
+    .hero-right-img{border-radius:24px;overflow:hidden;box-shadow:0 16px 64px rgba(0,0,0,.15);aspect-ratio:4/3;position:relative;}
+    .hero-right-img img{width:100%;height:100%;object-fit:cover;transition:transform 8s ease;}
+    .hero-right-img:hover img{transform:scale(1.04);}
+    .hero-right-badge{position:absolute;bottom:-20px;left:-20px;background:#fff;border-radius:16px;padding:14px 18px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(201,162,39,.2);display:flex;align-items:center;gap:12px;z-index:2;}
+    .hero-right-badge .hb-icon{width:44px;height:44px;border-radius:50%;background:#fdf8ee;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+    .hero-right-badge strong{font-size:1rem;font-weight:900;display:block;color:#1a1a1a;}
+    .hero-right-badge span{font-size:.72rem;color:#888;}
+    .hero-right-badge2{position:absolute;top:-16px;right:-16px;background:linear-gradient(135deg,#c9a227,#e8b800);border-radius:14px;padding:12px 16px;box-shadow:0 6px 24px rgba(201,162,39,.4);z-index:2;text-align:center;}
+    .hero-right-badge2 strong{font-size:1.4rem;font-weight:900;color:#fff;display:block;line-height:1;}
+    .hero-right-badge2 span{font-size:.68rem;color:rgba(255,255,255,.85);font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+    .about-real-img{width:100%;height:100%;object-fit:cover;border-radius:20px;}
+    .about-image{border-radius:20px;overflow:hidden;box-shadow:0 8px 48px rgba(0,0,0,.12);aspect-ratio:4/3;position:relative;}
+    .about-image .about-overlay-badge{position:absolute;bottom:16px;left:16px;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);color:#fff;border-radius:12px;padding:10px 16px;font-size:.8rem;}
+    .about-image .about-overlay-badge strong{display:block;font-size:1rem;color:var(--gold);}
+    .ref-real-img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+    @media(max-width:768px){.hero-split{grid-template-columns:1fr;gap:28px;min-height:auto;padding:28px 0 48px;}.hero-right{order:-1;}.hero-right-badge{bottom:-12px;left:-8px;padding:10px 12px;}.hero-right-badge2{top:-10px;right:-8px;padding:10px 12px;}.hero-right-badge2 strong{font-size:1.1rem;}}
+  </style>
+</head>
+<body data-page="home">
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo">
+        <span class="logo-text">AKDENİZ YAPI</span>
+        <span class="logo-sub">DEKORASYON</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menü">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="/" class="active">Ana Sayfa</a></li>
+        <li><a href="/hizmetler.html">Hizmetler</a></li>
+        <li><a href="/referanslar.html">Referanslar</a></li>
+        <li><a href="/iletisim.html">İletişim</a></li>
+        <li><a href="tel:05309361017" class="btn-call"><i class="fas fa-phone"></i> Hemen Ara</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero" style="padding-top:var(--navbar-h);min-height:100svh;display:flex;align-items:center;">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&q=80&fit=crop" alt="İnşaat" loading="eager" />
+    </div>
+    <div class="container" style="width:100%;">
+      <div class="hero-split">
+        <!-- Sol içerik -->
+        <div class="hero-content">
+          <span class="hero-badge">✦ Antalya'nın Güvenilir İnşaat Firması</span>
+          <h1 class="hero-title">Yapınıza <span class="gold">Değer</span> Katıyoruz</h1>
+          <p class="hero-desc">Isı yalıtımı, dış cephe mantolama, boya, alçı, tadilat ve daha fazlası. 10 yıl garantili profesyonel hizmet.</p>
+          <div class="hero-actions">
+            <a href="https://wa.me/905309361017?text=Merhaba%2C%20%C3%BCcretsiz%20ke%C5%9Fif%20istiyorum." target="_blank" class="btn btn-wa btn-lg">
+              <i class="fab fa-whatsapp"></i> Ücretsiz Keşif Al
+            </a>
+            <a href="tel:05309361017" class="btn btn-outline btn-lg">
+              <i class="fas fa-phone"></i> 0530 936 10 17
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-num">12+</span>
+              <span class="stat-label">Referans Proje</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">10 Yıl</span>
+              <span class="stat-label">İş Garantisi</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">%100</span>
+              <span class="stat-label">Müşteri Memnuniyeti</span>
+            </div>
+          </div>
+        </div>
+        <!-- Sağ görsel -->
+        <div class="hero-right">
+          <div class="hero-right-img">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&fit=crop" alt="Dış cephe mantolama uygulaması" loading="eager" />
+          </div>
+          <div class="hero-right-badge">
+            <div class="hb-icon">🏆</div>
+            <div>
+              <strong>Güvenilir Firma</strong>
+              <span>ISO Belgeli Ekip</span>
+            </div>
+          </div>
+          <div class="hero-right-badge2">
+            <strong>10+</strong>
+            <span>Yıllık Tecrübe</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HİZMET KATEGORİLERİ -->
+  <section class="section" style="background:var(--bg);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Ne Yapıyoruz?</span>
+        <h2 class="section-title">Hizmetlerimiz</h2>
+        <p class="section-desc">Dış cepheden iç mekana, çatıdan zemine profesyonel çözümler sunuyoruz.</p>
+      </div>
+      <div class="categories-grid" id="categoriesGrid">
+        <div class="cat-card" style="height:80px;"></div>
+        <div class="cat-card" style="height:80px;"></div>
+        <div class="cat-card" style="height:80px;"></div>
+        <div class="cat-card" style="height:80px;"></div>
+        <div class="cat-card" style="height:80px;"></div>
+        <div class="cat-card" style="height:80px;"></div>
+        <div class="cat-card" style="height:80px;"></div>
+      </div>
+      <div class="section-cta">
+        <a href="/hizmetler.html" class="btn btn-primary btn-lg">Tüm Hizmetleri Gör <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEDEN BİZ / AVANTAJLAR -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Farkımız</span>
+        <h2 class="section-title">Neden Akdeniz Yapı?</h2>
+      </div>
+      <div class="advantages-grid">
+        <div class="adv-card">
+          <div class="adv-icon">🦺</div>
+          <div class="adv-body">
+            <h4>Teknik Destek</h4>
+            <p>Yalıtım uzmanlarından keşif sonrası ücretsiz teknik danışmanlık alın.</p>
+          </div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon">🛡️</div>
+          <div class="adv-body">
+            <h4>10 Yıl Garanti</h4>
+            <p>Tüm uygulamalarımızda sözleşmeli 10 yıl malzeme ve işçilik garantisi.</p>
+          </div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon">⚖️</div>
+          <div class="adv-body">
+            <h4>Hukuk Desteği</h4>
+            <p>Proje sürecinde avukatlarımızdan ücretsiz hukuki danışmanlık.</p>
+          </div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon">🏗️</div>
+          <div class="adv-body">
+            <h4>3D Renklendirilme</h4>
+            <p>Sözleşme imzalandığında binanızın 3 boyutlu tasarımını ücretsiz sunuyoruz.</p>
+          </div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon">📋</div>
+          <div class="adv-body">
+            <h4>EKB Belgesi</h4>
+            <p>Uygulama sonunda Enerji Kimlik Belgesi ücretsiz olarak tarafımızdan verilir.</p>
+          </div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon">🤝</div>
+          <div class="adv-body">
+            <h4>Bireysel Muhataplık</h4>
+            <p>Her daire ile bireysel görüşüp hizmet bedellerini bireysel alıyoruz.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÖNCÜ HİZMETLER -->
+  <section class="section" style="background:var(--bg);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Öne Çıkan</span>
+        <h2 class="section-title">Popüler Hizmetlerimiz</h2>
+      </div>
+      <div class="services-grid" id="featuredServices">
+        <!-- JS ile doldurulur -->
+      </div>
+    </div>
+  </section>
+
+  <!-- REFERANSLAR -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Tamamlanan İşler</span>
+        <h2 class="section-title">Referanslarımız</h2>
+        <p class="section-desc">Antalya'nın birçok sitesi ve apartmanında başarıyla tamamladığımız projeler.</p>
+      </div>
+      <!-- Statik referans fotoğrafları (dinamik olmadan da görünsün) -->
+      <div class="refs-grid" id="referencesGrid">
+        <div class="ref-card">
+          <div class="ref-img"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=75&fit=crop" alt="Bayındır Pınarlar Sitesi" loading="lazy" class="ref-real-img" /></div>
+          <div class="ref-body"><div class="featured-badge">Öne Çıkan</div><div class="ref-title">Bayındır Pınarlar Sitesi</div><div class="ref-location"><i class="fas fa-map-marker-alt"></i> Antalya</div><div class="ref-desc">Dış cephe mantolama ve mineral sıva uygulaması</div></div>
+        </div>
+        <div class="ref-card">
+          <div class="ref-img"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=75&fit=crop" alt="AYT Park Villa Sitesi" loading="lazy" class="ref-real-img" /></div>
+          <div class="ref-body"><div class="featured-badge">Öne Çıkan</div><div class="ref-title">AYT Park Villa Sitesi</div><div class="ref-location"><i class="fas fa-map-marker-alt"></i> Antalya</div><div class="ref-desc">Isı yalıtımı ve boya uygulaması</div></div>
+        </div>
+        <div class="ref-card">
+          <div class="ref-img"><img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=75&fit=crop" alt="Varsak Güneş Konakları" loading="lazy" class="ref-real-img" /></div>
+          <div class="ref-body"><div class="featured-badge">Öne Çıkan</div><div class="ref-title">Varsak Güneş Konakları</div><div class="ref-location"><i class="fas fa-map-marker-alt"></i> Antalya</div><div class="ref-desc">Tam cephe yenileme projesi</div></div>
+        </div>
+        <div class="ref-card">
+          <div class="ref-img"><img src="https://images.unsplash.com/photo-1549517045-bc93de744f8a?w=600&q=75&fit=crop" alt="Sarısu Klas Sitesi" loading="lazy" class="ref-real-img" /></div>
+          <div class="ref-body"><div class="featured-badge">Öne Çıkan</div><div class="ref-title">Sarısu Klas Sitesi</div><div class="ref-location"><i class="fas fa-map-marker-alt"></i> Antalya</div><div class="ref-desc">Mineral sıva ve boya sistemi</div></div>
+        </div>
+      </div>
+      <div class="section-cta">
+        <a href="/referanslar.html" class="btn btn-primary btn-lg">Tüm Referansları Gör <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HAKKIMIZDA -->
+  <section class="section about-section" style="background:var(--bg);">
+    <div class="container about-inner">
+      <div class="about-image">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80&fit=crop" alt="Akdeniz Yapı Dekorasyon ekibi çalışırken" class="about-real-img" loading="lazy" />
+        <div class="about-overlay-badge">
+          <strong>10+ Yıl</strong>
+          Antalya'da güvenilir hizmet
+        </div>
+      </div>
+      <div class="about-content">
+        <span class="section-label">Firma Hakkında</span>
+        <h2 class="section-title" style="text-align:left;">Akdeniz Yapı Dekorasyon</h2>
+        <p id="aboutText" style="color:var(--text2);line-height:1.8;margin-bottom:20px;">Firmamız ısı, su, ses, yangın yalıtımı yanı sıra iç-dış boya, alçı, kartonpiyer, asma tavan, çatı, asansör revizyon, drenaj, seramik-mermer uygulamaları ve tadilat alanlarında faaliyet göstermektedir.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;" id="aboutBadges">
+          <span style="background:#fdf8ee;border:1px solid rgba(201,162,39,.3);color:var(--gold);padding:5px 12px;border-radius:50px;font-size:.78rem;font-weight:700;">İZODER</span>
+          <span style="background:#fdf8ee;border:1px solid rgba(201,162,39,.3);color:var(--gold);padding:5px 12px;border-radius:50px;font-size:.78rem;font-weight:700;">FİLLİ BOYA</span>
+          <span style="background:#fdf8ee;border:1px solid rgba(201,162,39,.3);color:var(--gold);padding:5px 12px;border-radius:50px;font-size:.78rem;font-weight:700;">DYO</span>
+          <span style="background:#fdf8ee;border:1px solid rgba(201,162,39,.3);color:var(--gold);padding:5px 12px;border-radius:50px;font-size:.78rem;font-weight:700;">WEBER</span>
+          <span style="background:#fdf8ee;border:1px solid rgba(201,162,39,.3);color:var(--gold);padding:5px 12px;border-radius:50px;font-size:.78rem;font-weight:700;">MARSHALL</span>
+          <span style="background:#fdf8ee;border:1px solid rgba(201,162,39,.3);color:var(--gold);padding:5px 12px;border-radius:50px;font-size:.78rem;font-weight:700;">KNAUF</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;">
+          <a href="https://wa.me/905309361017?text=Merhaba%2C%20bilgi%20almak%20istiyorum." target="_blank" class="btn btn-wa btn-lg">
+            <i class="fab fa-whatsapp"></i> WhatsApp'tan Yaz
+          </a>
+          <a href="/iletisim.html" class="btn btn-outline btn-lg">İletişime Geç</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="container" style="text-align:center;">
+      <h2>Ücretsiz Keşif &amp; Teklif Alın</h2>
+      <p>Uzman ekibimiz değerlendirme için en kısa sürede yanınızda.</p>
+      <div class="cta-buttons">
+        <a href="tel:05309361017" class="cta-btn-white"><i class="fas fa-phone"></i> 0530 936 10 17</a>
+        <a href="https://wa.me/905309361017?text=Merhaba%2C%20%C3%BCcretsiz%20ke%C5%9Fif%20talep%20ediyorum." target="_blank" class="cta-btn-outline-white">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <span class="logo-text">AKDENİZ YAPI</span>
+        <span class="logo-sub">DEKORASYON</span>
+        <p>Yapınıza değer katıyoruz. Profesyonel ekip, garantili işçilik.</p>
+        <div class="social">
+          <a href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/905309361017" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Hızlı Bağlantılar</h4>
+        <ul>
+          <li><a href="/">Ana Sayfa</a></li>
+          <li><a href="/hizmetler.html">Hizmetler</a></li>
+          <li><a href="/referanslar.html">Referanslar</a></li>
+          <li><a href="/iletisim.html">İletişim</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hizmetlerimiz</h4>
+        <ul>
+          <li><a href="/hizmetler.html">Isı Yalıtımı</a></li>
+          <li><a href="/hizmetler.html">Dış Cephe Mantolama</a></li>
+          <li><a href="/hizmetler.html">Boya &amp; Sıva</a></li>
+          <li><a href="/hizmetler.html">Alçı &amp; Dekorasyon</a></li>
+          <li><a href="/hizmetler.html">Tadilat</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>İletişim</h4>
+        <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:05309361017">0530 936 10 17 (Yunus)</a></div>
+        <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:05358763504">0535 876 35 04 (Adem)</a></div>
+        <div class="contact-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/905309361017" target="_blank">WhatsApp</a></div>
+        <div class="contact-item"><i class="fab fa-instagram"></i><a href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank">@akdeniz.yapidekorasyon</a></div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Antalya, Türkiye</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2024 Akdeniz Yapı Dekorasyon. Tüm hakları saklıdır.</span>
+      <span>Antalya'da Güvenilir İnşaat Hizmeti</span>
+    </div>
+  </footer>
+
+  <!-- YÜZEN WHATSAPP -->
+  <div class="wa-float">
+    <a href="https://wa.me/905309361017?text=Merhaba%2C%20bilgi%20almak%20istiyorum." target="_blank" class="wa-float-btn" aria-label="WhatsApp ile iletişim">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+node_modules/
+backend/akdeniz_yapi.db
+backend/uploads/*
+!backend/uploads/.gitkeep
+.env
+*.log

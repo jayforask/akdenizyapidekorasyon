@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>İletişim | Akdeniz Yapı Dekorasyon</title>
+  <meta name="description" content="Akdeniz Yapı Dekorasyon iletişim bilgileri ve mesaj formu. Ücretsiz keşif için bize ulaşın." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .page-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#fff 0%,#fdf8ee 100%);padding:80px 0 40px;border-bottom:1px solid var(--border);}
+    .page-hero-img{position:absolute;inset:0;z-index:0;}
+    .page-hero-img img{width:100%;height:100%;object-fit:cover;opacity:.07;}
+    .page-hero .container{position:relative;z-index:1;}
+    .contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+    .contact-cards{display:flex;flex-direction:column;gap:12px;margin-top:20px;}
+    .contact-card{display:flex;align-items:center;gap:14px;padding:16px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);transition:all .2s;}
+    .contact-card:hover{border-color:rgba(201,162,39,.3);box-shadow:var(--shadow);transform:translateX(4px);}
+    .contact-card-icon{width:46px;height:46px;border-radius:12px;background:var(--gold);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;flex-shrink:0;}
+    .contact-card-label{font-size:.72rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}
+    .contact-card-value{font-size:.92rem;font-weight:800;color:var(--text);margin-bottom:3px;}
+    .contact-card-link{font-size:.85rem;color:var(--gold);font-weight:700;transition:opacity .2s;}
+    .contact-card-link:hover{opacity:.8;}
+    .req{color:#ef4444;}
+    .form-note{font-size:.82rem;color:var(--text-muted);margin-top:12px;text-align:center;}
+    .form-note a{color:var(--gold);font-weight:700;}
+    .btn-full{width:100%;justify-content:center;}
+    .btn-gold{background:var(--gold);color:#fff;padding:12px 24px;border-radius:var(--radius-sm);font-weight:700;display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;font-size:.9rem;font-family:inherit;transition:all .2s;}
+    .btn-gold:hover{background:var(--gold-dark);transform:translateY(-1px);}
+    @media(max-width:768px){.contact-layout{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body data-page="iletisim">
+
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo">
+        <span class="logo-text">AKDENİZ YAPI</span>
+        <span class="logo-sub">DEKORASYON</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menü"><i class="fas fa-bars"></i></button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="/">Ana Sayfa</a></li>
+        <li><a href="/hizmetler.html">Hizmetler</a></li>
+        <li><a href="/referanslar.html">Referanslar</a></li>
+        <li><a href="/iletisim.html" class="active">İletişim</a></li>
+        <li><a href="tel:05309361017" class="btn-call"><i class="fas fa-phone"></i> Hemen Ara</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-img">
+      <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1400&q=60&fit=crop" alt="" aria-hidden="true" loading="eager" />
+    </div>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">Ana Sayfa</a>
+        <span><i class="fas fa-chevron-right" style="font-size:.65rem;"></i></span>
+        <span>İletişim</span>
+      </div>
+      <h1 style="font-family:'Montserrat',sans-serif;font-size:2rem;font-weight:900;margin-bottom:8px;">İletişim</h1>
+      <p style="color:var(--text-muted);font-size:.95rem;">Ücretsiz keşif ve teklif için bize ulaşın</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-layout">
+
+        <!-- İletişim Bilgileri -->
+        <div>
+          <h2 style="font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:8px;">Bize Ulaşın</h2>
+          <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:4px;">Ücretsiz keşif ve fiyat teklifi için aşağıdaki kanallardan bize ulaşabilirsiniz.</p>
+
+          <div class="contact-cards">
+            <div class="contact-card">
+              <div class="contact-card-icon"><i class="fas fa-user-tie"></i></div>
+              <div>
+                <div class="contact-card-label">Firma Yetkilisi</div>
+                <div class="contact-card-value">Yunus Demirel</div>
+                <a href="tel:05309361017" class="contact-card-link">0530 936 10 17</a>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon"><i class="fas fa-user-tie"></i></div>
+              <div>
+                <div class="contact-card-label">Firma Yetkilisi</div>
+                <div class="contact-card-value">Adem Demirel</div>
+                <a href="tel:05358763504" class="contact-card-link">0535 876 35 04</a>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon"><i class="fas fa-hard-hat"></i></div>
+              <div>
+                <div class="contact-card-label">İnşaat Mühendisi</div>
+                <div class="contact-card-value">Serhat Sincar</div>
+                <a href="tel:05050869807" class="contact-card-link">0505 086 98 07</a>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon" style="background:var(--wa-green);"><i class="fab fa-whatsapp"></i></div>
+              <div>
+                <div class="contact-card-label">WhatsApp</div>
+                <div class="contact-card-value">Hızlı iletişim</div>
+                <a href="https://wa.me/905309361017?text=Merhaba%2C%20bilgi%20almak%20istiyorum." target="_blank" class="contact-card-link">WhatsApp'tan Yaz</a>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon" style="background:linear-gradient(45deg,#833ab4,#fd1d1d,#fcb045);"><i class="fab fa-instagram"></i></div>
+              <div>
+                <div class="contact-card-label">Instagram</div>
+                <div class="contact-card-value">@akdeniz.yapidekorasyon</div>
+                <a href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" class="contact-card-link">Takip Et</a>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon" style="background:#e5e7eb;color:var(--text);"><i class="fas fa-map-marker-alt"></i></div>
+              <div>
+                <div class="contact-card-label">Adres</div>
+                <div class="contact-card-value">Antalya, Türkiye</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mesaj Formu -->
+        <div class="contact-form-wrap">
+          <h2 style="font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:20px;">Mesaj Gönderin</h2>
+          <div id="formAlert"></div>
+          <form id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Adınız Soyadınız <span class="req">*</span></label>
+                <input type="text" id="name" name="name" placeholder="Adınız Soyadınız" required />
+              </div>
+              <div class="form-group">
+                <label for="phone">Telefon</label>
+                <input type="tel" id="phone" name="phone" placeholder="0530 000 00 00" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">E-posta</label>
+              <input type="email" id="email" name="email" placeholder="ornek@mail.com" />
+            </div>
+            <div class="form-group">
+              <label for="subject">Konu</label>
+              <input type="text" id="subject" name="subject" placeholder="Konu" />
+            </div>
+            <div class="form-group">
+              <label for="message">Mesajınız <span class="req">*</span></label>
+              <textarea id="message" name="message" rows="5" placeholder="Mesajınızı buraya yazın..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-gold btn-full btn-lg">
+              <i class="fas fa-paper-plane"></i> Mesaj Gönder
+            </button>
+            <p class="form-note">Ya da doğrudan <a href="https://wa.me/905309361017" target="_blank">WhatsApp'tan</a> yazın.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Harita placeholder -->
+  <section style="background:var(--bg);padding:0;">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d198041.5854559658!2d30.56301!3d36.8968908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c385de6c560b77%3A0x41e22c7d21a8bf27!2sAntalya!5e0!3m2!1str!2str!4v1699000000000!5m2!1str!2str"
+      width="100%" height="320" style="border:0;display:block;filter:grayscale(20%);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Antalya Harita">
+    </iframe>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <span class="logo-text">AKDENİZ YAPI</span>
+        <span class="logo-sub">DEKORASYON</span>
+        <p>Yapınıza değer katıyoruz.</p>
+        <div class="social">
+          <a href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/905309361017" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Hızlı Bağlantılar</h4>
+        <ul>
+          <li><a href="/">Ana Sayfa</a></li>
+          <li><a href="/hizmetler.html">Hizmetler</a></li>
+          <li><a href="/referanslar.html">Referanslar</a></li>
+          <li><a href="/iletisim.html">İletişim</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hizmetlerimiz</h4>
+        <ul>
+          <li><a href="/hizmetler.html">Isı Yalıtımı</a></li>
+          <li><a href="/hizmetler.html">Dış Cephe Mantolama</a></li>
+          <li><a href="/hizmetler.html">Boya &amp; Sıva</a></li>
+          <li><a href="/hizmetler.html">Tadilat</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>İletişim</h4>
+        <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:05309361017">0530 936 10 17 (Yunus)</a></div>
+        <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:05358763504">0535 876 35 04 (Adem)</a></div>
+        <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:05050869807">0505 086 98 07 (Serhat)</a></div>
+        <div class="contact-item"><i class="fab fa-instagram"></i><a href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank">@akdeniz.yapidekorasyon</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2024 Akdeniz Yapı Dekorasyon. Tüm hakları saklıdır.</span>
+    </div>
+  </footer>
+
+  <div class="wa-float">
+    <a href="https://wa.me/905309361017?text=Merhaba%2C%20bilgi%20almak%20istiyorum." target="_blank" class="wa-float-btn" aria-label="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

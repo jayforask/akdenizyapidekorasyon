@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Referans Yönetimi | Admin Paneli</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="admin-page">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><span class="logo-text">AKDENİZ YAPI</span><span class="logo-sub">Admin Panel</span></div>
+    <nav class="sidebar-nav">
+      <a href="/admin/dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="/admin/hizmetler.html"><i class="fas fa-tools"></i> Hizmetler</a>
+      <a href="/admin/kategoriler.html"><i class="fas fa-tags"></i> Kategoriler</a>
+      <a href="/admin/referanslar.html" class="active"><i class="fas fa-building"></i> Referanslar</a>
+      <a href="/admin/mesajlar.html"><i class="fas fa-envelope"></i> Mesajlar</a>
+      <a href="/admin/ayarlar.html"><i class="fas fa-cog"></i> Site Ayarları</a>
+      <a href="/admin/sifre.html"><i class="fas fa-key"></i> Şifre Değiştir</a>
+      <a href="/" target="_blank"><i class="fas fa-external-link-alt"></i> Siteyi Gör</a>
+    </nav>
+    <button class="sidebar-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-header">
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+      <h1 class="admin-page-title">Referans Yönetimi</h1>
+      <div class="admin-user"><i class="fas fa-user-circle"></i><span id="adminUsername">admin</span></div>
+    </header>
+    <div class="admin-content">
+      <div class="content-toolbar">
+        <button class="btn-admin btn-primary" onclick="openAddModal()"><i class="fas fa-plus"></i> Yeni Referans Ekle</button>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Görsel</th><th>Proje Adı</th><th>Konum</th><th>Öne Çıkan</th><th>İşlemler</th></tr></thead>
+          <tbody id="projBody"><tr><td colspan="5" class="loading-row"><i class="fas fa-spinner fa-spin"></i></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="projModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="projModalTitle">Referans Ekle</h3>
+        <button class="modal-close" onclick="closeModal('projModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="projForm">
+        <input type="hidden" id="projId" />
+        <div class="form-row">
+          <div class="form-group"><label>Proje Adı <span class="req">*</span></label><input type="text" id="pTitle" required placeholder="Örn: Bayındır Pınarlar Sitesi" /></div>
+          <div class="form-group"><label>Konum</label><input type="text" id="pLocation" placeholder="Örn: Antalya" /></div>
+        </div>
+        <div class="form-group"><label>Açıklama</label><textarea id="pDesc" rows="3" placeholder="Proje açıklaması..."></textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label>Sıra</label><input type="number" id="pSort" value="0" min="0" /></div>
+          <div class="form-group form-check-group"><label class="checkbox-label"><input type="checkbox" id="pFeatured" /> Öne Çıkan</label></div>
+        </div>
+        <div class="form-group">
+          <label>Görsel</label>
+          <input type="file" id="pImage" accept="image/jpeg,image/png,image/webp" />
+          <img id="pImagePreview" src="" alt="Önizleme" class="img-preview" style="display:none;" />
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn-admin btn-primary">Kaydet</button>
+          <button type="button" class="btn-admin btn-secondary" onclick="closeModal('projModal')">İptal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+  <script>
+    let projects = [];
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!await requireAuth()) return;
+      document.getElementById('sidebarToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
+      previewImage(document.getElementById('pImage'), document.getElementById('pImagePreview'));
+      loadProjects();
+    });
+    async function loadProjects() {
+      const tbody = document.getElementById('projBody');
+      const res = await fetch(`${API}/projects`);
+      projects = await res.json();
+      if (!projects.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-row">Henüz referans yok.</td></tr>'; return; }
+      tbody.innerHTML = projects.map(p => `
+        <tr>
+          <td><img src="${p.image || 'https://placehold.co/60x40/1a1a1a/c9a227?text=+'}" style="width:60px;height:40px;object-fit:cover;border-radius:4px;" /></td>
+          <td><strong>${p.title}</strong></td>
+          <td>${p.location || '—'}</td>
+          <td>${p.featured ? '<span class="badge-status read">Evet</span>' : '<span class="badge-status">Hayır</span>'}</td>
+          <td class="actions-cell">
+            <button class="btn-admin btn-sm btn-primary" onclick="editProj(${p.id})"><i class="fas fa-edit"></i></button>
+            <button class="btn-admin btn-sm btn-danger" onclick="deleteProj(${p.id})"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>`).join('');
+    }
+    function openAddModal() {
+      document.getElementById('projModalTitle').textContent = 'Referans Ekle';
+      document.getElementById('projId').value = '';
+      document.getElementById('projForm').reset();
+      document.getElementById('pImagePreview').style.display = 'none';
+      openModal('projModal');
+    }
+    function editProj(id) {
+      const p = projects.find(x => x.id === id);
+      document.getElementById('projModalTitle').textContent = 'Referans Düzenle';
+      document.getElementById('projId').value = p.id;
+      document.getElementById('pTitle').value = p.title;
+      document.getElementById('pLocation').value = p.location || '';
+      document.getElementById('pDesc').value = p.description || '';
+      document.getElementById('pSort').value = p.sort_order || 0;
+      document.getElementById('pFeatured').checked = !!p.featured;
+      if (p.image) { document.getElementById('pImagePreview').src = p.image; document.getElementById('pImagePreview').style.display = 'block'; }
+      else document.getElementById('pImagePreview').style.display = 'none';
+      openModal('projModal');
+    }
+    document.getElementById('projForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const id = document.getElementById('projId').value;
+      const fd = new FormData();
+      fd.append('title', document.getElementById('pTitle').value);
+      fd.append('location', document.getElementById('pLocation').value);
+      fd.append('description', document.getElementById('pDesc').value);
+      fd.append('sort_order', document.getElementById('pSort').value);
+      fd.append('featured', document.getElementById('pFeatured').checked ? '1' : '0');
+      const img = document.getElementById('pImage').files[0];
+      if (img) fd.append('image', img);
+      const res = await fetch(id ? `${API}/projects/${id}` : `${API}/projects`, {
+        method: id ? 'PUT' : 'POST', headers: authHeadersMultipart(), body: fd
+      });
+      const data = await res.json();
+      if (res.ok) { toast(id ? 'Güncellendi.' : 'Eklendi.'); closeModal('projModal'); loadProjects(); }
+      else toast(data.error || 'Hata.', 'error');
+    });
+    async function deleteProj(id) {
+      if (!await confirm2('Bu referansı silmek istiyor musunuz?')) return;
+      const res = await fetch(`${API}/projects/${id}`, { method: 'DELETE', headers: authHeaders() });
+      if (res.ok) { toast('Silindi.'); loadProjects(); }
+      else toast('Silinemedi.', 'error');
+    }
+  </script>
+</body>
+</html>

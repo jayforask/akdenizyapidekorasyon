@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kategori Yönetimi | Admin Paneli</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="admin-page">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><span class="logo-text">AKDENİZ YAPI</span><span class="logo-sub">Admin Panel</span></div>
+    <nav class="sidebar-nav">
+      <a href="/admin/dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="/admin/hizmetler.html"><i class="fas fa-tools"></i> Hizmetler</a>
+      <a href="/admin/kategoriler.html" class="active"><i class="fas fa-tags"></i> Kategoriler</a>
+      <a href="/admin/referanslar.html"><i class="fas fa-building"></i> Referanslar</a>
+      <a href="/admin/mesajlar.html"><i class="fas fa-envelope"></i> Mesajlar</a>
+      <a href="/admin/ayarlar.html"><i class="fas fa-cog"></i> Site Ayarları</a>
+      <a href="/admin/sifre.html"><i class="fas fa-key"></i> Şifre Değiştir</a>
+      <a href="/" target="_blank"><i class="fas fa-external-link-alt"></i> Siteyi Gör</a>
+    </nav>
+    <button class="sidebar-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-header">
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+      <h1 class="admin-page-title">Kategori Yönetimi</h1>
+      <div class="admin-user"><i class="fas fa-user-circle"></i><span id="adminUsername">admin</span></div>
+    </header>
+    <div class="admin-content">
+      <div class="content-toolbar">
+        <button class="btn-admin btn-primary" onclick="openAddModal()"><i class="fas fa-plus"></i> Yeni Kategori</button>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>İkon</th><th>Kategori Adı</th><th>Slug</th><th>İşlemler</th></tr></thead>
+          <tbody id="catsBody"><tr><td colspan="4" class="loading-row"><i class="fas fa-spinner fa-spin"></i></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="catModal">
+    <div class="modal-box" style="max-width:460px">
+      <div class="modal-header">
+        <h3 id="catModalTitle">Kategori Ekle</h3>
+        <button class="modal-close" onclick="closeModal('catModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="catForm">
+        <input type="hidden" id="catId" />
+        <div class="form-group"><label>Kategori Adı <span class="req">*</span></label><input type="text" id="catName" required placeholder="Örn: Isı Yalıtımı" /></div>
+        <div class="form-group"><label>İkon (Emoji)</label><input type="text" id="catIcon" placeholder="🔧" maxlength="4" /></div>
+        <div class="modal-footer">
+          <button type="submit" class="btn-admin btn-primary">Kaydet</button>
+          <button type="button" class="btn-admin btn-secondary" onclick="closeModal('catModal')">İptal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+  <script>
+    let cats = [];
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!await requireAuth()) return;
+      document.getElementById('sidebarToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
+      loadCats();
+    });
+    async function loadCats() {
+      const tbody = document.getElementById('catsBody');
+      const res = await fetch(`${API}/categories`);
+      cats = await res.json();
+      if (!cats.length) { tbody.innerHTML = '<tr><td colspan="4" class="empty-row">Kategori yok.</td></tr>'; return; }
+      tbody.innerHTML = cats.map(c => `
+        <tr>
+          <td style="font-size:1.5rem">${c.icon || '—'}</td>
+          <td><strong>${c.name}</strong></td>
+          <td><code>${c.slug}</code></td>
+          <td class="actions-cell">
+            <button class="btn-admin btn-sm btn-primary" onclick="editCat(${c.id})"><i class="fas fa-edit"></i></button>
+            <button class="btn-admin btn-sm btn-danger" onclick="deleteCat(${c.id})"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>`).join('');
+    }
+    function openAddModal() {
+      document.getElementById('catModalTitle').textContent = 'Kategori Ekle';
+      document.getElementById('catId').value = '';
+      document.getElementById('catForm').reset();
+      openModal('catModal');
+    }
+    function editCat(id) {
+      const c = cats.find(x => x.id === id);
+      document.getElementById('catModalTitle').textContent = 'Kategori Düzenle';
+      document.getElementById('catId').value = c.id;
+      document.getElementById('catName').value = c.name;
+      document.getElementById('catIcon').value = c.icon || '';
+      openModal('catModal');
+    }
+    document.getElementById('catForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const id = document.getElementById('catId').value;
+      const body = { name: document.getElementById('catName').value, icon: document.getElementById('catIcon').value };
+      const res = await fetch(id ? `${API}/categories/${id}` : `${API}/categories`, {
+        method: id ? 'PUT' : 'POST', headers: authHeaders(), body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      if (res.ok) { toast(id ? 'Güncellendi.' : 'Eklendi.'); closeModal('catModal'); loadCats(); }
+      else toast(data.error || 'Hata.', 'error');
+    });
+    async function deleteCat(id) {
+      if (!await confirm2('Bu kategoriyi silmek istiyor musunuz?')) return;
+      const res = await fetch(`${API}/categories/${id}`, { method: 'DELETE', headers: authHeaders() });
+      if (res.ok) { toast('Silindi.'); loadCats(); }
+      else toast('Silinemedi.', 'error');
+    }
+  </script>
+</body>
+</html>

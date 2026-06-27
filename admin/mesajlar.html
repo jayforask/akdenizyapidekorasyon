@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mesaj Yönetimi | Admin Paneli</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="admin-page">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><span class="logo-text">AKDENİZ YAPI</span><span class="logo-sub">Admin Panel</span></div>
+    <nav class="sidebar-nav">
+      <a href="/admin/dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="/admin/hizmetler.html"><i class="fas fa-tools"></i> Hizmetler</a>
+      <a href="/admin/kategoriler.html"><i class="fas fa-tags"></i> Kategoriler</a>
+      <a href="/admin/referanslar.html"><i class="fas fa-building"></i> Referanslar</a>
+      <a href="/admin/mesajlar.html" class="active"><i class="fas fa-envelope"></i> Mesajlar <span class="badge" id="unreadBadge"></span></a>
+      <a href="/admin/ayarlar.html"><i class="fas fa-cog"></i> Site Ayarları</a>
+      <a href="/admin/sifre.html"><i class="fas fa-key"></i> Şifre Değiştir</a>
+      <a href="/" target="_blank"><i class="fas fa-external-link-alt"></i> Siteyi Gör</a>
+    </nav>
+    <button class="sidebar-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-header">
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+      <h1 class="admin-page-title">Mesaj Yönetimi</h1>
+      <div class="admin-user"><i class="fas fa-user-circle"></i><span id="adminUsername">admin</span></div>
+    </header>
+    <div class="admin-content">
+      <div class="content-toolbar">
+        <label class="checkbox-label" style="color:var(--gold)">
+          <input type="checkbox" id="showUnread" /> Sadece Okunmamışları Göster
+        </label>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Ad</th><th>Telefon</th><th>E-posta</th><th>Konu / Mesaj</th><th>Tarih</th><th>Durum</th><th>İşlemler</th></tr></thead>
+          <tbody id="msgsBody"><tr><td colspan="7" class="loading-row"><i class="fas fa-spinner fa-spin"></i></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mesaj Detay Modal -->
+  <div class="modal-overlay" id="msgModal">
+    <div class="modal-box" style="max-width:560px">
+      <div class="modal-header">
+        <h3>Mesaj Detayı</h3>
+        <button class="modal-close" onclick="closeModal('msgModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="msgDetail" style="padding:1.5rem;color:var(--text-light);line-height:1.7;"></div>
+      <div class="modal-footer">
+        <button class="btn-admin btn-secondary" onclick="closeModal('msgModal')">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+  <script>
+    let messages = [];
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!await requireAuth()) return;
+      document.getElementById('sidebarToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
+      document.getElementById('showUnread').addEventListener('change', () => loadMessages());
+      loadMessages();
+    });
+
+    async function loadMessages() {
+      const tbody = document.getElementById('msgsBody');
+      const unreadOnly = document.getElementById('showUnread').checked;
+      tbody.innerHTML = '<tr><td colspan="7" class="loading-row"><i class="fas fa-spinner fa-spin"></i></td></tr>';
+      try {
+        const url = `${API}/messages${unreadOnly ? '?unread=1' : ''}`;
+        const res = await fetch(url, { headers: authHeaders() });
+        messages = await res.json();
+
+        // Okunmamış badge güncelle
+        const unread = messages.filter(m => !m.is_read).length;
+        const badge = document.getElementById('unreadBadge');
+        if (badge) { badge.textContent = unread || ''; badge.style.display = unread ? 'inline-block' : 'none'; }
+
+        if (!messages.length) { tbody.innerHTML = '<tr><td colspan="7" class="empty-row">Mesaj yok.</td></tr>'; return; }
+        tbody.innerHTML = messages.map(m => `
+          <tr class="${m.is_read ? '' : 'row-unread'}">
+            <td><strong>${m.name}</strong></td>
+            <td>${m.phone ? `<a href="tel:${m.phone.replace(/\s/g,'')}">${m.phone}</a>` : '—'}</td>
+            <td>${m.email || '—'}</td>
+            <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+              ${m.subject ? `<strong>${m.subject}</strong><br/>` : ''}
+              <small>${m.message.substring(0, 60)}${m.message.length > 60 ? '...' : ''}</small>
+            </td>
+            <td>${new Date(m.created_at).toLocaleDateString('tr-TR')}</td>
+            <td><span class="badge-status ${m.is_read ? 'read' : 'unread'}">${m.is_read ? 'Okundu' : 'Yeni'}</span></td>
+            <td class="actions-cell">
+              <button class="btn-admin btn-sm btn-primary" onclick="viewMsg(${m.id})" title="Görüntüle"><i class="fas fa-eye"></i></button>
+              ${!m.is_read ? `<button class="btn-admin btn-sm btn-secondary" onclick="markRead(${m.id})" title="Okundu İşaretle"><i class="fas fa-check"></i></button>` : ''}
+              <button class="btn-admin btn-sm btn-danger" onclick="deleteMsg(${m.id})" title="Sil"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+        `).join('');
+      } catch { tbody.innerHTML = '<tr><td colspan="7" class="empty-row">Yüklenemedi.</td></tr>'; }
+    }
+
+    function viewMsg(id) {
+      const m = messages.find(x => x.id === id);
+      if (!m) return;
+      document.getElementById('msgDetail').innerHTML = `
+        <p><strong>Ad:</strong> ${m.name}</p>
+        ${m.phone ? `<p><strong>Telefon:</strong> <a href="tel:${m.phone.replace(/\s/g,'')}">${m.phone}</a></p>` : ''}
+        ${m.email ? `<p><strong>E-posta:</strong> <a href="mailto:${m.email}">${m.email}</a></p>` : ''}
+        ${m.subject ? `<p><strong>Konu:</strong> ${m.subject}</p>` : ''}
+        <p><strong>Mesaj:</strong></p>
+        <div style="background:rgba(255,255,255,0.05);padding:1rem;border-radius:8px;border-left:3px solid var(--gold);margin-top:.5rem;">${m.message.replace(/\n/g,'<br/>')}</div>
+        <p style="margin-top:1rem;color:var(--text-muted);font-size:.85rem;"><i class="fas fa-clock"></i> ${new Date(m.created_at).toLocaleString('tr-TR')}</p>
+      `;
+      openModal('msgModal');
+      if (!m.is_read) markRead(id, false);
+    }
+
+    async function markRead(id, reload = true) {
+      await fetch(`${API}/messages/${id}/read`, { method: 'PUT', headers: authHeaders() });
+      if (reload) { toast('Okundu işaretlendi.'); loadMessages(); }
+      else { const m = messages.find(x => x.id === id); if (m) m.is_read = 1; }
+    }
+
+    async function deleteMsg(id) {
+      if (!await confirm2('Bu mesajı silmek istiyor musunuz?')) return;
+      const res = await fetch(`${API}/messages/${id}`, { method: 'DELETE', headers: authHeaders() });
+      if (res.ok) { toast('Silindi.'); loadMessages(); }
+      else toast('Silinemedi.', 'error');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Admin Paneli</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="admin-page">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-text">AKDENİZ YAPI</span>
+      <span class="logo-sub">Admin Panel</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/admin/dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="/admin/hizmetler.html"><i class="fas fa-tools"></i> Hizmetler</a>
+      <a href="/admin/kategoriler.html"><i class="fas fa-tags"></i> Kategoriler</a>
+      <a href="/admin/referanslar.html"><i class="fas fa-building"></i> Referanslar</a>
+      <a href="/admin/mesajlar.html"><i class="fas fa-envelope"></i> Mesajlar <span class="badge" id="unreadBadge"></span></a>
+      <a href="/admin/ayarlar.html"><i class="fas fa-cog"></i> Site Ayarları</a>
+      <a href="/admin/sifre.html"><i class="fas fa-key"></i> Şifre Değiştir</a>
+      <a href="/" target="_blank"><i class="fas fa-external-link-alt"></i> Siteyi Gör</a>
+    </nav>
+    <button class="sidebar-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
+  </aside>
+
+  <!-- Main -->
+  <div class="admin-main">
+    <header class="admin-header">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Menü"><i class="fas fa-bars"></i></button>
+      <h1 class="admin-page-title">Dashboard</h1>
+      <div class="admin-user">
+        <i class="fas fa-user-circle"></i>
+        <span id="adminUsername">admin</span>
+      </div>
+    </header>
+
+    <div class="admin-content">
+
+      <!-- İstatistik Kartları -->
+      <div class="stats-row" id="statsRow">
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fas fa-tools"></i></div>
+          <div class="stat-info">
+            <span class="stat-num" id="statServices">—</span>
+            <span class="stat-lbl">Hizmet</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon gold"><i class="fas fa-tags"></i></div>
+          <div class="stat-info">
+            <span class="stat-num" id="statCategories">—</span>
+            <span class="stat-lbl">Kategori</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><i class="fas fa-building"></i></div>
+          <div class="stat-info">
+            <span class="stat-num" id="statProjects">—</span>
+            <span class="stat-lbl">Referans</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red"><i class="fas fa-envelope"></i></div>
+          <div class="stat-info">
+            <span class="stat-num" id="statMessages">—</span>
+            <span class="stat-lbl">Mesaj</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange"><i class="fas fa-bell"></i></div>
+          <div class="stat-info">
+            <span class="stat-num" id="statUnread">—</span>
+            <span class="stat-lbl">Okunmamış</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hızlı Erişim -->
+      <h2 class="section-title-admin">Hızlı Erişim</h2>
+      <div class="quick-access">
+        <a href="/admin/hizmetler.html" class="qa-card">
+          <i class="fas fa-plus-circle"></i>
+          <span>Hizmet Ekle</span>
+        </a>
+        <a href="/admin/referanslar.html" class="qa-card">
+          <i class="fas fa-plus-circle"></i>
+          <span>Referans Ekle</span>
+        </a>
+        <a href="/admin/kategoriler.html" class="qa-card">
+          <i class="fas fa-tags"></i>
+          <span>Kategoriler</span>
+        </a>
+        <a href="/admin/mesajlar.html" class="qa-card">
+          <i class="fas fa-envelope-open"></i>
+          <span>Mesajları Gör</span>
+        </a>
+        <a href="/admin/ayarlar.html" class="qa-card">
+          <i class="fas fa-cog"></i>
+          <span>Site Ayarları</span>
+        </a>
+        <a href="/" target="_blank" class="qa-card">
+          <i class="fas fa-eye"></i>
+          <span>Siteyi Gör</span>
+        </a>
+      </div>
+
+      <!-- Son Mesajlar -->
+      <h2 class="section-title-admin">Son Mesajlar</h2>
+      <div class="admin-table-wrap">
+        <table class="admin-table" id="recentMessages">
+          <thead>
+            <tr>
+              <th>Ad</th>
+              <th>Telefon</th>
+              <th>Konu</th>
+              <th>Tarih</th>
+              <th>Durum</th>
+              <th>İşlem</th>
+            </tr>
+          </thead>
+          <tbody id="recentMsgBody">
+            <tr><td colspan="6" class="loading-row"><i class="fas fa-spinner fa-spin"></i> Yükleniyor...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const ok = await requireAuth();
+      if (!ok) return;
+      setActiveSidebarLink();
+
+      // Sidebar toggle
+      document.getElementById('sidebarToggle').addEventListener('click', () => {
+        document.getElementById('sidebar').classList.toggle('open');
+      });
+
+      loadStats();
+      loadRecentMessages();
+    });
+
+    async function loadStats() {
+      try {
+        const res = await fetch(`${API}/settings/stats`, { headers: authHeaders() });
+        const s = await res.json();
+        document.getElementById('statServices').textContent = s.services;
+        document.getElementById('statCategories').textContent = s.categories;
+        document.getElementById('statProjects').textContent = s.projects;
+        document.getElementById('statMessages').textContent = s.messages;
+        document.getElementById('statUnread').textContent = s.unread_messages;
+        if (s.unread_messages > 0) {
+          const b = document.getElementById('unreadBadge');
+          if (b) { b.textContent = s.unread_messages; b.style.display = 'inline-block'; }
+        }
+      } catch {}
+    }
+
+    async function loadRecentMessages() {
+      const tbody = document.getElementById('recentMsgBody');
+      try {
+        const res = await fetch(`${API}/messages`, { headers: authHeaders() });
+        const msgs = await res.json();
+        if (!msgs.length) {
+          tbody.innerHTML = '<tr><td colspan="6" class="empty-row">Henüz mesaj yok.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = msgs.slice(0, 8).map(m => `
+          <tr class="${m.is_read ? '' : 'row-unread'}">
+            <td><strong>${m.name}</strong></td>
+            <td>${m.phone || '—'}</td>
+            <td>${m.subject || m.message.substring(0, 40) + '...'}</td>
+            <td>${new Date(m.created_at).toLocaleDateString('tr-TR')}</td>
+            <td><span class="badge-status ${m.is_read ? 'read' : 'unread'}">${m.is_read ? 'Okundu' : 'Yeni'}</span></td>
+            <td><a href="/admin/mesajlar.html" class="btn-admin btn-sm btn-primary">Gör</a></td>
+          </tr>
+        `).join('');
+      } catch {
+        tbody.innerHTML = '<tr><td colspan="6" class="empty-row">Mesajlar yüklenemedi.</td></tr>';
+      }
+    }
+  </script>
+</body>
+</html>

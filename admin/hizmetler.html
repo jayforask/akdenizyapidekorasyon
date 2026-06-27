@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hizmet Yönetimi | Admin Paneli</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="admin-page">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-text">AKDENİZ YAPI</span>
+      <span class="logo-sub">Admin Panel</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/admin/dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="/admin/hizmetler.html" class="active"><i class="fas fa-tools"></i> Hizmetler</a>
+      <a href="/admin/kategoriler.html"><i class="fas fa-tags"></i> Kategoriler</a>
+      <a href="/admin/referanslar.html"><i class="fas fa-building"></i> Referanslar</a>
+      <a href="/admin/mesajlar.html"><i class="fas fa-envelope"></i> Mesajlar <span class="badge" id="unreadBadge"></span></a>
+      <a href="/admin/ayarlar.html"><i class="fas fa-cog"></i> Site Ayarları</a>
+      <a href="/admin/sifre.html"><i class="fas fa-key"></i> Şifre Değiştir</a>
+      <a href="/" target="_blank"><i class="fas fa-external-link-alt"></i> Siteyi Gör</a>
+    </nav>
+    <button class="sidebar-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-header">
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+      <h1 class="admin-page-title">Hizmet Yönetimi</h1>
+      <div class="admin-user"><i class="fas fa-user-circle"></i><span id="adminUsername">admin</span></div>
+    </header>
+
+    <div class="admin-content">
+      <div class="content-toolbar">
+        <button class="btn-admin btn-primary" onclick="openModal('serviceModal')">
+          <i class="fas fa-plus"></i> Yeni Hizmet Ekle
+        </button>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Görsel</th>
+              <th>Başlık</th>
+              <th>Kategori</th>
+              <th>Öne Çıkan</th>
+              <th>İşlemler</th>
+            </tr>
+          </thead>
+          <tbody id="servicesBody">
+            <tr><td colspan="5" class="loading-row"><i class="fas fa-spinner fa-spin"></i> Yükleniyor...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Hizmet Ekle/Düzenle -->
+  <div class="modal-overlay" id="serviceModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalTitle">Hizmet Ekle</h3>
+        <button class="modal-close" onclick="closeModal('serviceModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="serviceForm" enctype="multipart/form-data">
+        <input type="hidden" id="serviceId" />
+        <div class="form-row">
+          <div class="form-group">
+            <label>Başlık <span class="req">*</span></label>
+            <input type="text" id="sTitle" required placeholder="Hizmet adı" />
+          </div>
+          <div class="form-group">
+            <label>Kategori</label>
+            <select id="sCategoryId">
+              <option value="">Kategori seçin</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Kısa Açıklama</label>
+          <input type="text" id="sShortDesc" placeholder="Kart altında görünür" />
+        </div>
+        <div class="form-group">
+          <label>Detaylı Açıklama</label>
+          <textarea id="sDescription" rows="4" placeholder="Detaylı açıklama..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Sıra</label>
+            <input type="number" id="sSortOrder" value="0" min="0" />
+          </div>
+          <div class="form-group form-check-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="sFeatured" />
+              Öne Çıkan
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Görsel</label>
+          <input type="file" id="sImage" accept="image/jpeg,image/png,image/webp" />
+          <img id="sImagePreview" src="" alt="Önizleme" class="img-preview" style="display:none;" />
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn-admin btn-primary" id="serviceSubmitBtn">Kaydet</button>
+          <button type="button" class="btn-admin btn-secondary" onclick="closeModal('serviceModal')">İptal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+  <script>
+    let services = [], categories = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const ok = await requireAuth();
+      if (!ok) return;
+      document.getElementById('sidebarToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
+      previewImage(document.getElementById('sImage'), document.getElementById('sImagePreview'));
+      await loadCategories();
+      await loadServices();
+    });
+
+    async function loadCategories() {
+      const res = await fetch(`${API}/categories`);
+      categories = await res.json();
+      const sel = document.getElementById('sCategoryId');
+      sel.innerHTML = '<option value="">Kategori seçin</option>' +
+        categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    }
+
+    async function loadServices() {
+      const tbody = document.getElementById('servicesBody');
+      try {
+        const res = await fetch(`${API}/services`);
+        services = await res.json();
+        if (!services.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-row">Henüz hizmet yok.</td></tr>'; return; }
+        tbody.innerHTML = services.map(s => `
+          <tr>
+            <td><img src="${s.image || 'https://placehold.co/60x40/1a1a1a/c9a227?text=+'}" style="width:60px;height:40px;object-fit:cover;border-radius:4px;" /></td>
+            <td><strong>${s.title}</strong><br/><small>${s.short_desc || ''}</small></td>
+            <td>${s.category_name || '—'}</td>
+            <td>${s.featured ? '<span class="badge-status read">Evet</span>' : '<span class="badge-status">Hayır</span>'}</td>
+            <td class="actions-cell">
+              <button class="btn-admin btn-sm btn-primary" onclick="editService(${s.id})"><i class="fas fa-edit"></i></button>
+              <button class="btn-admin btn-sm btn-danger" onclick="deleteService(${s.id})"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+        `).join('');
+      } catch { tbody.innerHTML = '<tr><td colspan="5" class="empty-row">Yüklenemedi.</td></tr>'; }
+    }
+
+    function openAddModal() {
+      document.getElementById('modalTitle').textContent = 'Hizmet Ekle';
+      document.getElementById('serviceId').value = '';
+      document.getElementById('serviceForm').reset();
+      document.getElementById('sImagePreview').style.display = 'none';
+      openModal('serviceModal');
+    }
+    document.querySelector('[onclick="openModal(\'serviceModal\')"]').addEventListener('click', openAddModal);
+
+    function editService(id) {
+      const s = services.find(x => x.id === id);
+      if (!s) return;
+      document.getElementById('modalTitle').textContent = 'Hizmet Düzenle';
+      document.getElementById('serviceId').value = s.id;
+      document.getElementById('sTitle').value = s.title;
+      document.getElementById('sCategoryId').value = s.category_id || '';
+      document.getElementById('sShortDesc').value = s.short_desc || '';
+      document.getElementById('sDescription').value = s.description || '';
+      document.getElementById('sSortOrder').value = s.sort_order || 0;
+      document.getElementById('sFeatured').checked = !!s.featured;
+      if (s.image) { document.getElementById('sImagePreview').src = s.image; document.getElementById('sImagePreview').style.display = 'block'; }
+      else document.getElementById('sImagePreview').style.display = 'none';
+      openModal('serviceModal');
+    }
+
+    document.getElementById('serviceForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const id = document.getElementById('serviceId').value;
+      const btn = document.getElementById('serviceSubmitBtn');
+      btn.disabled = true; btn.textContent = 'Kaydediliyor...';
+
+      const fd = new FormData();
+      fd.append('title', document.getElementById('sTitle').value);
+      fd.append('category_id', document.getElementById('sCategoryId').value);
+      fd.append('short_desc', document.getElementById('sShortDesc').value);
+      fd.append('description', document.getElementById('sDescription').value);
+      fd.append('sort_order', document.getElementById('sSortOrder').value);
+      fd.append('featured', document.getElementById('sFeatured').checked ? '1' : '0');
+      const img = document.getElementById('sImage').files[0];
+      if (img) fd.append('image', img);
+
+      try {
+        const url = id ? `${API}/services/${id}` : `${API}/services`;
+        const res = await fetch(url, { method: id ? 'PUT' : 'POST', headers: authHeadersMultipart(), body: fd });
+        const data = await res.json();
+        if (res.ok) { toast(id ? 'Hizmet güncellendi.' : 'Hizmet eklendi.'); closeModal('serviceModal'); loadServices(); }
+        else toast(data.error || 'Hata oluştu.', 'error');
+      } catch { toast('Bağlantı hatası.', 'error'); }
+      finally { btn.disabled = false; btn.textContent = 'Kaydet'; }
+    });
+
+    async function deleteService(id) {
+      const ok = await confirm2('Bu hizmeti silmek istediğinize emin misiniz?');
+      if (!ok) return;
+      const res = await fetch(`${API}/services/${id}`, { method: 'DELETE', headers: authHeaders() });
+      if (res.ok) { toast('Hizmet silindi.'); loadServices(); }
+      else toast('Silinemedi.', 'error');
+    }
+  </script>
+</body>
+</html>

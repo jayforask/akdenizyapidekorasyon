@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Site Ayarları | Admin Paneli</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="admin-page">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><span class="logo-text">AKDENİZ YAPI</span><span class="logo-sub">Admin Panel</span></div>
+    <nav class="sidebar-nav">
+      <a href="/admin/dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="/admin/hizmetler.html"><i class="fas fa-tools"></i> Hizmetler</a>
+      <a href="/admin/kategoriler.html"><i class="fas fa-tags"></i> Kategoriler</a>
+      <a href="/admin/referanslar.html"><i class="fas fa-building"></i> Referanslar</a>
+      <a href="/admin/mesajlar.html"><i class="fas fa-envelope"></i> Mesajlar</a>
+      <a href="/admin/ayarlar.html" class="active"><i class="fas fa-cog"></i> Site Ayarları</a>
+      <a href="/admin/sifre.html"><i class="fas fa-key"></i> Şifre Değiştir</a>
+      <a href="/" target="_blank"><i class="fas fa-external-link-alt"></i> Siteyi Gör</a>
+    </nav>
+    <button class="sidebar-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-header">
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+      <h1 class="admin-page-title">Site Ayarları</h1>
+      <div class="admin-user"><i class="fas fa-user-circle"></i><span id="adminUsername">admin</span></div>
+    </header>
+    <div class="admin-content">
+      <form id="settingsForm">
+        <!-- İletişim Bilgileri -->
+        <div class="settings-card">
+          <h3 class="settings-card-title"><i class="fas fa-phone"></i> İletişim Bilgileri</h3>
+          <div class="form-row">
+            <div class="form-group"><label>Telefon 1 (WhatsApp)</label><input type="text" id="s_phone1" placeholder="0530 936 10 17" /></div>
+            <div class="form-group"><label>Telefon 2</label><input type="text" id="s_phone2" placeholder="0535 876 35 04" /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Telefon 3</label><input type="text" id="s_phone3" placeholder="0505 086 98 07" /></div>
+            <div class="form-group"><label>WhatsApp (ülke koduyla, boşluksuz)</label><input type="text" id="s_whatsapp" placeholder="905309361017" /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>E-posta</label><input type="email" id="s_email" placeholder="info@akdenizyapi.com" /></div>
+            <div class="form-group"><label>Adres</label><input type="text" id="s_address" placeholder="Antalya, Türkiye" /></div>
+          </div>
+        </div>
+
+        <!-- Sosyal Medya -->
+        <div class="settings-card">
+          <h3 class="settings-card-title"><i class="fab fa-instagram"></i> Sosyal Medya</h3>
+          <div class="form-row">
+            <div class="form-group"><label>Instagram Kullanıcı Adı</label><input type="text" id="s_instagram" placeholder="akdeniz.yapidekorasyon" /></div>
+          </div>
+        </div>
+
+        <!-- Firma Bilgileri -->
+        <div class="settings-card">
+          <h3 class="settings-card-title"><i class="fas fa-building"></i> Firma Bilgileri</h3>
+          <div class="form-row">
+            <div class="form-group"><label>Site Başlığı</label><input type="text" id="s_site_title" placeholder="Akdeniz Yapı Dekorasyon" /></div>
+            <div class="form-group"><label>Slogan</label><input type="text" id="s_site_slogan" placeholder="Yapınıza Değer Katıyoruz" /></div>
+          </div>
+          <div class="form-group"><label>Hakkımızda Metni</label><textarea id="s_about_text" rows="4" placeholder="Firma hakkında kısa açıklama..."></textarea></div>
+          <div class="form-group"><label>Vizyon</label><textarea id="s_vision" rows="3" placeholder="Firmanın vizyonu..."></textarea></div>
+          <div class="form-group"><label>Misyon</label><textarea id="s_mission" rows="3" placeholder="Firmanın misyonu..."></textarea></div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-admin btn-primary btn-lg" id="saveBtn">
+            <i class="fas fa-save"></i> Ayarları Kaydet
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!await requireAuth()) return;
+      document.getElementById('sidebarToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
+      loadSettings();
+    });
+
+    async function loadSettings() {
+      try {
+        const res = await fetch(`${API}/settings`);
+        const s = await res.json();
+        document.getElementById('s_phone1').value = s.phone1 || '';
+        document.getElementById('s_phone2').value = s.phone2 || '';
+        document.getElementById('s_phone3').value = s.phone3 || '';
+        document.getElementById('s_whatsapp').value = s.whatsapp || '';
+        document.getElementById('s_email').value = s.email || '';
+        document.getElementById('s_address').value = s.address || '';
+        document.getElementById('s_instagram').value = s.instagram || '';
+        document.getElementById('s_site_title').value = s.site_title || '';
+        document.getElementById('s_site_slogan').value = s.site_slogan || '';
+        document.getElementById('s_about_text').value = s.about_text || '';
+        document.getElementById('s_vision').value = s.vision || '';
+        document.getElementById('s_mission').value = s.mission || '';
+      } catch { toast('Ayarlar yüklenemedi.', 'error'); }
+    }
+
+    document.getElementById('settingsForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = document.getElementById('saveBtn');
+      btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kaydediliyor...';
+      const data = {
+        phone1: document.getElementById('s_phone1').value,
+        phone2: document.getElementById('s_phone2').value,
+        phone3: document.getElementById('s_phone3').value,
+        whatsapp: document.getElementById('s_whatsapp').value,
+        email: document.getElementById('s_email').value,
+        address: document.getElementById('s_address').value,
+        instagram: document.getElementById('s_instagram').value,
+        site_title: document.getElementById('s_site_title').value,
+        site_slogan: document.getElementById('s_site_slogan').value,
+        about_text: document.getElementById('s_about_text').value,
+        vision: document.getElementById('s_vision').value,
+        mission: document.getElementById('s_mission').value,
+      };
+      try {
+        const res = await fetch(`${API}/settings`, { method: 'PUT', headers: authHeaders(), body: JSON.stringify(data) });
+        const result = await res.json();
+        if (res.ok) toast('Ayarlar kaydedildi.');
+        else toast(result.error || 'Hata.', 'error');
+      } catch { toast('Bağlantı hatası.', 'error'); }
+      finally { btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Ayarları Kaydet'; }
+    });
+  </script>
+</body>
+</html>
