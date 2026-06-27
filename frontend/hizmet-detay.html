@@ -4,9 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hizmet Detay | Akdeniz Yapı Dekorasyon</title>
+  <meta name="description" content="Akdeniz Yapı Dekorasyon hizmet detayları - boyacılık, alçıpan, mantolama ve daha fazlası." />
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .page-hero { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); }
+  </style>
 </head>
 <body data-page="detay">
 
@@ -16,10 +20,13 @@
         <span class="logo-text">AKDENİZ YAPI</span>
         <span class="logo-sub">DEKORASYON</span>
       </a>
-      <button class="nav-toggle" id="navToggle" aria-label="Menü"><i class="fas fa-bars"></i></button>
+      <button class="nav-toggle" id="navToggle" aria-label="Menü aç/kapat">
+        <i class="fas fa-bars"></i>
+      </button>
       <ul class="nav-menu" id="navMenu">
         <li><a href="/">Ana Sayfa</a></li>
         <li><a href="/hizmetler.html" class="active">Hizmetler</a></li>
+        <li><a href="/kampanyalar.html">Kampanyalar</a></li>
         <li><a href="/referanslar.html">Referanslar</a></li>
         <li><a href="/iletisim.html">İletişim</a></li>
         <li><a href="tel:05309361017" class="btn-call"><i class="fas fa-phone"></i> Hemen Ara</a></li>
@@ -27,78 +34,194 @@
     </div>
   </nav>
 
-  <div class="page-hero">
+  <section class="page-hero">
     <div class="container">
-      <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Ana Sayfa</a> <i class="fas fa-chevron-right"></i>
-        <a href="/hizmetler.html">Hizmetler</a> <i class="fas fa-chevron-right"></i>
+      <div class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/"><i class="fas fa-home"></i> Ana Sayfa</a>
+        <i class="fas fa-chevron-right"></i>
+        <a href="/hizmetler.html">Hizmetler</a>
+        <i class="fas fa-chevron-right"></i>
         <span id="breadcrumbTitle">Hizmet Detay</span>
-      </nav>
+      </div>
+      <h1 id="pageHeroTitle">Hizmet Detayı</h1>
     </div>
-  </div>
+  </section>
 
   <section class="section detay-section">
     <div class="container">
       <div id="detayContent" class="detay-layout">
-        <div class="detay-image skeleton" style="height:400px;border-radius:12px;"></div>
+        <!-- Skeleton yükleniyor -->
+        <div class="detay-image skeleton" style="height:420px;border-radius:16px;"></div>
         <div class="detay-body">
-          <div class="skeleton" style="height:32px;width:60%;margin-bottom:16px;border-radius:6px;"></div>
-          <div class="skeleton" style="height:18px;margin-bottom:10px;border-radius:4px;"></div>
-          <div class="skeleton" style="height:18px;margin-bottom:10px;border-radius:4px;"></div>
-          <div class="skeleton" style="height:18px;width:80%;border-radius:4px;"></div>
+          <div class="skeleton" style="height:36px;width:60%;margin-bottom:20px;border-radius:8px;"></div>
+          <div class="skeleton" style="height:18px;margin-bottom:12px;border-radius:4px;"></div>
+          <div class="skeleton" style="height:18px;margin-bottom:12px;border-radius:4px;"></div>
+          <div class="skeleton" style="height:18px;width:75%;border-radius:4px;"></div>
         </div>
+      </div>
+
+      <!-- İlgili Hizmetler -->
+      <div id="relatedSection" style="display:none;margin-top:60px;">
+        <div class="section-header">
+          <h2>Diğer <span class="gold">Hizmetlerimiz</span></h2>
+          <p>Aynı kategorideki diğer hizmetleri inceleyin</p>
+        </div>
+        <div class="services-grid" id="relatedGrid"></div>
       </div>
     </div>
   </section>
 
   <section class="cta-banner">
-    <div class="container cta-inner">
-      <div class="cta-text">
-        <h2>Bu Hizmet Hakkında Bilgi Alın</h2>
-        <p>Uzmanlarımız keşif ve teklif için sizi arasın.</p>
-      </div>
-      <div class="cta-actions">
+    <div class="container" style="text-align:center;">
+      <h2>Bu Hizmet Hakkında Bilgi Alın</h2>
+      <p>Uzmanlarımız keşif ve ücretsiz teklif için sizi arasın.</p>
+      <div class="cta-buttons">
         <a href="tel:05309361017" class="btn btn-gold"><i class="fas fa-phone"></i> 0530 936 10 17</a>
-        <a href="https://wa.me/905309361017" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <a href="https://wa.me/905309361017?text=Merhaba%2C%20hizmet%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
       </div>
     </div>
   </section>
 
   <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-col">
-        <div class="footer-logo"><span class="logo-text">AKDENİZ YAPI</span><span class="logo-sub">DEKORASYON</span></div>
-        <p class="footer-desc">Yapınıza değer katıyoruz.</p>
-        <div class="footer-social">
-          <a href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank"><i class="fab fa-instagram"></i></a>
-          <a href="https://wa.me/905309361017" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:12px;">
+          <span class="logo-text">AKDENİZ YAPI</span>
+          <span class="logo-sub">DEKORASYON</span>
+        </div>
+        <p style="color:#aaa;font-size:0.9rem;line-height:1.6;margin-bottom:16px;">
+          Profesyonel yapı ve dekorasyon hizmetleri ile yapınıza değer katıyoruz.
+        </p>
+        <div class="social">
+          <a href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/905309361017" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="tel:05309361017" aria-label="Telefon"><i class="fas fa-phone"></i></a>
         </div>
       </div>
       <div class="footer-col">
         <h4>Hızlı Bağlantılar</h4>
-        <ul class="footer-links">
-          <li><a href="/">Ana Sayfa</a></li>
-          <li><a href="/hizmetler.html">Hizmetler</a></li>
-          <li><a href="/referanslar.html">Referanslar</a></li>
-          <li><a href="/iletisim.html">İletişim</a></li>
+        <ul>
+          <li><a href="/"><i class="fas fa-chevron-right"></i> Ana Sayfa</a></li>
+          <li><a href="/hizmetler.html"><i class="fas fa-chevron-right"></i> Hizmetler</a></li>
+          <li><a href="/referanslar.html"><i class="fas fa-chevron-right"></i> Referanslar</a></li>
+          <li><a href="/iletisim.html"><i class="fas fa-chevron-right"></i> İletişim</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hizmetlerimiz</h4>
+        <ul id="footerCats">
+          <li><a href="/hizmetler.html"><i class="fas fa-chevron-right"></i> Boyacılık</a></li>
+          <li><a href="/hizmetler.html"><i class="fas fa-chevron-right"></i> Alçıpan</a></li>
+          <li><a href="/hizmetler.html"><i class="fas fa-chevron-right"></i> Mantolama</a></li>
+          <li><a href="/hizmetler.html"><i class="fas fa-chevron-right"></i> Sıva</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>İletişim</h4>
-        <ul class="footer-contact">
-          <li><i class="fas fa-phone"></i> <a href="tel:05309361017">0530 936 10 17</a></li>
-          <li><i class="fas fa-phone"></i> <a href="tel:05358763504">0535 876 35 04</a></li>
-          <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank">@akdeniz.yapidekorasyon</a></li>
+        <ul>
+          <li><i class="fas fa-phone" style="color:var(--gold);"></i> <a href="tel:05309361017">0530 936 10 17</a></li>
+          <li><i class="fas fa-phone" style="color:var(--gold);"></i> <a href="tel:05358763504">0535 876 35 04</a></li>
+          <li><i class="fab fa-instagram" style="color:var(--gold);"></i> <a href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank">@akdeniz.yapidekorasyon</a></li>
+          <li><i class="fas fa-map-marker-alt" style="color:var(--gold);"></i> <span style="color:#aaa;">Antalya, Türkiye</span></li>
         </ul>
       </div>
     </div>
-    <div class="footer-bottom"><p>&copy; 2024 Akdeniz Yapı Dekorasyon. Tüm hakları saklıdır.</p></div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Akdeniz Yapı Dekorasyon. Tüm hakları saklıdır.</p>
+    </div>
   </footer>
 
-  <a href="https://wa.me/905309361017?text=Merhaba%2C%20bilgi%20almak%20istiyorum." target="_blank" class="whatsapp-float" aria-label="WhatsApp">
-    <i class="fab fa-whatsapp"></i><span class="wa-tooltip">Bilgi Al</span>
-  </a>
+  <div class="wa-float">
+    <a href="https://wa.me/905309361017?text=Merhaba%2C%20bilgi%20almak%20istiyorum." target="_blank" class="wa-float-btn" aria-label="WhatsApp ile iletişim">
+      <i class="fab fa-whatsapp"></i>
+      <span class="wa-tooltip">Bilgi Al</span>
+    </a>
+  </div>
 
   <script src="js/main.js"></script>
+  <script>
+    // Navbar hamburger toggle
+    const navToggle = document.getElementById('navToggle');
+    const navMenu   = document.getElementById('navMenu');
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('open');
+        const icon = navToggle.querySelector('i');
+        icon.className = navMenu.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+      });
+    }
+
+    // URL'den slug al ve hizmet detayını yükle
+    (async () => {
+      const params = new URLSearchParams(location.search);
+      const slug   = params.get('slug') || params.get('id');
+
+      if (!slug) {
+        document.getElementById('detayContent').innerHTML =
+          '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> Hizmet bulunamadı. <a href="/hizmetler.html">Geri dön</a></div>';
+        return;
+      }
+
+      try {
+        const res  = await fetch(`/api/services/${slug}`);
+        if (!res.ok) throw new Error('not found');
+        const data = await res.json();
+        const svc  = data.service || data;
+
+        // Başlık güncelle
+        document.title = `${svc.name} | Akdeniz Yapı Dekorasyon`;
+        document.getElementById('breadcrumbTitle').textContent = svc.name;
+        document.getElementById('pageHeroTitle').textContent   = svc.name;
+
+        const imgSrc = svc.image
+          ? `/uploads/${svc.image}`
+          : 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80';
+
+        document.getElementById('detayContent').innerHTML = `
+          <div class="detay-image">
+            <img src="${imgSrc}" alt="${svc.name}" loading="lazy"
+                 style="width:100%;height:100%;object-fit:cover;border-radius:16px;"
+                 onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80'" />
+          </div>
+          <div class="detay-body">
+            <h1 class="detay-title">${svc.name}</h1>
+            ${svc.category_name ? `<span class="badge-gold" style="display:inline-block;margin-bottom:16px;">${svc.category_name}</span>` : ''}
+            <div class="detay-desc">${(svc.description || '').replace(/\n/g, '<br>')}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;">
+              <a href="tel:05309361017" class="btn btn-gold"><i class="fas fa-phone"></i> Bilgi Al</a>
+              <a href="https://wa.me/905309361017?text=Merhaba%2C%20${encodeURIComponent(svc.name)}%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
+                 target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>`;
+
+        // İlgili hizmetleri yükle
+        try {
+          const relRes  = await fetch('/api/services?limit=4');
+          const relData = await relRes.json();
+          const others  = (relData.services || relData).filter(s => s.slug !== svc.slug).slice(0, 3);
+          if (others.length > 0) {
+            document.getElementById('relatedSection').style.display = 'block';
+            document.getElementById('relatedGrid').innerHTML = others.map(s => `
+              <div class="service-card">
+                <div class="service-img">
+                  <img src="${s.image ? '/uploads/' + s.image : 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400&q=70'}"
+                       alt="${s.name}" loading="lazy"
+                       onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400&q=70'" />
+                </div>
+                <div class="service-body">
+                  <h3>${s.name}</h3>
+                  <p>${(s.description || '').substring(0, 80)}${s.description && s.description.length > 80 ? '…' : ''}</p>
+                  <a href="/hizmet-detay.html?slug=${s.slug}" class="btn btn-outline">Detaylar <i class="fas fa-arrow-right"></i></a>
+                </div>
+              </div>`).join('');
+          }
+        } catch (_) { /* ilgili hizmetler yüklenemedi, sessizce geç */ }
+
+      } catch (err) {
+        document.getElementById('detayContent').innerHTML =
+          '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> Hizmet yüklenirken bir hata oluştu. <a href="/hizmetler.html">Geri dön</a></div>';
+      }
+    })();
+  </script>
 </body>
 </html>

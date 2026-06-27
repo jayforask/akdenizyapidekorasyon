@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
+    /* ── Hero ── */
     .hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;}
     .hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.12;filter:blur(1px);}
     .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.97) 0%,rgba(253,248,238,.95) 50%,rgba(249,242,212,.88) 100%);}
@@ -32,6 +33,25 @@
     .about-image .about-overlay-badge strong{display:block;font-size:1rem;color:var(--gold);}
     .ref-real-img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
     @media(max-width:768px){.hero-split{grid-template-columns:1fr;gap:28px;min-height:auto;padding:28px 0 48px;}.hero-right{order:-1;}.hero-right-badge{bottom:-12px;left:-8px;padding:10px 12px;}.hero-right-badge2{top:-10px;right:-8px;padding:10px 12px;}.hero-right-badge2 strong{font-size:1.1rem;}}
+
+    /* ── Painter Canvas Animasyonu ── */
+    #painterCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;}
+
+    /* ── Instagram Feed Bölümü ── */
+    .ig-section{padding:60px 0;background:var(--white);}
+    .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:32px;}
+    .ig-card{position:relative;aspect-ratio:1;border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:var(--shadow);}
+    .ig-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+    .ig-card:hover img{transform:scale(1.08);}
+    .ig-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 60%);opacity:0;transition:opacity .3s;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;}
+    .ig-card:hover .ig-card-overlay{opacity:1;}
+    .ig-card-overlay .ig-likes{color:#fff;font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:6px;}
+    .ig-card-overlay .ig-caption{color:rgba(255,255,255,.85);font-size:.72rem;margin-top:4px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+    .ig-card-type{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.5);border-radius:6px;padding:3px 7px;color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.5px;}
+    .ig-follow-row{text-align:center;margin-top:28px;}
+    .btn-ig{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;padding:12px 28px;border-radius:50px;font-weight:700;font-size:.95rem;box-shadow:0 4px 20px rgba(253,29,29,.3);transition:transform .2s,box-shadow .2s;}
+    .btn-ig:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(253,29,29,.4);}
+    @media(max-width:480px){.ig-grid{grid-template-columns:repeat(2,1fr);gap:8px;}.ig-section{padding:40px 0;}}
   </style>
 </head>
 <body data-page="home">
@@ -49,6 +69,7 @@
       <ul class="nav-menu" id="navMenu">
         <li><a href="/" class="active">Ana Sayfa</a></li>
         <li><a href="/hizmetler.html">Hizmetler</a></li>
+        <li><a href="/kampanyalar.html">Kampanyalar</a></li>
         <li><a href="/referanslar.html">Referanslar</a></li>
         <li><a href="/iletisim.html">İletişim</a></li>
         <li><a href="tel:05309361017" class="btn-call"><i class="fas fa-phone"></i> Hemen Ara</a></li>
@@ -58,6 +79,7 @@
 
   <!-- HERO -->
   <section class="hero" id="hero" style="padding-top:var(--navbar-h);min-height:100svh;display:flex;align-items:center;">
+    <canvas id="painterCanvas"></canvas>
     <div class="hero-bg">
       <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&q=80&fit=crop" alt="İnşaat" loading="eager" />
     </div>
@@ -94,7 +116,7 @@
         <!-- Sağ görsel -->
         <div class="hero-right">
           <div class="hero-right-img">
-            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&fit=crop" alt="Dış cephe mantolama uygulaması" loading="eager" />
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80&fit=crop&crop=edges" alt="Dış cephe mantolama uygulaması" loading="eager" />
           </div>
           <div class="hero-right-badge">
             <div class="hb-icon">🏆</div>
@@ -281,6 +303,72 @@
     </div>
   </section>
 
+  <!-- INSTAGRAM FEED -->
+  <section class="ig-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Sosyal Medya</span>
+        <h2 class="section-title"><i class="fab fa-instagram" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i> Instagram'dan Güncel İçerikler</h2>
+        <p class="section-desc">Tamamladığımız projeleri ve çalışmalarımızı takip edin.</p>
+      </div>
+      <div class="ig-grid">
+        <a class="ig-card" href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" rel="noopener noreferrer" aria-label="Instagram'da görüntüle">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80&fit=crop" alt="Dış cephe mantolama" loading="lazy" />
+          <div class="ig-card-type">FOTOĞRAF</div>
+          <div class="ig-card-overlay">
+            <div class="ig-likes"><i class="fas fa-heart"></i> 142 <i class="fas fa-comment" style="margin-left:8px;"></i> 18</div>
+            <div class="ig-caption">Bayındır Pınarlar Sitesi dış cephe mantolama tamamlandı 🏗️ #mantolama #akdenizyanı</div>
+          </div>
+        </a>
+        <a class="ig-card" href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" rel="noopener noreferrer" aria-label="Instagram'da görüntüle">
+          <img src="https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?w=600&q=80&fit=crop" alt="İç mekan boya" loading="lazy" />
+          <div class="ig-card-type">FOTOĞRAF</div>
+          <div class="ig-card-overlay">
+            <div class="ig-likes"><i class="fas fa-heart"></i> 89 <i class="fas fa-comment" style="margin-left:8px;"></i> 7</div>
+            <div class="ig-caption">Profesyonel iç mekan boya uygulaması ✨ #boya #tadilat #antalya</div>
+          </div>
+        </a>
+        <a class="ig-card" href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" rel="noopener noreferrer" aria-label="Instagram'da görüntüle">
+          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80&fit=crop" alt="Ekip çalışması" loading="lazy" />
+          <div class="ig-card-type">FOTOĞRAF</div>
+          <div class="ig-card-overlay">
+            <div class="ig-likes"><i class="fas fa-heart"></i> 203 <i class="fas fa-comment" style="margin-left:8px;"></i> 31</div>
+            <div class="ig-caption">Ekibimiz sahada! Her projeye özen ve titizlikle yaklaşıyoruz 💪 #ekip #akdenizyanı</div>
+          </div>
+        </a>
+        <a class="ig-card" href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" rel="noopener noreferrer" aria-label="Instagram'da görüntüle">
+          <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80&fit=crop" alt="Bina cephesi" loading="lazy" />
+          <div class="ig-card-type">FOTOĞRAF</div>
+          <div class="ig-card-overlay">
+            <div class="ig-likes"><i class="fas fa-heart"></i> 167 <i class="fas fa-comment" style="margin-left:8px;"></i> 22</div>
+            <div class="ig-caption">AYT Park Villa Sitesi — ısı yalıtımı öncesi ve sonrası 🌡️ #isiyalitimi #antalya</div>
+          </div>
+        </a>
+        <a class="ig-card" href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" rel="noopener noreferrer" aria-label="Instagram'da görüntüle">
+          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80&fit=crop" alt="Yapı projesi" loading="lazy" />
+          <div class="ig-card-type">FOTOĞRAF</div>
+          <div class="ig-card-overlay">
+            <div class="ig-likes"><i class="fas fa-heart"></i> 118 <i class="fas fa-comment" style="margin-left:8px;"></i> 14</div>
+            <div class="ig-caption">Varsak Güneş Konakları tam cephe yenileme projesi tamamlandı ✅ #cephe #dekorasyon</div>
+          </div>
+        </a>
+        <a class="ig-card" href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" rel="noopener noreferrer" aria-label="Instagram'da görüntüle">
+          <img src="https://images.unsplash.com/photo-1549517045-bc93de744f8a?w=600&q=80&fit=crop" alt="Mineral sıva" loading="lazy" />
+          <div class="ig-card-type">FOTOĞRAF</div>
+          <div class="ig-card-overlay">
+            <div class="ig-likes"><i class="fas fa-heart"></i> 95 <i class="fas fa-comment" style="margin-left:8px;"></i> 9</div>
+            <div class="ig-caption">Mineral sıva ve boya sistemi — Sarısu Klas Sitesi 🎨 #siva #boya #antalya</div>
+          </div>
+        </a>
+      </div>
+      <div class="ig-follow-row">
+        <a href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" class="btn-ig">
+          <i class="fab fa-instagram"></i> @akdeniz.yapidekorasyon'u Takip Et
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container footer-grid">
@@ -297,9 +385,10 @@
         <h4>Hızlı Bağlantılar</h4>
         <ul>
           <li><a href="/">Ana Sayfa</a></li>
-          <li><a href="/hizmetler.html">Hizmetler</a></li>
-          <li><a href="/referanslar.html">Referanslar</a></li>
-          <li><a href="/iletisim.html">İletişim</a></li>
+            <li><a href="/hizmetler.html">Hizmetler</a></li>
+            <li><a href="/kampanyalar.html">Kampanyalar</a></li>
+            <li><a href="/referanslar.html">Referanslar</a></li>
+            <li><a href="/iletisim.html">İletişim</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -335,5 +424,340 @@
   </div>
 
   <script src="js/main.js"></script>
+  <script>
+  /* ══════════════════════════════════════════════════════
+     Boya Ustası Canvas Animasyonu v3
+     - Büyük karakter (SCALE=3)
+     - Başının üstünde dış cephe rulosu fırça
+     - Fırça yukarı-aşağı hareket ederek duvar boyuyor
+     - Her boyama turunda "AKDENİZ YAPI" yazısı belirir
+     - Yazı fade-in ile tam görünür, usta gidince solar
+     - Hareket dalgalı sinüs eğrisi (düz değil)
+  ══════════════════════════════════════════════════════ */
+  (function(){
+    const canvas = document.getElementById('painterCanvas');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const SCALE = 3.0;
+    let W = 0, H = 0;
+
+    /* Aktif yazı bölümleri: her boyamada tam metin bir kez yazılır */
+    /* {x, y, alpha, fadeIn, life, maxLife} */
+    const labels = [];
+
+    const man = {
+      x: 0, y: 0,
+      t: 0,               // zaman parametresi (radyan, dalgalı yol için)
+      baseY: 0,           // sinüs merkezi
+      dir: 1,
+      speed: 0.45,        // piksel/frame (yavaş, izlenebilsin)
+      opacity: 0,
+      fadeDir: 1,
+      visible: true,
+      restTimer: 0,
+      /* fırça animasyonu */
+      brushPhase: 0,      // 0..2π — yukarı aşağı döngüsü
+      brushPainting: false,
+      paintCooldown: 0,
+    };
+
+    function resize(){
+      W = canvas.width  = canvas.offsetWidth  || canvas.parentElement.offsetWidth;
+      H = canvas.height = canvas.offsetHeight || canvas.parentElement.offsetHeight;
+      man.baseY = H * 0.60;
+      if(man.y === 0) man.y = man.baseY;
+    }
+
+    /* ────── Rulo Fırça Çizimi (başın üstünde) ────── */
+    function drawBrush(brushY, dir, alpha){
+      /* brushY: fırça ucunun canvas koordinatı (man.y - bodyTop - brushOffset)
+         Fırça başın tepesinde, kollar yukarı uzanmış */
+      ctx.save();
+      ctx.globalAlpha = alpha;
+
+      /* Sap: ince metal çubuk dikey */
+      const sapX = man.x + dir * SCALE * 2;
+      const sapTop = brushY - SCALE * 18;
+      const sapBot = man.y  - SCALE * 80; // omuz seviyesi
+
+      ctx.strokeStyle = '#546e7a';
+      ctx.lineWidth   = SCALE * 2.5;
+      ctx.lineCap     = 'round';
+      ctx.beginPath();
+      ctx.moveTo(sapX, sapTop + SCALE*16);
+      ctx.lineTo(sapX, sapBot);
+      ctx.stroke();
+
+      /* Bağlantı kafesi (metal kısmı) */
+      ctx.strokeStyle = '#90a4ae';
+      ctx.lineWidth   = SCALE * 1.5;
+      ctx.beginPath();
+      ctx.moveTo(sapX - SCALE*6, sapTop + SCALE*16);
+      ctx.lineTo(sapX - SCALE*6, sapTop + SCALE*6);
+      ctx.lineTo(sapX + SCALE*6, sapTop + SCALE*6);
+      ctx.lineTo(sapX + SCALE*6, sapTop + SCALE*16);
+      ctx.stroke();
+
+      /* Rulo gövdesi — büyük silindir */
+      const rW = SCALE * 14, rH = SCALE * 10;
+      ctx.save();
+      ctx.translate(sapX, sapTop + SCALE*11);
+      /* Silindir gövde — bej/kum rengi (dış cephe rulosu) */
+      ctx.fillStyle = '#d4b896';
+      ctx.beginPath();
+      ctx.ellipse(0, 0, rW, rH/2, 0, 0, Math.PI*2);
+      ctx.fill();
+      /* Mavi şerit detay */
+      ctx.strokeStyle = '#1976d2';
+      ctx.lineWidth   = SCALE * 1.8;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, rW * 0.5, rH/2, 0, 0, Math.PI*2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.ellipse(0, 0, rW * 0.85, rH/2, 0, 0, Math.PI*2);
+      ctx.stroke();
+      /* Kenarlık */
+      ctx.strokeStyle = '#a08060';
+      ctx.lineWidth   = SCALE * 1;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, rW, rH/2, 0, 0, Math.PI*2);
+      ctx.stroke();
+      ctx.restore();
+
+      /* Boya izi — rulo alt kısmından damla efekti */
+      if(man.brushPainting){
+        ctx.fillStyle = 'rgba(201,162,39,0.35)';
+        ctx.beginPath();
+        ctx.ellipse(sapX, sapTop + SCALE*17, rW*0.9, SCALE*2.5, 0, 0, Math.PI*2);
+        ctx.fill();
+      }
+
+      ctx.restore();
+    }
+
+    /* ────── Usta Çizimi ────── */
+    function drawMan(alpha){
+      const x = man.x, y = man.y;
+      const s = SCALE;
+      const now = Date.now();
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+
+      /* yön */
+      ctx.save();
+      ctx.translate(x, y);
+      if(man.dir < 0) ctx.scale(-1, 1);
+
+      /* BACAKLAR — yürüyüş animasyonu */
+      const legSwing = Math.sin(now / 160) * 14;
+      /* sol bacak */
+      ctx.save();
+      ctx.translate(-s*4, -s*18);
+      ctx.rotate(legSwing * Math.PI/180);
+      ctx.fillStyle = '#1565c0';
+      ctx.fillRect(-s*3.5, 0, s*7, s*22);
+      ctx.fillStyle = '#0d1b2a';
+      ctx.fillRect(-s*4, s*20, s*9, s*5);
+      ctx.restore();
+      /* sağ bacak */
+      ctx.save();
+      ctx.translate(s*4, -s*18);
+      ctx.rotate(-legSwing * Math.PI/180);
+      ctx.fillStyle = '#1565c0';
+      ctx.fillRect(-s*3.5, 0, s*7, s*22);
+      ctx.fillStyle = '#0d1b2a';
+      ctx.fillRect(-s*4, s*20, s*9, s*5);
+      ctx.restore();
+
+      /* GÖVDE — turuncu tulum */
+      ctx.fillStyle = '#e65100';
+      ctx.fillRect(-s*11, -s*50, s*22, s*32);
+      /* göğüs şeridi */
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.fillRect(-s*2, -s*50, s*4, s*16);
+      /* kemer */
+      ctx.fillStyle = '#4e342e';
+      ctx.fillRect(-s*11, -s*22, s*22, s*4);
+      ctx.fillStyle = '#ffd54f';
+      ctx.fillRect(-s*3, -s*22, s*6, s*4);
+
+      /* KAFA */
+      ctx.shadowColor = 'rgba(0,0,0,0.2)';
+      ctx.shadowBlur  = s*4;
+      ctx.beginPath();
+      ctx.arc(0, -s*64, s*13, 0, Math.PI*2);
+      ctx.fillStyle = '#ffcc80';
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      /* KASK — sarı inşaat kaskı */
+      ctx.beginPath();
+      ctx.ellipse(0, -s*74, s*16, s*9, 0, Math.PI, 0);
+      ctx.fillStyle = '#f9a825';
+      ctx.fill();
+      ctx.fillRect(-s*16, -s*75, s*32, s*6);
+      ctx.strokeStyle = '#f57f17';
+      ctx.lineWidth = s;
+      ctx.stroke();
+
+      /* Yüz */
+      ctx.fillStyle = '#5d4037';
+      ctx.beginPath(); ctx.arc(s*4.5, -s*63, s*2, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(-s*4.5, -s*63, s*2, 0, Math.PI*2); ctx.fill();
+      ctx.strokeStyle = '#bf360c'; ctx.lineWidth = s*1.2; ctx.lineCap='round';
+      ctx.beginPath(); ctx.arc(0, -s*59, s*4, 0.2, Math.PI-0.2); ctx.stroke();
+
+      /* KOLLAR — ikisi de yukarı kaldırılmış, ruloyu tutuyor */
+      const brushBob = Math.sin(man.brushPhase) * s * 8; // yukarı-aşağı
+      ctx.strokeStyle = '#e65100';
+      ctx.lineWidth   = s*6;
+      ctx.lineCap     = 'round';
+      /* sol kol (destek) */
+      ctx.save();
+      ctx.translate(-s*10, -s*46);
+      ctx.rotate(-70 * Math.PI/180);
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0, s*22); ctx.stroke();
+      ctx.restore();
+      /* sağ kol (fırça tutan) */
+      ctx.save();
+      ctx.translate(s*10, -s*46);
+      ctx.rotate(-110 * Math.PI/180);
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0, s*28); ctx.stroke();
+      ctx.restore();
+
+      ctx.restore(); /* translate/scale geri al */
+
+      /* Fırça konumu: başın tepesinde + bobing hareketi */
+      const brushTipY = y - s*87 + brushBob;
+      drawBrush(brushTipY, man.dir, alpha);
+
+      ctx.restore();
+      return brushTipY; /* boya izi için geri dön */
+    }
+
+    /* ────── Yazı Etiketi Çiz ────── */
+    function drawLabels(){
+      for(let i = labels.length-1; i >= 0; i--){
+        const lb = labels[i];
+        lb.life--;
+        if(lb.life <= 0){ labels.splice(i,1); continue; }
+
+        /* fade in */
+        if(lb.fadeIn) lb.alpha = Math.min(1, lb.alpha + 0.04);
+        /* fade out (son 60 frame) */
+        if(lb.life < 60) lb.alpha = lb.life / 60;
+
+        ctx.save();
+        ctx.globalAlpha = lb.alpha;
+        ctx.font = `900 ${SCALE*14}px 'Montserrat',sans-serif`;
+        ctx.textAlign   = 'center';
+        ctx.textBaseline = 'middle';
+
+        /* beyaz kontur */
+        ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+        ctx.lineWidth   = SCALE * 4;
+        ctx.lineJoin    = 'round';
+        ctx.strokeText('AKDENİZ YAPI', lb.x, lb.y);
+
+        /* altın dolgu */
+        ctx.fillStyle = '#c9a227';
+        ctx.fillText('AKDENİZ YAPI', lb.x, lb.y);
+
+        /* hafif gölge çizgi altında */
+        ctx.strokeStyle = 'rgba(201,162,39,0.3)';
+        ctx.lineWidth   = SCALE;
+        ctx.beginPath();
+        const tw = ctx.measureText('AKDENİZ YAPI').width;
+        ctx.moveTo(lb.x - tw/2, lb.y + SCALE*10);
+        ctx.lineTo(lb.x + tw/2, lb.y + SCALE*10);
+        ctx.stroke();
+
+        ctx.restore();
+      }
+    }
+
+    /* ────── Update ────── */
+    let paintSpawn = false;
+
+    function update(){
+      /* fade */
+      if(man.fadeDir === 1){
+        man.opacity = Math.min(1, man.opacity + 0.03);
+        if(man.opacity >= 1) man.fadeDir = 0;
+      } else if(man.fadeDir === -1){
+        man.opacity = Math.max(0, man.opacity - 0.025);
+        if(man.opacity <= 0){
+          man.fadeDir  = 0;
+          man.visible  = false;
+          man.restTimer = 130 + Math.random()*100;
+        }
+      }
+
+      /* bekleme */
+      if(!man.visible){
+        if(man.restTimer > 0) man.restTimer--;
+        if(man.restTimer <= 0){
+          man.visible   = true;
+          man.opacity   = 0;
+          man.fadeDir   = 1;
+          man.baseY     = H * (0.48 + Math.random()*0.2);
+          man.y         = man.baseY;
+          man.t         = 0;
+          man.x         = man.dir > 0 ? -180 : W + 180;
+          man.brushPhase= 0;
+          paintSpawn    = false;
+        }
+        return;
+      }
+
+      /* Dalgalı yürüyüş — sinüs eğrisi */
+      man.t += 0.022;
+      man.x += man.speed * man.dir;
+      man.y  = man.baseY + Math.sin(man.t * 2.8) * 28;
+
+      /* Fırça yukarı-aşağı hareketi */
+      man.brushPhase += 0.07;
+      /* Boyama anı: fırça aşağıya inerken (sin > 0.6) */
+      const bobVal = Math.sin(man.brushPhase);
+      if(bobVal > 0.75 && !paintSpawn){
+        paintSpawn = true;
+        labels.push({
+          x     : man.x,
+          y     : man.y - SCALE * 105,
+          alpha : 0,
+          fadeIn: true,
+          life  : 220 + Math.random()*60,
+        });
+      }
+      if(bobVal < 0.3) paintSpawn = false;
+
+      /* ekran dışı */
+      if((man.dir > 0 && man.x > W + 180) || (man.dir < 0 && man.x < -180)){
+        if(man.fadeDir === 0){ man.fadeDir = -1; man.dir *= -1; }
+      }
+
+      /* rastgele kaybol */
+      if(man.visible && man.fadeDir === 0 && Math.random() < 0.002){
+        man.fadeDir = -1; man.dir *= -1;
+      }
+    }
+
+    /* ────── Render ────── */
+    function render(){
+      ctx.clearRect(0, 0, W, H);
+      drawLabels();
+      if(man.opacity > 0) drawMan(man.opacity);
+    }
+
+    /* init */
+    resize();
+    window.addEventListener('resize', resize);
+
+    function loop(){ update(); render(); requestAnimationFrame(loop); }
+    loop();
+  })();
+  </script>
 </body>
 </html>

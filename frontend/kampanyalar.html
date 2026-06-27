@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kampanyalar | Akdeniz Yapi Dekorasyon</title>
+  <meta name="description" content="Akdeniz Yapi Dekorasyon guncel kampanyalari - isi yalitimi, mantolama, boya firsat fiyatlari." />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .page-hero{background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 50%,#3a2e00 100%);}
+    .countdown-bar{background:linear-gradient(90deg,#c9a227,#e8b800,#c9a227);background-size:200% 100%;animation:cdShimmer 3s linear infinite;padding:13px 0;text-align:center;position:sticky;top:64px;z-index:900;}
+    @keyframes cdShimmer{0%{background-position:0 0}100%{background-position:200% 0}}
+    .cd-inner{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;}
+    .cd-label{color:#1a1a1a;font-weight:800;font-size:.85rem;display:flex;align-items:center;gap:8px;}
+    .cd-units{display:flex;gap:8px;}
+    .cd-unit{background:rgba(0,0,0,.18);border-radius:8px;padding:5px 10px;text-align:center;min-width:50px;}
+    .cd-unit strong{display:block;font-size:1.25rem;font-weight:900;color:#1a1a1a;line-height:1.1;}
+    .cd-unit span{font-size:.58rem;color:rgba(0,0,0,.65);font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+    .filter-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;}
+    .filter-tab{padding:9px 22px;border-radius:50px;border:2px solid #e0ddd6;background:#fff;color:#444;font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s;}
+    .filter-tab.active,.filter-tab:hover{background:#c9a227;border-color:#c9a227;color:#1a1a1a;}
+    .kampanya-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px;}
+    .kamp-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);transition:transform .3s,box-shadow .3s;border:1px solid rgba(0,0,0,.06);position:relative;}
+    .kamp-card:hover{transform:translateY(-6px);box-shadow:0 16px 56px rgba(0,0,0,.14);}
+    .kamp-card-img{position:relative;aspect-ratio:16/9;overflow:hidden;}
+    .kamp-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+    .kamp-card:hover .kamp-card-img img{transform:scale(1.06);}
+    .kamp-badge{position:absolute;top:14px;left:14px;background:linear-gradient(135deg,#c9a227,#e8b800);color:#1a1a1a;font-size:.68rem;font-weight:900;padding:5px 13px;border-radius:50px;letter-spacing:.5px;text-transform:uppercase;box-shadow:0 2px 12px rgba(201,162,39,.5);z-index:2;}
+    .kamp-badge.red{background:linear-gradient(135deg,#e53935,#ef5350);color:#fff;box-shadow:0 2px 12px rgba(229,57,53,.4);}
+    .kamp-badge.green{background:linear-gradient(135deg,#2e7d32,#43a047);color:#fff;box-shadow:0 2px 12px rgba(46,125,50,.4);}
+    .kamp-badge.blue{background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;box-shadow:0 2px 12px rgba(21,101,192,.4);}
+    .kamp-timer-tag{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);color:#fff;font-size:.68rem;font-weight:700;padding:5px 10px;border-radius:8px;display:flex;align-items:center;gap:5px;z-index:2;}
+    .kamp-card-body{padding:22px 24px 26px;}
+    .kamp-title{font-family:'Montserrat',sans-serif;font-size:1.12rem;font-weight:800;color:#1a1a1a;margin-bottom:8px;line-height:1.3;}
+    .kamp-desc{color:#666;font-size:.87rem;line-height:1.65;margin-bottom:14px;}
+    .kamp-features{list-style:none;padding:0;margin:0 0 16px;display:flex;flex-direction:column;gap:6px;}
+    .kamp-features li{font-size:.82rem;color:#555;display:flex;align-items:flex-start;gap:8px;}
+    .kamp-features li i{color:#c9a227;margin-top:3px;flex-shrink:0;}
+    .kamp-price-row{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+    .kamp-old{font-size:.85rem;color:#bbb;text-decoration:line-through;}
+    .kamp-new{font-size:1.35rem;font-weight:900;color:#c9a227;}
+    .kamp-disc{background:#fff3e0;color:#e65100;font-size:.7rem;font-weight:800;padding:3px 9px;border-radius:6px;}
+    .kamp-actions{display:flex;gap:10px;flex-wrap:wrap;}
+    .promo-banner{background:linear-gradient(135deg,#1a1a1a,#2d2d2d);border-radius:20px;padding:40px 36px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;margin-bottom:48px;overflow:hidden;position:relative;}
+    .promo-banner::after{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.22) 0%,transparent 70%);}
+    .promo-banner h3{font-family:'Montserrat',sans-serif;font-size:1.55rem;font-weight:900;color:#fff;margin-bottom:10px;}
+    .promo-banner p{color:#aaa;font-size:.9rem;line-height:1.65;margin-bottom:0;}
+    .promo-icon{font-size:4rem;opacity:.75;text-align:center;}
+    .faq-item{border:1px solid #e0ddd6;border-radius:14px;margin-bottom:10px;overflow:hidden;}
+    .faq-q{padding:17px 22px;font-weight:700;font-size:.92rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:#fff;transition:background .2s;user-select:none;}
+    .faq-q:hover,.faq-q.open{background:#fdf8ee;color:#c9a227;}
+    .faq-q i.fa-chevron-down{transition:transform .3s;}
+    .faq-q.open i.fa-chevron-down{transform:rotate(180deg);}
+    .faq-a{display:none;padding:0 22px 18px;}
+    .faq-a p{color:#666;font-size:.88rem;line-height:1.7;margin:0;}
+    @media(max-width:768px){.kampanya-grid{grid-template-columns:1fr;}.promo-banner{grid-template-columns:1fr;}.promo-icon{display:none;}.cd-unit{min-width:44px;}}
+  </style>
+</head>
+<body data-page="kampanyalar">
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo">
+        <span class="logo-text">AKDENİZ YAPI</span>
+        <span class="logo-sub">DEKORASYON</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menü">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="/">Ana Sayfa</a></li>
+        <li><a href="/hizmetler.html">Hizmetler</a></li>
+        <li><a href="/kampanyalar.html" class="active">Kampanyalar</a></li>
+        <li><a href="/referanslar.html">Referanslar</a></li>
+        <li><a href="/iletisim.html">İletişim</a></li>
+        <li><a href="tel:05309361017" class="btn-call"><i class="fas fa-phone"></i> Hemen Ara</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- GERİ SAYIM ÇUBUĞU -->
+  <div class="countdown-bar">
+    <div class="container cd-inner">
+      <div class="cd-label"><i class="fas fa-fire"></i> Kampanya Bitiyor!</div>
+      <div class="cd-units">
+        <div class="cd-unit"><strong id="cdDays">00</strong><span>Gün</span></div>
+        <div class="cd-unit"><strong id="cdHours">00</strong><span>Saat</span></div>
+        <div class="cd-unit"><strong id="cdMins">00</strong><span>Dak</span></div>
+        <div class="cd-unit"><strong id="cdSecs">00</strong><span>Sn</span></div>
+      </div>
+      <div class="cd-label"><i class="fas fa-tag"></i> Temmuz Fırsatları Devam Ediyor</div>
+    </div>
+  </div>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/"><i class="fas fa-home"></i> Ana Sayfa</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Kampanyalar</span>
+      </div>
+      <h1 style="margin-top:16px;">Özel <span class="gold">Kampanyalar</span> &amp; Fırsatlar</h1>
+      <p style="color:rgba(255,255,255,.75);max-width:540px;margin-top:10px;font-size:.95rem;line-height:1.7;">Temmuz ayına özel indirimli hizmetlerimizden yararlanın. Ücretsiz keşif ve sözleşmeli işçilik garantisi.</p>
+    </div>
+  </section>
+
+  <!-- ANA İÇERİK -->
+  <section class="section">
+    <div class="container">
+
+      <!-- Öne çıkan promo banner -->
+      <div class="promo-banner">
+        <div>
+          <div style="color:#c9a227;font-size:.72rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;">⚡ ÖZEL TEKLİF</div>
+          <h3>Dış Cephe Mantolama + Boyasını Birlikte Yaptır, <span style="color:#c9a227;">%20 Tasarruf Et!</span></h3>
+          <p>Isı yalıtımı ve dış cephe boyasını tek sözleşmeyle yaptırdığınızda kombine indirim uyguluyoruz. Sınırlı kontenjan!</p>
+          <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+            <a href="https://wa.me/905309361017?text=Merhaba%2C%20kombine%20kampanyadan%20yararlanmak%20istiyorum." target="_blank" class="btn btn-gold"><i class="fab fa-whatsapp"></i> Hemen Bilgi Al</a>
+            <a href="tel:05309361017" class="btn" style="background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);"><i class="fas fa-phone"></i> 0530 936 10 17</a>
+          </div>
+        </div>
+        <div class="promo-icon">🏗️</div>
+      </div>
+
+      <!-- Filtre sekmeleri -->
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">Tümü</button>
+        <button class="filter-tab" data-filter="mantolama">Mantolama</button>
+        <button class="filter-tab" data-filter="boya">Boya &amp; Sıva</button>
+        <button class="filter-tab" data-filter="alcipan">Alçıpan &amp; Asma Tavan</button>
+        <button class="filter-tab" data-filter="paket">Paket Teklifler</button>
+      </div>
+
+      <!-- Kampanya Kartları -->
+      <div class="kampanya-grid" id="kampGrid">
+
+        <!-- Kart 1 -->
+        <div class="kamp-card" data-cat="mantolama">
+          <div class="kamp-card-img">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=640&q=80&fit=crop" alt="Dış Cephe Mantolama" loading="lazy" />
+            <span class="kamp-badge red">🔥 Çok Satan</span>
+            <div class="kamp-timer-tag"><i class="fas fa-clock"></i> 12 Gün Kaldı</div>
+          </div>
+          <div class="kamp-card-body">
+            <div class="kamp-title">Dış Cephe EPS Mantolama Kampanyası</div>
+            <div class="kamp-desc">5 cm EPS ısı yalıtım levhası, örgü file, yapıştırıcı, mineral sıva ve dış cephe boyası dahil anahtar teslim uygulama.</div>
+            <ul class="kamp-features">
+              <li><i class="fas fa-check-circle"></i> 10 yıl işçilik garantisi</li>
+              <li><i class="fas fa-check-circle"></i> EKB belgesi ücretsiz</li>
+              <li><i class="fas fa-check-circle"></i> Ücretsiz keşif ve 3D tasarım</li>
+              <li><i class="fas fa-check-circle"></i> Weber / Marshall malzeme</li>
+            </ul>
+            <div class="kamp-price-row">
+              <span class="kamp-old">m² 420 ₺</span>
+              <span class="kamp-new">m² 349 ₺</span>
+              <span class="kamp-disc">%17 İndirim</span>
+            </div>
+            <div class="kamp-actions">
+              <a href="https://wa.me/905309361017?text=Merhaba%2C%20mantolama%20kampanyas%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="btn btn-wa btn-sm"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+              <a href="tel:05309361017" class="btn btn-outline btn-sm"><i class="fas fa-phone"></i> Ara</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kart 2 -->
+        <div class="kamp-card" data-cat="boya">
+          <div class="kamp-card-img">
+            <img src="https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?w=640&q=80&fit=crop" alt="İç Mekan Boya" loading="lazy" />
+            <span class="kamp-badge green">✅ Hızlı Teslimat</span>
+            <div class="kamp-timer-tag"><i class="fas fa-clock"></i> 20 Gün Kaldı</div>
+          </div>
+          <div class="kamp-card-body">
+            <div class="kamp-title">İç Mekan Komple Boya Kampanyası</div>
+            <div class="kamp-desc">Daire veya dükkanınızın tüm iç mekan boyası — sıva tamiri, astar, 2 kat son kat boya dahil.</div>
+            <ul class="kamp-features">
+              <li><i class="fas fa-check-circle"></i> Filli Boya / DYO / Marshall</li>
+              <li><i class="fas fa-check-circle"></i> Sıva hasarı onarımı dahil</li>
+              <li><i class="fas fa-check-circle"></i> 3 iş günü teslim</li>
+              <li><i class="fas fa-check-circle"></i> Temizlik garantisi</li>
+            </ul>
+            <div class="kamp-price-row">
+              <span class="kamp-old">m² 95 ₺</span>
+              <span class="kamp-new">m² 75 ₺</span>
+              <span class="kamp-disc">%21 İndirim</span>
+            </div>
+            <div class="kamp-actions">
+              <a href="https://wa.me/905309361017?text=Merhaba%2C%20ic%20mekan%20boya%20kampanyas%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="btn btn-wa btn-sm"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+              <a href="tel:05309361017" class="btn btn-outline btn-sm"><i class="fas fa-phone"></i> Ara</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kart 3 -->
+        <div class="kamp-card" data-cat="alcipan">
+          <div class="kamp-card-img">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640&q=80&fit=crop" alt="Alçıpan Asma Tavan" loading="lazy" />
+            <span class="kamp-badge blue">🆕 Yeni Sezon</span>
+            <div class="kamp-timer-tag"><i class="fas fa-clock"></i> 25 Gün Kaldı</div>
+          </div>
+          <div class="kamp-card-body">
+            <div class="kamp-title">Alçıpan Asma Tavan Kampanyası</div>
+            <div class="kamp-desc">Knauf alçıpan ile LED spotlu asma tavan uygulaması. Kartonpiyer dahil, anahtar teslim.</div>
+            <ul class="kamp-features">
+              <li><i class="fas fa-check-circle"></i> Knauf sertifikalı malzeme</li>
+              <li><i class="fas fa-check-circle"></i> LED aydınlatma dahil</li>
+              <li><i class="fas fa-check-circle"></i> Kartonpiyer ücretsiz</li>
+              <li><i class="fas fa-check-circle"></i> 5 yıl garanti</li>
+            </ul>
+            <div class="kamp-price-row">
+              <span class="kamp-old">m² 380 ₺</span>
+              <span class="kamp-new">m² 299 ₺</span>
+              <span class="kamp-disc">%21 İndirim</span>
+            </div>
+            <div class="kamp-actions">
+              <a href="https://wa.me/905309361017?text=Merhaba%2C%20alcipan%20kampanyas%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="btn btn-wa btn-sm"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+              <a href="tel:05309361017" class="btn btn-outline btn-sm"><i class="fas fa-phone"></i> Ara</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kart 4 -->
+        <div class="kamp-card" data-cat="mantolama">
+          <div class="kamp-card-img">
+            <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=640&q=80&fit=crop" alt="XPS Mantolama" loading="lazy" />
+            <span class="kamp-badge">⭐ Popüler</span>
+            <div class="kamp-timer-tag"><i class="fas fa-clock"></i> 18 Gün Kaldı</div>
+          </div>
+          <div class="kamp-card-body">
+            <div class="kamp-title">XPS Zemin Isı Yalıtımı Kampanyası</div>
+            <div class="kamp-desc">Zemin katta nem ve soğuk sorununa kalıcı çözüm. 5 cm XPS levha + şap dahil uygulama.</div>
+            <ul class="kamp-features">
+              <li><i class="fas fa-check-circle"></i> Su geçirmez uygulama</li>
+              <li><i class="fas fa-check-circle"></i> Şap dahil fiyat</li>
+              <li><i class="fas fa-check-circle"></i> 10 yıl garanti</li>
+              <li><i class="fas fa-check-circle"></i> İZODER üyesi firma</li>
+            </ul>
+            <div class="kamp-price-row">
+              <span class="kamp-old">m² 280 ₺</span>
+              <span class="kamp-new">m² 229 ₺</span>
+              <span class="kamp-disc">%18 İndirim</span>
+            </div>
+            <div class="kamp-actions">
+              <a href="https://wa.me/905309361017?text=Merhaba%2C%20zemin%20yalitimi%20kampanyas%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="btn btn-wa btn-sm"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+              <a href="tel:05309361017" class="btn btn-outline btn-sm"><i class="fas fa-phone"></i> Ara</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kart 5 -->
+        <div class="kamp-card" data-cat="paket">
+          <div class="kamp-card-img">
+            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=640&q=80&fit=crop" alt="Komple Tadilat" loading="lazy" />
+            <span class="kamp-badge red">💎 Premium</span>
+            <div class="kamp-timer-tag"><i class="fas fa-clock"></i> 8 Gün Kaldı</div>
+          </div>
+          <div class="kamp-card-body">
+            <div class="kamp-title">Komple Daire Tadilat Paketi</div>
+            <div class="kamp-desc">Boya, alçıpan, asma tavan, zemin ve elektrik tesisatı dahil anahtar teslim komple tadilat.</div>
+            <ul class="kamp-features">
+              <li><i class="fas fa-check-circle"></i> Tüm iç mekan kapsıyor</li>
+              <li><i class="fas fa-check-circle"></i> Mimar desteği ücretsiz</li>
+              <li><i class="fas fa-check-circle"></i> 30 gün teslimat garantisi</li>
+              <li><i class="fas fa-check-circle"></i> Sözleşmeli, belgeli</li>
+            </ul>
+            <div class="kamp-price-row">
+              <span class="kamp-new" style="font-size:1rem;">Fiyat teklifi için arayın</span>
+            </div>
+            <div class="kamp-actions">
+              <a href="https://wa.me/905309361017?text=Merhaba%2C%20komple%20tadilat%20paketi%20icin%20teklif%20almak%20istiyorum." target="_blank" class="btn btn-wa btn-sm"><i class="fab fa-whatsapp"></i> Teklif Al</a>
+              <a href="tel:05309361017" class="btn btn-outline btn-sm"><i class="fas fa-phone"></i> Ara</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kart 6 -->
+        <div class="kamp-card" data-cat="boya">
+          <div class="kamp-card-img">
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=640&q=80&fit=crop" alt="Cephe Boyası" loading="lazy" />
+            <span class="kamp-badge green">🌿 Eko</span>
+            <div class="kamp-timer-tag"><i class="fas fa-clock"></i> 30 Gün Kaldı</div>
+          </div>
+          <div class="kamp-card-body">
+            <div class="kamp-title">Dış Cephe Silikonlu Boya Kampanyası</div>
+            <div class="kamp-desc">Uzun ömürlü, nefes alan silikonlu dış cephe boyası. Su ve kirlilik dayanımlı formül.</div>
+            <ul class="kamp-features">
+              <li><i class="fas fa-check-circle"></i> 8 yıl renk garantisi</li>
+              <li><i class="fas fa-check-circle"></i> Su bazlı, çevre dostu</li>
+              <li><i class="fas fa-check-circle"></i> Çatlak önleyici astar dahil</li>
+              <li><i class="fas fa-check-circle"></i> Marshall / DYO malzeme</li>
+            </ul>
+            <div class="kamp-price-row">
+              <span class="kamp-old">m² 145 ₺</span>
+              <span class="kamp-new">m² 115 ₺</span>
+              <span class="kamp-disc">%21 İndirim</span>
+            </div>
+            <div class="kamp-actions">
+              <a href="https://wa.me/905309361017?text=Merhaba%2C%20cephe%20boyasi%20kampanyas%C4%B1%20icin%20bilgi%20almak%20istiyorum." target="_blank" class="btn btn-wa btn-sm"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+              <a href="tel:05309361017" class="btn btn-outline btn-sm"><i class="fas fa-phone"></i> Ara</a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /kampanya-grid -->
+    </div>
+  </section>
+  <!-- SSS BÖLÜMÜ -->
+  <section class="section" style="background:var(--bg);padding:60px 0;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Merak Edilenler</span>
+        <h2 class="section-title">Sık Sorulan <span class="gold">Sorular</span></h2>
+      </div>
+      <div style="max-width:720px;margin:0 auto;">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Kampanya fiyatları m² başına mı?<i class="fas fa-chevron-down"></i></div>
+          <div class="faq-a"><p>Evet, tüm fiyatlar m² başına uygulamalı fiyatlardır. Keşif sonrası binanızın toplam m² alanına göre net fiyat teklifi sunulur.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Kampanya fiyatlarına malzeme dahil mi?<i class="fas fa-chevron-down"></i></div>
+          <div class="faq-a"><p>Evet, tüm kampanya fiyatlarımıza malzeme ve işçilik dahildir. Kullanılan markalar (Weber, Marshall, Knauf, DYO vb.) sözleşmede belirtilir.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Garanti belgesi alabilir miyim?<i class="fas fa-chevron-down"></i></div>
+          <div class="faq-a"><p>Evet. Tüm uygulamalarımızda yazılı sözleşme ve garanti belgesi düzenliyoruz. Mantolama için 10 yıl, boya için 5-8 yıl garanti sağlıyoruz.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Keşif ücretsiz mi?<i class="fas fa-chevron-down"></i></div>
+          <div class="faq-a"><p>Keşif tamamen ücretsizdir. Ekibimiz yerinde inceleme yaparak detaylı teklif hazırlar. Sözleşme imzalanırsa 3 boyutlu cephe tasarımı da ücretsiz verilir.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Kampanya tarihleri uzatılır mı?<i class="fas fa-chevron-down"></i></div>
+          <div class="faq-a"><p>Kampanyalar sınırlı kontenjanla geçerlidir ve belirtilen tarihte sona erer. Erken rezervasyon öneriyoruz.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Ödeme koşulları nasıl?<i class="fas fa-chevron-down"></i></div>
+          <div class="faq-a"><p>%30 başlangıç, %40 iş ortası ve %30 teslimatta şeklinde 3 aşamalı ödeme uyguluyoruz. Büyük projeler için özel vade imkânı görüşülebilir.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="container" style="text-align:center;">
+      <h2>Kampanyadan Yararlanmak İçin Hemen Arayın</h2>
+      <p>Ücretsiz keşif randevusu alın, uzman ekibimiz en kısa sürede yanınızda olsun.</p>
+      <div class="cta-buttons">
+        <a href="tel:05309361017" class="cta-btn-white"><i class="fas fa-phone"></i> 0530 936 10 17</a>
+        <a href="https://wa.me/905309361017?text=Merhaba%2C%20kampanya%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="cta-btn-outline-white"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <span class="logo-text">AKDENİZ YAPI</span>
+        <span class="logo-sub">DEKORASYON</span>
+        <p>Yapınıza değer katıyoruz. Profesyonel ekip, garantili işçilik.</p>
+        <div class="social">
+          <a href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/905309361017" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Hızlı Bağlantılar</h4>
+        <ul>
+          <li><a href="/">Ana Sayfa</a></li>
+          <li><a href="/hizmetler.html">Hizmetler</a></li>
+          <li><a href="/kampanyalar.html">Kampanyalar</a></li>
+          <li><a href="/referanslar.html">Referanslar</a></li>
+          <li><a href="/iletisim.html">İletişim</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hizmetlerimiz</h4>
+        <ul>
+          <li><a href="/hizmetler.html">Isı Yalıtımı</a></li>
+          <li><a href="/hizmetler.html">Dış Cephe Mantolama</a></li>
+          <li><a href="/hizmetler.html">Boya &amp; Sıva</a></li>
+          <li><a href="/hizmetler.html">Alçı &amp; Dekorasyon</a></li>
+          <li><a href="/hizmetler.html">Tadilat</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>İletişim</h4>
+        <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:05309361017">0530 936 10 17 (Yunus)</a></div>
+        <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:05358763504">0535 876 35 04 (Adem)</a></div>
+        <div class="contact-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/905309361017" target="_blank">WhatsApp</a></div>
+        <div class="contact-item"><i class="fab fa-instagram"></i><a href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank">@akdeniz.yapidekorasyon</a></div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Antalya, Türkiye</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2024 Akdeniz Yapı Dekorasyon. Tüm hakları saklıdır.</span>
+      <span>Antalya'da Güvenilir İnşaat Hizmeti</span>
+    </div>
+  </footer>
+
+  <div class="wa-float">
+    <a href="https://wa.me/905309361017?text=Merhaba%2C%20kampanya%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="wa-float-btn" aria-label="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    /* Navbar hamburger */
+    const nt = document.getElementById('navToggle');
+    const nm = document.getElementById('navMenu');
+    if(nt && nm) nt.addEventListener('click', () => {
+      nm.classList.toggle('open');
+      nt.querySelector('i').className = nm.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+    });
+
+    /* Geri sayım — ay sonuna kadar */
+    (function(){
+      const end = new Date();
+      end.setMonth(end.getMonth() + 1);
+      end.setDate(1); end.setHours(0,0,0,0);
+      function tick(){
+        const diff = end - Date.now();
+        if(diff <= 0) return;
+        const d = Math.floor(diff/86400000);
+        const h = Math.floor((diff%86400000)/3600000);
+        const m = Math.floor((diff%3600000)/60000);
+        const s = Math.floor((diff%60000)/1000);
+        document.getElementById('cdDays').textContent  = String(d).padStart(2,'0');
+        document.getElementById('cdHours').textContent = String(h).padStart(2,'0');
+        document.getElementById('cdMins').textContent  = String(m).padStart(2,'0');
+        document.getElementById('cdSecs').textContent  = String(s).padStart(2,'0');
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+
+    /* Filtre sekmeleri */
+    document.querySelectorAll('.filter-tab').forEach(btn => {
+      btn.addEventListener('click', function(){
+        document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const f = this.dataset.filter;
+        document.querySelectorAll('.kamp-card').forEach(card => {
+          card.style.display = (f === 'all' || card.dataset.cat === f) ? '' : 'none';
+        });
+      });
+    });
+
+    /* FAQ accordion */
+    function toggleFaq(el){
+      const a = el.nextElementSibling;
+      const isOpen = el.classList.contains('open');
+      el.classList.toggle('open');
+      a.style.display = isOpen ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
