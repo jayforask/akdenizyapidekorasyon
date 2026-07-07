@@ -20,6 +20,7 @@
       <a href="/admin/hizmetler.html" class="active"><i class="fas fa-tools"></i> Hizmetler</a>
       <a href="/admin/kategoriler.html"><i class="fas fa-tags"></i> Kategoriler</a>
       <a href="/admin/referanslar.html"><i class="fas fa-building"></i> Referanslar</a>
+      <a href="/admin/kampanyalar.html"><i class="fas fa-percent"></i> Kampanyalar</a>
       <a href="/admin/mesajlar.html"><i class="fas fa-envelope"></i> Mesajlar <span class="badge" id="unreadBadge"></span></a>
       <a href="/admin/ayarlar.html"><i class="fas fa-cog"></i> Site Ayarları</a>
       <a href="/admin/sifre.html"><i class="fas fa-key"></i> Şifre Değiştir</a>
@@ -37,7 +38,7 @@
 
     <div class="admin-content">
       <div class="content-toolbar">
-        <button class="btn-admin btn-primary" onclick="openModal('serviceModal')">
+        <button class="btn-admin btn-primary" onclick="openAddModal()">
           <i class="fas fa-plus"></i> Yeni Hizmet Ekle
         </button>
       </div>
@@ -140,7 +141,9 @@
       const tbody = document.getElementById('servicesBody');
       try {
         const res = await fetch(`${API}/services`);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         services = await res.json();
+        if (!Array.isArray(services)) throw new Error('Geçersiz yanıt');
         if (!services.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-row">Henüz hizmet yok.</td></tr>'; return; }
         tbody.innerHTML = services.map(s => `
           <tr>
@@ -149,12 +152,15 @@
             <td>${s.category_name || '—'}</td>
             <td>${s.featured ? '<span class="badge-status read">Evet</span>' : '<span class="badge-status">Hayır</span>'}</td>
             <td class="actions-cell">
-              <button class="btn-admin btn-sm btn-primary" onclick="editService(${s.id})"><i class="fas fa-edit"></i></button>
-              <button class="btn-admin btn-sm btn-danger" onclick="deleteService(${s.id})"><i class="fas fa-trash"></i></button>
+              <button class="btn-admin btn-sm btn-primary" onclick="editService(${s.id})" title="Düzenle"><i class="fas fa-edit"></i></button>
+              <button class="btn-admin btn-sm btn-danger" onclick="deleteService(${s.id})" title="Sil"><i class="fas fa-trash"></i></button>
             </td>
           </tr>
         `).join('');
-      } catch { tbody.innerHTML = '<tr><td colspan="5" class="empty-row">Yüklenemedi.</td></tr>'; }
+      } catch(err) {
+        console.error('[loadServices] Hata:', err);
+        tbody.innerHTML = '<tr><td colspan="5" class="empty-row">Yüklenemedi: ' + err.message + '</td></tr>';
+      }
     }
 
     function openAddModal() {
@@ -164,11 +170,10 @@
       document.getElementById('sImagePreview').style.display = 'none';
       openModal('serviceModal');
     }
-    document.querySelector('[onclick="openModal(\'serviceModal\')"]').addEventListener('click', openAddModal);
 
     function editService(id) {
       const s = services.find(x => x.id === id);
-      if (!s) return;
+      if (!s) { console.error('[editService] id bulunamadı:', id, 'services:', services.map(x=>x.id)); toast('Hizmet bulunamadı.', 'error'); return; }
       document.getElementById('modalTitle').textContent = 'Hizmet Düzenle';
       document.getElementById('serviceId').value = s.id;
       document.getElementById('sTitle').value = s.title;
@@ -211,9 +216,11 @@
     async function deleteService(id) {
       const ok = await confirm2('Bu hizmeti silmek istediğinize emin misiniz?');
       if (!ok) return;
-      const res = await fetch(`${API}/services/${id}`, { method: 'DELETE', headers: authHeaders() });
-      if (res.ok) { toast('Hizmet silindi.'); loadServices(); }
-      else toast('Silinemedi.', 'error');
+      try {
+        const res = await fetch(`${API}/services/${id}`, { method: 'DELETE', headers: authHeaders() });
+        if (res.ok) { toast('Hizmet silindi.'); loadServices(); }
+        else { const d = await res.json(); toast(d.error || 'Silinemedi.', 'error'); }
+      } catch(err) { console.error('[deleteService]', err); toast('Bağlantı hatası.', 'error'); }
     }
   </script>
 </body>

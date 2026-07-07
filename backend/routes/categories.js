@@ -10,10 +10,17 @@ function makeSlug(name) {
     .replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
 }
 
-// GET /api/categories - tüm kategoriler (public)
+// GET /api/categories - tüm kategoriler (public), hizmet sayısı dahil
 router.get('/', async (req, res) => {
   try {
-    const cats = await db.allAsync('SELECT * FROM categories ORDER BY name ASC');
+    const cats = await db.allAsync(`
+      SELECT c.*,
+             COUNT(s.id) AS service_count
+      FROM categories c
+      LEFT JOIN services s ON s.category_id = c.id
+      GROUP BY c.id
+      ORDER BY c.name ASC
+    `);
     res.json(cats);
   } catch (err) {
     res.status(500).json({ error: 'Sunucu hatası: ' + err.message });

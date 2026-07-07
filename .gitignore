@@ -1,6 +1,11 @@
 node_modules/
 backend/akdeniz_yapi.db
+backend/akdeniz_yapi.db-shm
+backend/akdeniz_yapi.db-wal
+backend/ig_cache.json
 backend/uploads/*
 !backend/uploads/.gitkeep
 .env
+*.env.*
 *.log
+_gen_*.js

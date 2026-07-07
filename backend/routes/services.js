@@ -17,11 +17,14 @@ const storage = multer.diskStorage({
     cb(null, `service_${Date.now()}${ext}`);
   }
 });
+const ALLOWED_MIMES = ['image/jpeg', 'image/png', 'image/webp'];
+const ALLOWED_EXTS  = /\.(jpeg|jpg|png|webp)$/i;
+
 const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
-    if (/jpeg|jpg|png|webp/.test(path.extname(file.originalname).toLowerCase())) {
+    if (ALLOWED_MIMES.includes(file.mimetype) && ALLOWED_EXTS.test(file.originalname)) {
       cb(null, true);
     } else {
       cb(new Error('Sadece JPG, PNG ve WebP dosyaları kabul edilir.'));
@@ -103,21 +106,24 @@ router.put('/:id', auth, upload.single('image'), async (req, res) => {
     if (!title) return res.status(400).json({ error: 'Hizmet başlığı gerekli.' });
     const existing = await db.getAsync('SELECT * FROM services WHERE id = ?', [req.params.id]);
     if (!existing) return res.status(404).json({ error: 'Hizmet bulunamadı.' });
-    const slug = makeSlug(title);
+    // Slug sabit kalır — URL'ler kırılmasın
     const image = req.file ? `/uploads/services/${req.file.filename}` : existing.image;
     if (req.file && existing.image) {
       const oldPath = path.join(__dirname, '..', existing.image);
       if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
     }
     await db.runAsync(
-      `UPDATE services SET title=?, slug=?, category_id=?, short_desc=?, description=?,
+      `UPDATE services SET title=?, category_id=?, short_desc=?, description=?,
        image=?, featured=?, sort_order=? WHERE id=?`,
-      [title, slug, category_id || null, short_desc || null, description || null,
+      [title, category_id || null, short_desc || null, description || null,
        image, featured === '1' ? 1 : 0, parseInt(sort_order) || 0, req.params.id]
     );
     const updated = await db.getAsync('SELECT * FROM services WHERE id = ?', [req.params.id]);
     res.json(updated);
   } catch (err) {
+    if (err.message && err.message.includes('UNIQUE')) {
+      return res.status(409).json({ error: 'Bu hizmet adı zaten mevcut.' });
+    }
     res.status(500).json({ error: 'Sunucu hatası: ' + err.message });
   }
 });

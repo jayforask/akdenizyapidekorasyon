@@ -68,8 +68,8 @@ function closeModal(id) {
   if (m) { m.classList.remove('open'); document.body.style.overflow = ''; }
 }
 
-// Onay dialogu
-function confirm2(msg) {
+// Onay dialogu — confirmText opsiyonel, varsayılan "Evet, Sil"
+function confirm2(msg, confirmText = 'Evet, Sil') {
   return new Promise(resolve => {
     const overlay = document.createElement('div');
     overlay.className = 'confirm-overlay';
@@ -77,7 +77,7 @@ function confirm2(msg) {
       <div class="confirm-box">
         <p>${msg}</p>
         <div class="confirm-actions">
-          <button class="btn-admin btn-danger" id="confirmYes">Evet, Sil</button>
+          <button class="btn-admin btn-danger" id="confirmYes">${confirmText}</button>
           <button class="btn-admin btn-secondary" id="confirmNo">İptal</button>
         </div>
       </div>

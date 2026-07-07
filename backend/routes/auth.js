@@ -1,8 +1,8 @@
 const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const db = require('../database');
+const router  = express.Router();
+const bcrypt  = require('bcryptjs');
+const jwt     = require('jsonwebtoken');
+const db      = require('../database');
 
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
@@ -17,7 +17,8 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Kullanıcı adı veya şifre hatalı.' });
     }
 
-    const valid = bcrypt.compareSync(password, user.password_hash);
+    // ✅ Async bcrypt.compare (blocking olmayan, timing-safe)
+    const valid = await bcrypt.compare(password, user.password_hash);
     if (!valid) {
       return res.status(401).json({ error: 'Kullanıcı adı veya şifre hatalı.' });
     }
@@ -30,7 +31,9 @@ router.post('/login', async (req, res) => {
 
     res.json({ token, username: user.username });
   } catch (err) {
-    res.status(500).json({ error: 'Sunucu hatası: ' + err.message });
+    // ✅ err.message sızdırılmıyor — iç detay gizli
+    console.error('[Auth] Login hatası:', err.message);
+    res.status(500).json({ error: 'Sunucu hatası.' });
   }
 });
 
@@ -41,22 +44,26 @@ router.post('/change-password', require('../middleware/auth'), async (req, res) 
     if (!currentPassword || !newPassword) {
       return res.status(400).json({ error: 'Mevcut ve yeni şifre gerekli.' });
     }
-    if (newPassword.length < 6) {
-      return res.status(400).json({ error: 'Yeni şifre en az 6 karakter olmalı.' });
+    // ✅ Minimum şifre uzunluğu 8 karakter
+    if (newPassword.length < 8) {
+      return res.status(400).json({ error: 'Yeni şifre en az 8 karakter olmalı.' });
     }
 
     const user = await db.getAsync('SELECT * FROM admin_users WHERE id = ?', [req.user.id]);
-    const valid = bcrypt.compareSync(currentPassword, user.password_hash);
+    // ✅ Async bcrypt.compare
+    const valid = await bcrypt.compare(currentPassword, user.password_hash);
     if (!valid) {
       return res.status(401).json({ error: 'Mevcut şifre hatalı.' });
     }
 
-    const newHash = bcrypt.hashSync(newPassword, 10);
+    // ✅ Async bcrypt.hash
+    const newHash = await bcrypt.hash(newPassword, 12);
     await db.runAsync('UPDATE admin_users SET password_hash = ? WHERE id = ?', [newHash, req.user.id]);
 
     res.json({ message: 'Şifre başarıyla güncellendi.' });
   } catch (err) {
-    res.status(500).json({ error: 'Sunucu hatası: ' + err.message });
+    console.error('[Auth] Şifre değiştirme hatası:', err.message);
+    res.status(500).json({ error: 'Sunucu hatası.' });
   }
 });
 

@@ -73,14 +73,39 @@ async function initDatabase() {
     CREATE TABLE IF NOT EXISTS projects (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT NOT NULL,
+      slug TEXT,
       location TEXT,
       description TEXT,
+      detail_text TEXT,
       image TEXT,
+      gallery TEXT,
+      year INTEGER,
+      area TEXT,
+      service_type TEXT,
+      client TEXT,
       featured INTEGER DEFAULT 0,
       sort_order INTEGER DEFAULT 0,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
+
+  // Mevcut projects tablosuna eksik sütunları ekle (migration)
+  const projectCols = await db.allAsync("PRAGMA table_info(projects)");
+  const colNames = projectCols.map(c => c.name);
+  const newCols = [
+    ['slug',         'TEXT'],
+    ['detail_text',  'TEXT'],
+    ['gallery',      'TEXT'],
+    ['year',         'INTEGER'],
+    ['area',         'TEXT'],
+    ['service_type', 'TEXT'],
+    ['client',       'TEXT'],
+  ];
+  for (const [col, type] of newCols) {
+    if (!colNames.includes(col)) {
+      await db.runAsync(`ALTER TABLE projects ADD COLUMN ${col} ${type}`);
+    }
+  }
 
   // İletişim Mesajları
   await db.runAsync(`
@@ -92,6 +117,25 @@ async function initDatabase() {
       subject TEXT,
       message TEXT NOT NULL,
       is_read INTEGER DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
+  // Kampanyalar
+  await db.runAsync(`
+    CREATE TABLE IF NOT EXISTS campaigns (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      description TEXT,
+      badge_text TEXT,
+      badge_color TEXT DEFAULT 'red',
+      old_price TEXT,
+      new_price TEXT,
+      discount_text TEXT,
+      days_left INTEGER DEFAULT 30,
+      image TEXT,
+      active INTEGER DEFAULT 1,
+      sort_order INTEGER DEFAULT 0,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
@@ -158,6 +202,94 @@ async function initDatabase() {
     for (const [name, slug, icon] of cats) {
       await db.runAsync('INSERT INTO categories (name, slug, icon) VALUES (?, ?, ?)', [name, slug, icon]);
     }
+  }
+
+  // Varsayılan hizmetler
+  const svcRow = await db.getAsync('SELECT COUNT(*) as cnt FROM services');
+  if (!svcRow || svcRow.cnt === 0) {
+    // Kategori ID'lerini slug'a göre al
+    const getCatId = async (slug) => {
+      const row = await db.getAsync('SELECT id FROM categories WHERE slug = ?', [slug]);
+      return row ? row.id : null;
+    };
+
+    const services = [
+      // [title, slug, category_slug, short_desc, description, featured, sort_order]
+      [
+        'Dış Cephe Isı Yalıtımı (EPS Mantolama)',
+        'dis-cephe-isi-yalitimi',
+        'isi-yalitimi',
+        'Enerji tasarrufu sağlayan, ısı kaybını %50\'ye kadar azaltan EPS levha mantolama sistemi.',
+        'Dış cephe ısı yalıtımı, binanın enerji verimliliğini artırmak ve ısı kayıplarını önlemek amacıyla uygulanan en etkili yöntemdir. EPS (genleştirilmiş polistiren) levhalar yapıştırılarak mekanik dübel ile tespit edilir, ardından donatılı sıva ve mineral boya ile tamamlanır. 10 yıl garanti kapsamındadır. EKB belgesi ücretsiz verilir.',
+        1, 1
+      ],
+      [
+        'Mineral Sıva Uygulaması',
+        'mineral-siva',
+        'isi-yalitimi',
+        'Yüksek nefes alabilirlik, UV dayanımı ve estetik görünüm sunan mineral bazlı dış cephe sıvası.',
+        'Mineral sıva; çimento bazlı, su itici ve hava geçirgen yapısıyla dış cephelerde uzun ömürlü koruma sağlar. Geniş renk skalası ile her mimari tarza uyum sağlar. Dona dayanıklı, çatlama direnci yüksek formülü sayesinde Antalya iklimine özel tercih edilmektedir.',
+        1, 2
+      ],
+      [
+        'Su Yalıtımı & Termal Kaplama',
+        'su-yalitimi-termal',
+        'su-yalitimi',
+        'Çatı, teras, balkon ve bodrum katı için poliüretan ve bitümlü membran su yalıtım sistemleri.',
+        'Poliüretan likit membran, bitümlü örtü ve kristalize su yalıtımı yöntemleriyle yüzey tamamen su geçirmez hale getirilir. Teras, çatı, balkon, garaj tavanı ve bodrum katlarda uygulanır. Uygulamadan önce yüzey hazırlığı ve primer ile desteklenir. Garanti süresi 5-10 yıldır.',
+        1, 3
+      ],
+      [
+        'İç & Dış Cephe Boyası',
+        'ic-dis-cephe-boyasi',
+        'boya-siva',
+        'Filli Boya, DYO ve Marshall markalı A+ ürünlerle profesyonel iç ve dış cephe boya uygulaması.',
+        'Deneyimli ekibimiz; yüzey temizliği, macun, astar ve kat boya süreçlerini eksiksiz uygular. İç mekanlarda ipek mat, saten ve antibakteriyel boya seçenekleri mevcuttur. Dış cephede su bazlı silikonlu veya akrilik boya kullanılır. Tüm işler sonrası temizlik hizmeti dahildir.',
+        1, 4
+      ],
+      [
+        'Alçı & Kartonpiyer',
+        'alci-kartonpiyer',
+        'alci-dekorasyon',
+        'Asma tavan, kartonpiyer ve alçı sıva uygulamaları ile mekanlara estetik ve modern bir görünüm kazandırıyoruz.',
+        'Alçı levha, alçı sıva ve dekoratif kartonpiyer uygulamalarında geniş model yelpazemiz ile mekanınızı dönüştürüyoruz. Asma tavan sistemleri, LED aydınlatma entegrasyonu ile birlikte planlanır. Düz sıva ve alçı perdah işlemleri yüzey mükemmeliyetini garanti eder.',
+        0, 5
+      ],
+      [
+        'Çatı Onarım & Yenileme',
+        'cati-onarim',
+        'cati',
+        'Kiremit çatı, shingle ve termoizole çatı sistemleri; sızdırmazlık garantisiyle onarım ve yenileme.',
+        'Çatı muayenesi, kiremit değişimi, mahya çimento yenileme ve çatı altı yalıtımı hizmetlerimiz kapsamındadır. Shingle (bitüm esaslı çatı) ve çelik profil çatı sistemleri de kurulumunu gerçekleştiriyoruz. Tüm işlemler sızdırmazlık garantisi ile teslim edilir.',
+        0, 6
+      ],
+      [
+        'Seramik & Mermer Döşeme',
+        'seramik-mermer',
+        'seramik-mermer',
+        'Zemin ve duvar seramik, granit ve mermer kaplama uygulamaları; kesim, döşeme ve derz dahil.',
+        'İç mekan zemin ve duvar kaplamalarında seramik, granit, mermer ve mozaik uygulamaları yapılmaktadır. Banyo, mutfak, salon ve dış terasta her boyutta kaplama hizmeti verilir. Malzeme seçiminden döşemeye, derz dolgudan koruyucu cila uygulamasına kadar tüm süreç yönetilir.',
+        0, 7
+      ],
+      [
+        'Komple Tadilat & Renovasyon',
+        'komple-tadilat',
+        'tadilat',
+        'Daire, villa ve ticari alanlarda anahtar teslim komple tadilat; elektrik, sıhhi tesisat dahil.',
+        'Konut ve ticari mekan tadilatlarında mimari proje desteği, malzeme tedariki ve uygulama hizmetleri sunulmaktadır. Boya, seramik, alçı, doğrama, elektrik ve sıhhi tesisat işleri koordineli ekip tarafından yürütülür. 3D tasarım desteği sözleşmeye dahildir.',
+        1, 8
+      ],
+    ];
+
+    for (const [title, slug, catSlug, short_desc, description, featured, sort_order] of services) {
+      const category_id = await getCatId(catSlug);
+      await db.runAsync(
+        `INSERT OR IGNORE INTO services (title, slug, category_id, short_desc, description, featured, sort_order)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [title, slug, category_id, short_desc, description, featured, sort_order]
+      );
+    }
+    console.log('✅ Varsayılan hizmetler eklendi.');
   }
 
   // Varsayılan referanslar

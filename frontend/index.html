@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Akdeniz Yapı Dekorasyon | Yapınıza Değer Katıyoruz</title>
-  <meta name="description" content="Akdeniz Yapı Dekorasyon - Isı yalıtımı, dış cephe mantolama, boya, alçı, tadilat. Antalya'nın güvenilir inşaat firması. Ücretsiz keşif." />
+  <title>Akdeniz Yapı Dekorasyon | Antalya'nın Güvenilir İnşaat Firması</title>
+  <meta name="description" content="Akdeniz Yapı Dekorasyon — 10+ yıllık tecrübe, ISO belgeli ekip, 10 yıl garantili işçilik. Isı yalıtımı, mantolama, boya, alçı, tadilat. Antalya. Ücretsiz keşif." />
+  <meta name="keywords" content="ısı yalıtımı antalya, dış cephe mantolama, mantolama fiyatları, boya badana antalya, tadilat antalya, akdeniz yapı" />
+  <meta property="og:title" content="Akdeniz Yapı Dekorasyon | Antalya'nın Güvenilir İnşaat Firması" />
+  <meta property="og:description" content="10+ yıllık tecrübe, ISO belgeli ekip. Isı yalıtımı, mantolama, boya, tadilat. Ücretsiz keşif — 0530 936 10 17" />
+  <meta property="og:type" content="website" />
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -16,42 +20,80 @@
     .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.97) 0%,rgba(253,248,238,.95) 50%,rgba(249,242,212,.88) 100%);}
     .hero-content{position:relative;z-index:1;}
     .hero-split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;min-height:calc(100svh - 64px);padding:60px 0;}
-    .hero-right{position:relative;z-index:1;}
-    .hero-right-img{border-radius:24px;overflow:hidden;box-shadow:0 16px 64px rgba(0,0,0,.15);aspect-ratio:4/3;position:relative;}
-    .hero-right-img img{width:100%;height:100%;object-fit:cover;transition:transform 8s ease;}
-    .hero-right-img:hover img{transform:scale(1.04);}
-    .hero-right-badge{position:absolute;bottom:-20px;left:-20px;background:#fff;border-radius:16px;padding:14px 18px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(201,162,39,.2);display:flex;align-items:center;gap:12px;z-index:2;}
-    .hero-right-badge .hb-icon{width:44px;height:44px;border-radius:50%;background:#fdf8ee;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
-    .hero-right-badge strong{font-size:1rem;font-weight:900;display:block;color:#1a1a1a;}
-    .hero-right-badge span{font-size:.72rem;color:#888;}
-    .hero-right-badge2{position:absolute;top:-16px;right:-16px;background:linear-gradient(135deg,#c9a227,#e8b800);border-radius:14px;padding:12px 16px;box-shadow:0 6px 24px rgba(201,162,39,.4);z-index:2;text-align:center;}
-    .hero-right-badge2 strong{font-size:1.4rem;font-weight:900;color:#fff;display:block;line-height:1;}
-    .hero-right-badge2 span{font-size:.68rem;color:rgba(255,255,255,.85);font-weight:700;text-transform:uppercase;letter-spacing:1px;}
     .about-real-img{width:100%;height:100%;object-fit:cover;border-radius:20px;}
     .about-image{border-radius:20px;overflow:hidden;box-shadow:0 8px 48px rgba(0,0,0,.12);aspect-ratio:4/3;position:relative;}
     .about-image .about-overlay-badge{position:absolute;bottom:16px;left:16px;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);color:#fff;border-radius:12px;padding:10px 16px;font-size:.8rem;}
     .about-image .about-overlay-badge strong{display:block;font-size:1rem;color:var(--gold);}
     .ref-real-img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
-    @media(max-width:768px){.hero-split{grid-template-columns:1fr;gap:28px;min-height:auto;padding:28px 0 48px;}.hero-right{order:-1;}.hero-right-badge{bottom:-12px;left:-8px;padding:10px 12px;}.hero-right-badge2{top:-10px;right:-8px;padding:10px 12px;}.hero-right-badge2 strong{font-size:1.1rem;}}
 
-    /* ── Painter Canvas Animasyonu ── */
-    #painterCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;}
+    /* ── Duvar Widget ── */
+    .wall-widget{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:16px;}
+    .wall-canvas-wrap{border-radius:20px;overflow:hidden;box-shadow:0 16px 56px rgba(0,0,0,.18);border:3px solid rgba(201,162,39,.25);background:#e8ddd0;width:100%;aspect-ratio:4/3;position:relative;}
+    #wallCanvas{display:block;width:100%;height:100%;}
+    .wall-hint{font-size:.78rem;color:var(--text-muted);font-weight:600;letter-spacing:.5px;text-align:center;}
+    .color-palette{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:10px 16px;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border-radius:50px;box-shadow:0 4px 20px rgba(0,0,0,.1);border:1px solid var(--border);}
+    .color-swatch{width:32px;height:32px;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+    .color-swatch:hover{transform:scale(1.18);}
+    .color-swatch.active{border-color:#1a1a1a;box-shadow:0 0 0 2px #fff,0 0 0 4px #1a1a1a;transform:scale(1.12);}
+    @media(max-width:768px){.hero-split{grid-template-columns:1fr;gap:28px;min-height:auto;padding:28px 0 48px;}.wall-widget{order:-1;}}
 
-    /* ── Instagram Feed Bölümü ── */
-    .ig-section{padding:60px 0;background:var(--white);}
-    .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:32px;}
-    .ig-card{position:relative;aspect-ratio:1;border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:var(--shadow);}
-    .ig-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
-    .ig-card:hover img{transform:scale(1.08);}
-    .ig-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 60%);opacity:0;transition:opacity .3s;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;}
-    .ig-card:hover .ig-card-overlay{opacity:1;}
-    .ig-card-overlay .ig-likes{color:#fff;font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:6px;}
-    .ig-card-overlay .ig-caption{color:rgba(255,255,255,.85);font-size:.72rem;margin-top:4px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-    .ig-card-type{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.5);border-radius:6px;padding:3px 7px;color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.5px;}
-    .ig-follow-row{text-align:center;margin-top:28px;}
-    .btn-ig{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;padding:12px 28px;border-radius:50px;font-weight:700;font-size:.95rem;box-shadow:0 4px 20px rgba(253,29,29,.3);transition:transform .2s,box-shadow .2s;}
-    .btn-ig:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(253,29,29,.4);}
-    @media(max-width:480px){.ig-grid{grid-template-columns:repeat(2,1fr);gap:8px;}.ig-section{padding:40px 0;}}
+    /* ── Hero Trust Chips ── */
+    .hero-trust-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+    .hero-trust-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.3);color:var(--gold);padding:5px 13px;border-radius:50px;font-size:.75rem;font-weight:700;}
+    .hero-trust-chip i{font-size:.7rem;}
+
+    /* ── Güven/Marka Şeridi — Kayan Marquee ── */
+    .trust-band{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:0;display:flex;align-items:stretch;overflow:hidden;}
+    .trust-band-label-wrap{background:var(--white);border-right:2px solid var(--gold);padding:14px 22px;display:flex;align-items:center;flex-shrink:0;z-index:2;}
+    .trust-band-label{font-size:.72rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:2px;white-space:nowrap;display:flex;align-items:center;gap:7px;}
+    .trust-marquee-wrap{flex:1;overflow:hidden;position:relative;}
+    .trust-marquee-wrap::before,.trust-marquee-wrap::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:1;pointer-events:none;}
+    .trust-marquee-wrap::before{left:0;background:linear-gradient(to right,var(--bg2),transparent);}
+    .trust-marquee-wrap::after{right:0;background:linear-gradient(to left,var(--bg2),transparent);}
+    .trust-marquee{display:flex;align-items:center;width:max-content;animation:marquee 28s linear infinite;}
+    .trust-marquee:hover{animation-play-state:paused;}
+    @keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+    .trust-logo-item{display:flex;align-items:center;justify-content:center;padding:10px 28px;border-right:1px solid var(--border);min-width:100px;height:64px;transition:background .2s,opacity .2s;opacity:.65;}
+    .trust-logo-item:hover{background:var(--white);opacity:1;}
+    .trust-logo-svg{transition:filter .3s,transform .2s;filter:saturate(.55) brightness(.95);}
+    .trust-logo-item:hover .trust-logo-svg{filter:saturate(1) brightness(1);transform:scale(1.06);}
+    @media(max-width:768px){.trust-band-label-wrap{padding:10px 14px;}.trust-band-label{font-size:.65rem;letter-spacing:1px;}.trust-logo-item{padding:8px 18px;min-width:80px;height:56px;}}
+    @media(max-width:480px){.trust-band-label-wrap{display:none;}}
+
+    /* ── CTA Trust Chips ── */
+    .cta-trust-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:5px 14px;border-radius:50px;font-size:.75rem;font-weight:700;}
+    .cta-trust-chip i{font-size:.7rem;}
+
+    /* ── Kampanya Önizleme (Ana Sayfa) ── */
+    .kamp-promo-banner{background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 50%,#3a2e00 100%);border-radius:20px;padding:36px 40px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;margin-bottom:40px;overflow:hidden;position:relative;}
+    .kamp-promo-banner::after{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.22) 0%,transparent 70%);}
+    .kamp-promo-label{color:var(--gold);font-size:.72rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+    .kamp-promo-text h3{font-family:'Montserrat',sans-serif;font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:10px;line-height:1.3;}
+    .kamp-promo-text p{color:#aaa;font-size:.9rem;line-height:1.65;margin-bottom:20px;}
+    .kamp-promo-actions{display:flex;gap:12px;flex-wrap:wrap;}
+    .kamp-promo-icon{font-size:3.5rem;opacity:.7;text-align:center;position:relative;z-index:1;}
+    .kamp-preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+    .kamp-card{background:var(--white);border-radius:20px;overflow:hidden;box-shadow:var(--shadow);transition:transform .3s,box-shadow .3s;border:1px solid var(--border);position:relative;}
+    .kamp-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+    .kamp-card-img{position:relative;aspect-ratio:16/9;overflow:hidden;}
+    .kamp-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s;border-radius:0;}
+    .kamp-card:hover .kamp-card-img img{transform:scale(1.06);}
+    .kamp-badge{position:absolute;top:12px;left:12px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#1a1a1a;font-size:.68rem;font-weight:900;padding:5px 12px;border-radius:50px;letter-spacing:.5px;text-transform:uppercase;box-shadow:0 2px 12px rgba(201,162,39,.5);z-index:2;}
+    .kamp-badge-red{background:linear-gradient(135deg,#e53935,#ef5350)!important;color:#fff!important;}
+    .kamp-badge-green{background:linear-gradient(135deg,#2e7d32,#43a047)!important;color:#fff!important;}
+    .kamp-badge-blue{background:linear-gradient(135deg,#1565c0,#1976d2)!important;color:#fff!important;}
+    .kamp-timer-tag{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);color:#fff;font-size:.68rem;font-weight:700;padding:5px 10px;border-radius:8px;display:flex;align-items:center;gap:5px;z-index:2;}
+    .kamp-card-body{padding:20px 22px 24px;}
+    .kamp-title{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:800;color:var(--text);margin-bottom:6px;line-height:1.3;}
+    .kamp-desc{color:var(--text-muted);font-size:.85rem;line-height:1.6;margin-bottom:12px;}
+    .kamp-price-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+    .kamp-old{font-size:.83rem;color:#bbb;text-decoration:line-through;}
+    .kamp-new{font-size:1.25rem;font-weight:900;color:var(--gold);}
+    .kamp-disc{background:#fff3e0;color:#e65100;font-size:.68rem;font-weight:800;padding:3px 8px;border-radius:6px;}
+    .kamp-actions{display:flex;gap:8px;flex-wrap:wrap;}
+    @media(max-width:900px){.kamp-preview-grid{grid-template-columns:1fr 1fr;gap:16px;}.kamp-promo-banner{padding:24px 22px;}}
+    @media(max-width:600px){.kamp-preview-grid{grid-template-columns:1fr;gap:14px;}.kamp-promo-banner{grid-template-columns:1fr;}.kamp-promo-icon{display:none;}}
+
   </style>
 </head>
 <body data-page="home">
@@ -79,7 +121,6 @@
 
   <!-- HERO -->
   <section class="hero" id="hero" style="padding-top:var(--navbar-h);min-height:100svh;display:flex;align-items:center;">
-    <canvas id="painterCanvas"></canvas>
     <div class="hero-bg">
       <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&q=80&fit=crop" alt="İnşaat" loading="eager" />
     </div>
@@ -87,9 +128,13 @@
       <div class="hero-split">
         <!-- Sol içerik -->
         <div class="hero-content">
-          <span class="hero-badge">✦ Antalya'nın Güvenilir İnşaat Firması</span>
+          <div class="hero-trust-row">
+            <span class="hero-trust-chip"><i class="fas fa-shield-alt"></i> ISO Belgeli</span>
+            <span class="hero-trust-chip"><i class="fas fa-award"></i> İZODER Üyesi</span>
+            <span class="hero-trust-chip"><i class="fas fa-star"></i> 10 Yıl Garanti</span>
+          </div>
           <h1 class="hero-title">Yapınıza <span class="gold">Değer</span> Katıyoruz</h1>
-          <p class="hero-desc">Isı yalıtımı, dış cephe mantolama, boya, alçı, tadilat ve daha fazlası. 10 yıl garantili profesyonel hizmet.</p>
+          <p class="hero-desc">Antalya'nın köklü inşaat firması — ısı yalıtımı, dış cephe mantolama, boya, alçı ve tam tadilat. Sözleşmeli, belgeli, garantili hizmet.</p>
           <div class="hero-actions">
             <a href="https://wa.me/905309361017?text=Merhaba%2C%20%C3%BCcretsiz%20ke%C5%9Fif%20istiyorum." target="_blank" class="btn btn-wa btn-lg">
               <i class="fab fa-whatsapp"></i> Ücretsiz Keşif Al
@@ -100,39 +145,140 @@
           </div>
           <div class="hero-stats">
             <div class="stat">
-              <span class="stat-num">12+</span>
-              <span class="stat-label">Referans Proje</span>
+              <span class="stat-num" data-count="500" data-suffix="+">500+</span>
+              <span class="stat-label">Tamamlanan Proje</span>
             </div>
             <div class="stat">
-              <span class="stat-num">10 Yıl</span>
+              <span class="stat-num" data-count="10" data-suffix=" Yıl">10 Yıl</span>
               <span class="stat-label">İş Garantisi</span>
             </div>
             <div class="stat">
-              <span class="stat-num">%100</span>
+              <span class="stat-num" data-count="12" data-suffix="+">12+</span>
+              <span class="stat-label">Referans Proje</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num" data-count="100" data-suffix="%">%100</span>
               <span class="stat-label">Müşteri Memnuniyeti</span>
             </div>
           </div>
         </div>
-        <!-- Sağ görsel -->
-        <div class="hero-right">
-          <div class="hero-right-img">
-            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80&fit=crop&crop=edges" alt="Dış cephe mantolama uygulaması" loading="eager" />
+        <!-- Sağ — İnteraktif Duvar Widget -->
+        <div class="wall-widget">
+          <div class="wall-canvas-wrap">
+            <canvas id="wallCanvas"></canvas>
           </div>
-          <div class="hero-right-badge">
-            <div class="hb-icon">🏆</div>
-            <div>
-              <strong>Güvenilir Firma</strong>
-              <span>ISO Belgeli Ekip</span>
-            </div>
-          </div>
-          <div class="hero-right-badge2">
-            <strong>10+</strong>
-            <span>Yıllık Tecrübe</span>
+          <p class="wall-hint">🎨 Bir renk seç, usta duvarı boyasın!</p>
+          <div class="color-palette" id="colorPalette">
+            <div class="color-swatch active" data-color="#C9A227" style="background:#C9A227;" title="Altın"></div>
+            <div class="color-swatch" data-color="#E8F4F8" style="background:#E8F4F8;border-color:#ccc;" title="Beyaz Krem"></div>
+            <div class="color-swatch" data-color="#A8C5DA" style="background:#A8C5DA;" title="Mavi"></div>
+            <div class="color-swatch" data-color="#B5D5B5" style="background:#B5D5B5;" title="Yeşil"></div>
+            <div class="color-swatch" data-color="#F2C4A0" style="background:#F2C4A0;" title="Somon"></div>
+            <div class="color-swatch" data-color="#D4A8C7" style="background:#D4A8C7;" title="Pembe"></div>
+            <div class="color-swatch" data-color="#B0B0C8" style="background:#B0B0C8;" title="Gri-Mavi"></div>
+            <div class="color-swatch" data-color="#E8D5A3" style="background:#E8D5A3;" title="Krem"></div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- MARKA / GÜVENİLİRLİK ŞERİDİ — KAYAN DÖNGÜ -->
+  <div class="trust-band">
+    <div class="trust-band-label-wrap">
+      <span class="trust-band-label"><i class="fas fa-handshake"></i> Kullandığımız Markalar</span>
+    </div>
+    <div class="trust-marquee-wrap">
+      <div class="trust-marquee">
+        <!-- Set 1 — inline SVG logolar (gerçek renk & tipografi, bağımsız/offline) -->
+        <div class="trust-logo-item">
+          <!-- Weber: kırmızı zemin, beyaz bold yazı, gerçek marka rengi -->
+          <svg viewBox="0 0 110 44" height="36" aria-label="Weber" class="trust-logo-svg">
+            <rect width="110" height="44" rx="6" fill="#E31E24"/>
+            <text x="55" y="29" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="22" fill="#fff" letter-spacing="1.5">Weber</text>
+          </svg>
+        </div>
+        <div class="trust-logo-item">
+          <!-- Knauf: sarı zemin, siyah KNAUF yazısı -->
+          <svg viewBox="0 0 110 44" height="36" aria-label="Knauf" class="trust-logo-svg">
+            <rect width="110" height="44" rx="6" fill="#FFCC00"/>
+            <text x="55" y="30" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="20" fill="#1a1a1a" letter-spacing="2">KNAUF</text>
+          </svg>
+        </div>
+        <div class="trust-logo-item">
+          <!-- Filli Boya: beyaz zemin, kırmızı yazı + fırça çizgisi -->
+          <svg viewBox="0 0 140 44" height="36" aria-label="Filli Boya" class="trust-logo-svg">
+            <rect width="140" height="44" rx="6" fill="#fff" stroke="#E8001C" stroke-width="2"/>
+            <text x="70" y="20" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="11" fill="#E8001C" letter-spacing="1">FİLLİ BOYA</text>
+            <rect x="20" y="26" width="100" height="5" rx="2.5" fill="#E8001C"/>
+            <rect x="20" y="33" width="60" height="5" rx="2.5" fill="#E8001C" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="trust-logo-item">
+          <!-- Marshall: lacivert zemin, beyaz yazı -->
+          <svg viewBox="0 0 130 44" height="36" aria-label="Marshall" class="trust-logo-svg">
+            <rect width="130" height="44" rx="6" fill="#1D3D8F"/>
+            <text x="65" y="29" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="16" fill="#fff" letter-spacing="1.5">MARSHALL</text>
+          </svg>
+        </div>
+        <div class="trust-logo-item">
+          <!-- DYO: kırmızı zemin, beyaz DYO + daire amblem -->
+          <svg viewBox="0 0 90 44" height="36" aria-label="DYO" class="trust-logo-svg">
+            <rect width="90" height="44" rx="6" fill="#E30613"/>
+            <circle cx="20" cy="22" r="14" fill="#fff" opacity=".15"/>
+            <text x="52" y="30" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="22" fill="#fff" letter-spacing="3">DYO</text>
+          </svg>
+        </div>
+        <div class="trust-logo-item">
+          <!-- Sika: kırmızı, beyaz sika yazısı lowercase italic -->
+          <svg viewBox="0 0 100 44" height="36" aria-label="Sika" class="trust-logo-svg">
+            <rect width="100" height="44" rx="6" fill="#CC0000"/>
+            <text x="50" y="31" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="24" fill="#fff" font-style="italic" letter-spacing="2">sika</text>
+          </svg>
+        </div>
+        <div class="trust-logo-item">
+          <!-- BASF: koyu mavi zemin, beyaz BASF -->
+          <svg viewBox="0 0 100 44" height="36" aria-label="BASF" class="trust-logo-svg">
+            <rect width="100" height="44" rx="6" fill="#004A96"/>
+            <text x="50" y="30" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="22" fill="#fff" letter-spacing="3">BASF</text>
+          </svg>
+        </div>
+        <div class="trust-logo-item">
+          <!-- İZODER: lacivert zemin, turuncu çizgi, beyaz İZODER -->
+          <svg viewBox="0 0 120 44" height="36" aria-label="İZODER" class="trust-logo-svg">
+            <rect width="120" height="44" rx="6" fill="#1A3A6B"/>
+            <rect x="0" y="36" width="120" height="5" rx="0 0 6 6" fill="#E87722"/>
+            <text x="60" y="27" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="16" fill="#fff" letter-spacing="2">İZODER</text>
+          </svg>
+        </div>
+        <!-- Set 2 — sonsuz döngü (aria-hidden) -->
+        <div class="trust-logo-item" aria-hidden="true">
+          <svg viewBox="0 0 110 44" height="36" class="trust-logo-svg"><rect width="110" height="44" rx="6" fill="#E31E24"/><text x="55" y="29" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="22" fill="#fff" letter-spacing="1.5">Weber</text></svg>
+        </div>
+        <div class="trust-logo-item" aria-hidden="true">
+          <svg viewBox="0 0 110 44" height="36" class="trust-logo-svg"><rect width="110" height="44" rx="6" fill="#FFCC00"/><text x="55" y="30" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="20" fill="#1a1a1a" letter-spacing="2">KNAUF</text></svg>
+        </div>
+        <div class="trust-logo-item" aria-hidden="true">
+          <svg viewBox="0 0 140 44" height="36" class="trust-logo-svg"><rect width="140" height="44" rx="6" fill="#fff" stroke="#E8001C" stroke-width="2"/><text x="70" y="20" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="11" fill="#E8001C" letter-spacing="1">FİLLİ BOYA</text><rect x="20" y="26" width="100" height="5" rx="2.5" fill="#E8001C"/><rect x="20" y="33" width="60" height="5" rx="2.5" fill="#E8001C" opacity=".4"/></svg>
+        </div>
+        <div class="trust-logo-item" aria-hidden="true">
+          <svg viewBox="0 0 130 44" height="36" class="trust-logo-svg"><rect width="130" height="44" rx="6" fill="#1D3D8F"/><text x="65" y="29" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="16" fill="#fff" letter-spacing="1.5">MARSHALL</text></svg>
+        </div>
+        <div class="trust-logo-item" aria-hidden="true">
+          <svg viewBox="0 0 90 44" height="36" class="trust-logo-svg"><rect width="90" height="44" rx="6" fill="#E30613"/><circle cx="20" cy="22" r="14" fill="#fff" opacity=".15"/><text x="52" y="30" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="22" fill="#fff" letter-spacing="3">DYO</text></svg>
+        </div>
+        <div class="trust-logo-item" aria-hidden="true">
+          <svg viewBox="0 0 100 44" height="36" class="trust-logo-svg"><rect width="100" height="44" rx="6" fill="#CC0000"/><text x="50" y="31" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="24" fill="#fff" font-style="italic" letter-spacing="2">sika</text></svg>
+        </div>
+        <div class="trust-logo-item" aria-hidden="true">
+          <svg viewBox="0 0 100 44" height="36" class="trust-logo-svg"><rect width="100" height="44" rx="6" fill="#004A96"/><text x="50" y="30" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="22" fill="#fff" letter-spacing="3">BASF</text></svg>
+        </div>
+        <div class="trust-logo-item" aria-hidden="true">
+          <svg viewBox="0 0 120 44" height="36" class="trust-logo-svg"><rect width="120" height="44" rx="6" fill="#1A3A6B"/><rect x="0" y="36" width="120" height="5" rx="0 0 6 6" fill="#E87722"/><text x="60" y="27" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="16" fill="#fff" letter-spacing="2">İZODER</text></svg>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- HİZMET KATEGORİLERİ -->
   <section class="section" style="background:var(--bg);">
@@ -142,14 +288,15 @@
         <h2 class="section-title">Hizmetlerimiz</h2>
         <p class="section-desc">Dış cepheden iç mekana, çatıdan zemine profesyonel çözümler sunuyoruz.</p>
       </div>
-      <div class="categories-grid" id="categoriesGrid">
-        <div class="cat-card" style="height:80px;"></div>
-        <div class="cat-card" style="height:80px;"></div>
-        <div class="cat-card" style="height:80px;"></div>
-        <div class="cat-card" style="height:80px;"></div>
-        <div class="cat-card" style="height:80px;"></div>
-        <div class="cat-card" style="height:80px;"></div>
-        <div class="cat-card" style="height:80px;"></div>
+      <div class="cat-photo-grid" id="categoriesGrid">
+        <!-- Skeleton: API gelene kadar göster -->
+        <div class="cat-photo-card" style="background:var(--bg3);"></div>
+        <div class="cat-photo-card" style="background:var(--bg3);"></div>
+        <div class="cat-photo-card" style="background:var(--bg3);"></div>
+        <div class="cat-photo-card" style="background:var(--bg3);"></div>
+        <div class="cat-photo-card" style="background:var(--bg3);"></div>
+        <div class="cat-photo-card" style="background:var(--bg3);"></div>
+        <div class="cat-photo-card" style="background:var(--bg3);"></div>
       </div>
       <div class="section-cta">
         <a href="/hizmetler.html" class="btn btn-primary btn-lg">Tüm Hizmetleri Gör <i class="fas fa-arrow-right"></i></a>
@@ -163,63 +310,102 @@
       <div class="section-header">
         <span class="section-label">Farkımız</span>
         <h2 class="section-title">Neden Akdeniz Yapı?</h2>
+        <p class="section-desc">Rakiplerimizden bizi ayıran, müşterilerimizin bize güvenmeye devam etmesini sağlayan nedenler.</p>
       </div>
       <div class="advantages-grid">
         <div class="adv-card">
           <div class="adv-icon">🦺</div>
           <div class="adv-body">
-            <h4>Teknik Destek</h4>
-            <p>Yalıtım uzmanlarından keşif sonrası ücretsiz teknik danışmanlık alın.</p>
+            <h4>Ücretsiz Teknik Keşif</h4>
+            <p>Yalıtım uzmanı ekibimiz binanızı yerinde inceler, tespitini yapar ve ücretsiz teknik rapor sunar.</p>
           </div>
         </div>
         <div class="adv-card">
           <div class="adv-icon">🛡️</div>
           <div class="adv-body">
-            <h4>10 Yıl Garanti</h4>
-            <p>Tüm uygulamalarımızda sözleşmeli 10 yıl malzeme ve işçilik garantisi.</p>
+            <h4>10 Yıl Yazılı Garanti</h4>
+            <p>Tüm uygulamalarımızda noter onaylı sözleşme ve 10 yıl malzeme + işçilik garantisi veriyoruz.</p>
           </div>
         </div>
         <div class="adv-card">
           <div class="adv-icon">⚖️</div>
           <div class="adv-body">
-            <h4>Hukuk Desteği</h4>
-            <p>Proje sürecinde avukatlarımızdan ücretsiz hukuki danışmanlık.</p>
+            <h4>Avukatlı Hukuk Desteği</h4>
+            <p>Site yönetimi ve kat maliklerine proje sürecinde anlaşmazlık çözümü için hukuki danışmanlık.</p>
           </div>
         </div>
         <div class="adv-card">
-          <div class="adv-icon">🏗️</div>
+          <div class="adv-icon">🎨</div>
           <div class="adv-body">
-            <h4>3D Renklendirilme</h4>
-            <p>Sözleşme imzalandığında binanızın 3 boyutlu tasarımını ücretsiz sunuyoruz.</p>
+            <h4>Ücretsiz 3D Tasarım</h4>
+            <p>Sözleşme imzaladığınızda binanızın tam ölçekli 3 boyutlu renk ve cephe tasarımını ücretsiz alırsınız.</p>
           </div>
         </div>
         <div class="adv-card">
           <div class="adv-icon">📋</div>
           <div class="adv-body">
-            <h4>EKB Belgesi</h4>
-            <p>Uygulama sonunda Enerji Kimlik Belgesi ücretsiz olarak tarafımızdan verilir.</p>
+            <h4>EKB Belgesi Dahil</h4>
+            <p>Uygulama sonrası Enerji Kimlik Belgesi (EKB) resmi kuruluştan ücretsiz düzenlenir.</p>
+          </div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon">🏅</div>
+          <div class="adv-body">
+            <h4>Sertifikalı Malzeme</h4>
+            <p>Weber, Knauf, Marshall, Filli Boya — sadece orijinal, sertifikalı malzeme kullanıyoruz. Fatura kesilir.</p>
           </div>
         </div>
         <div class="adv-card">
           <div class="adv-icon">🤝</div>
           <div class="adv-body">
-            <h4>Bireysel Muhataplık</h4>
-            <p>Her daire ile bireysel görüşüp hizmet bedellerini bireysel alıyoruz.</p>
+            <h4>Daire Bazlı Sözleşme</h4>
+            <p>Kat malikleriyle ayrı ayrı görüşüp bireysel fiyat ve ödeme planı oluşturuyoruz.</p>
+          </div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon">⏱️</div>
+          <div class="adv-body">
+            <h4>Zamanında Teslimat</h4>
+            <p>Sözleşmede belirlenen süreye uymazsak cezai şart ödüyoruz. Takvim garantisi veriyoruz.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ÖNCÜ HİZMETLER -->
+  <!-- KAMPANYALAR ÖNİZLEME -->
   <section class="section" style="background:var(--bg);">
     <div class="container">
       <div class="section-header">
-        <span class="section-label">Öne Çıkan</span>
-        <h2 class="section-title">Popüler Hizmetlerimiz</h2>
+        <span class="section-label">Fırsatlar</span>
+        <h2 class="section-title">Güncel Kampanyalar</h2>
+        <p class="section-desc">Temmuz ayına özel indirimli hizmetlerimizden yararlanın. Ücretsiz keşif ve garantili işçilik.</p>
       </div>
-      <div class="services-grid" id="featuredServices">
-        <!-- JS ile doldurulur -->
+
+      <!-- Öne çıkan promo banner -->
+      <div class="kamp-promo-banner">
+        <div class="kamp-promo-text">
+          <div class="kamp-promo-label">⚡ ÖZEL TEKLİF</div>
+          <h3>Dış Cephe Mantolama + Boyasını Birlikte Yaptır, <span class="gold">%20 Tasarruf Et!</span></h3>
+          <p>Isı yalıtımı ve dış cephe boyasını tek sözleşmeyle yaptırdığınızda kombine indirim uyguluyoruz. Sınırlı kontenjan!</p>
+          <div class="kamp-promo-actions">
+            <a href="https://wa.me/905309361017?text=Merhaba%2C%20kombine%20kampanyadan%20yararlanmak%20istiyorum." target="_blank" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Hemen Bilgi Al</a>
+            <a href="tel:05309361017" class="btn btn-outline"><i class="fas fa-phone"></i> 0530 936 10 17</a>
+          </div>
+        </div>
+        <div class="kamp-promo-icon">🏗️</div>
+      </div>
+
+      <!-- Kampanya kartları — API'den dinamik yüklenir -->
+      <div class="kamp-preview-grid" id="kampanyaPreviewGrid">
+        <!-- Skeleton -->
+        <div class="kamp-card" style="opacity:.4;pointer-events:none;"><div class="kamp-card-img" style="background:#e0ddd6;height:180px;border-radius:12px 12px 0 0;"></div><div class="kamp-card-body"><div style="height:14px;background:#e0ddd6;border-radius:6px;margin-bottom:8px;"></div><div style="height:10px;background:#e0ddd6;border-radius:6px;width:70%;"></div></div></div>
+        <div class="kamp-card" style="opacity:.4;pointer-events:none;"><div class="kamp-card-img" style="background:#e0ddd6;height:180px;border-radius:12px 12px 0 0;"></div><div class="kamp-card-body"><div style="height:14px;background:#e0ddd6;border-radius:6px;margin-bottom:8px;"></div><div style="height:10px;background:#e0ddd6;border-radius:6px;width:70%;"></div></div></div>
+        <div class="kamp-card" style="opacity:.4;pointer-events:none;"><div class="kamp-card-img" style="background:#e0ddd6;height:180px;border-radius:12px 12px 0 0;"></div><div class="kamp-card-body"><div style="height:14px;background:#e0ddd6;border-radius:6px;margin-bottom:8px;"></div><div style="height:10px;background:#e0ddd6;border-radius:6px;width:70%;"></div></div></div>
+      </div>
+
+      <div class="section-cta">
+        <a href="/kampanyalar.html" class="btn btn-primary btn-lg">Tüm Kampanyaları Gör <i class="fas fa-arrow-right"></i></a>
       </div>
     </div>
   </section>
@@ -292,78 +478,17 @@
   <!-- CTA BANNER -->
   <section class="cta-banner">
     <div class="container" style="text-align:center;">
+      <div style="display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:20px;">
+        <span class="cta-trust-chip"><i class="fas fa-shield-alt"></i> 10 Yıl Garanti</span>
+        <span class="cta-trust-chip"><i class="fas fa-file-contract"></i> Sözleşmeli</span>
+        <span class="cta-trust-chip"><i class="fas fa-search"></i> Keşif Ücretsiz</span>
+      </div>
       <h2>Ücretsiz Keşif &amp; Teklif Alın</h2>
-      <p>Uzman ekibimiz değerlendirme için en kısa sürede yanınızda.</p>
+      <p>Uzman ekibimiz binanızı yerinde inceleyip aynı gün yazılı teklif sunar. Hiçbir ön ödeme yok.</p>
       <div class="cta-buttons">
         <a href="tel:05309361017" class="cta-btn-white"><i class="fas fa-phone"></i> 0530 936 10 17</a>
         <a href="https://wa.me/905309361017?text=Merhaba%2C%20%C3%BCcretsiz%20ke%C5%9Fif%20talep%20ediyorum." target="_blank" class="cta-btn-outline-white">
-          <i class="fab fa-whatsapp"></i> WhatsApp
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- INSTAGRAM FEED -->
-  <section class="ig-section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Sosyal Medya</span>
-        <h2 class="section-title"><i class="fab fa-instagram" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i> Instagram'dan Güncel İçerikler</h2>
-        <p class="section-desc">Tamamladığımız projeleri ve çalışmalarımızı takip edin.</p>
-      </div>
-      <div class="ig-grid">
-        <a class="ig-card" href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" rel="noopener noreferrer" aria-label="Instagram'da görüntüle">
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80&fit=crop" alt="Dış cephe mantolama" loading="lazy" />
-          <div class="ig-card-type">FOTOĞRAF</div>
-          <div class="ig-card-overlay">
-            <div class="ig-likes"><i class="fas fa-heart"></i> 142 <i class="fas fa-comment" style="margin-left:8px;"></i> 18</div>
-            <div class="ig-caption">Bayındır Pınarlar Sitesi dış cephe mantolama tamamlandı 🏗️ #mantolama #akdenizyanı</div>
-          </div>
-        </a>
-        <a class="ig-card" href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" rel="noopener noreferrer" aria-label="Instagram'da görüntüle">
-          <img src="https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?w=600&q=80&fit=crop" alt="İç mekan boya" loading="lazy" />
-          <div class="ig-card-type">FOTOĞRAF</div>
-          <div class="ig-card-overlay">
-            <div class="ig-likes"><i class="fas fa-heart"></i> 89 <i class="fas fa-comment" style="margin-left:8px;"></i> 7</div>
-            <div class="ig-caption">Profesyonel iç mekan boya uygulaması ✨ #boya #tadilat #antalya</div>
-          </div>
-        </a>
-        <a class="ig-card" href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" rel="noopener noreferrer" aria-label="Instagram'da görüntüle">
-          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80&fit=crop" alt="Ekip çalışması" loading="lazy" />
-          <div class="ig-card-type">FOTOĞRAF</div>
-          <div class="ig-card-overlay">
-            <div class="ig-likes"><i class="fas fa-heart"></i> 203 <i class="fas fa-comment" style="margin-left:8px;"></i> 31</div>
-            <div class="ig-caption">Ekibimiz sahada! Her projeye özen ve titizlikle yaklaşıyoruz 💪 #ekip #akdenizyanı</div>
-          </div>
-        </a>
-        <a class="ig-card" href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" rel="noopener noreferrer" aria-label="Instagram'da görüntüle">
-          <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80&fit=crop" alt="Bina cephesi" loading="lazy" />
-          <div class="ig-card-type">FOTOĞRAF</div>
-          <div class="ig-card-overlay">
-            <div class="ig-likes"><i class="fas fa-heart"></i> 167 <i class="fas fa-comment" style="margin-left:8px;"></i> 22</div>
-            <div class="ig-caption">AYT Park Villa Sitesi — ısı yalıtımı öncesi ve sonrası 🌡️ #isiyalitimi #antalya</div>
-          </div>
-        </a>
-        <a class="ig-card" href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" rel="noopener noreferrer" aria-label="Instagram'da görüntüle">
-          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80&fit=crop" alt="Yapı projesi" loading="lazy" />
-          <div class="ig-card-type">FOTOĞRAF</div>
-          <div class="ig-card-overlay">
-            <div class="ig-likes"><i class="fas fa-heart"></i> 118 <i class="fas fa-comment" style="margin-left:8px;"></i> 14</div>
-            <div class="ig-caption">Varsak Güneş Konakları tam cephe yenileme projesi tamamlandı ✅ #cephe #dekorasyon</div>
-          </div>
-        </a>
-        <a class="ig-card" href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" rel="noopener noreferrer" aria-label="Instagram'da görüntüle">
-          <img src="https://images.unsplash.com/photo-1549517045-bc93de744f8a?w=600&q=80&fit=crop" alt="Mineral sıva" loading="lazy" />
-          <div class="ig-card-type">FOTOĞRAF</div>
-          <div class="ig-card-overlay">
-            <div class="ig-likes"><i class="fas fa-heart"></i> 95 <i class="fas fa-comment" style="margin-left:8px;"></i> 9</div>
-            <div class="ig-caption">Mineral sıva ve boya sistemi — Sarısu Klas Sitesi 🎨 #siva #boya #antalya</div>
-          </div>
-        </a>
-      </div>
-      <div class="ig-follow-row">
-        <a href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" class="btn-ig">
-          <i class="fab fa-instagram"></i> @akdeniz.yapidekorasyon'u Takip Et
+          <i class="fab fa-whatsapp"></i> WhatsApp'tan Yaz
         </a>
       </div>
     </div>
@@ -411,8 +536,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; 2024 Akdeniz Yapı Dekorasyon. Tüm hakları saklıdır.</span>
-      <span>Antalya'da Güvenilir İnşaat Hizmeti</span>
+      <span>&copy; 2025 Akdeniz Yapı Dekorasyon. Tüm hakları saklıdır.</span>
+      <span>🏆 Antalya'nın Güvenilir İnşaat Firması</span>
     </div>
   </footer>
 
@@ -424,340 +549,44 @@
   </div>
 
   <script src="js/main.js"></script>
+  <script src="js/painter.js"></script>
   <script>
-  /* ══════════════════════════════════════════════════════
-     Boya Ustası Canvas Animasyonu v3
-     - Büyük karakter (SCALE=3)
-     - Başının üstünde dış cephe rulosu fırça
-     - Fırça yukarı-aşağı hareket ederek duvar boyuyor
-     - Her boyama turunda "AKDENİZ YAPI" yazısı belirir
-     - Yazı fade-in ile tam görünür, usta gidince solar
-     - Hareket dalgalı sinüs eğrisi (düz değil)
-  ══════════════════════════════════════════════════════ */
-  (function(){
-    const canvas = document.getElementById('painterCanvas');
-    if(!canvas) return;
-    const ctx = canvas.getContext('2d');
-
-    const SCALE = 3.0;
-    let W = 0, H = 0;
-
-    /* Aktif yazı bölümleri: her boyamada tam metin bir kez yazılır */
-    /* {x, y, alpha, fadeIn, life, maxLife} */
-    const labels = [];
-
-    const man = {
-      x: 0, y: 0,
-      t: 0,               // zaman parametresi (radyan, dalgalı yol için)
-      baseY: 0,           // sinüs merkezi
-      dir: 1,
-      speed: 0.45,        // piksel/frame (yavaş, izlenebilsin)
-      opacity: 0,
-      fadeDir: 1,
-      visible: true,
-      restTimer: 0,
-      /* fırça animasyonu */
-      brushPhase: 0,      // 0..2π — yukarı aşağı döngüsü
-      brushPainting: false,
-      paintCooldown: 0,
-    };
-
-    function resize(){
-      W = canvas.width  = canvas.offsetWidth  || canvas.parentElement.offsetWidth;
-      H = canvas.height = canvas.offsetHeight || canvas.parentElement.offsetHeight;
-      man.baseY = H * 0.60;
-      if(man.y === 0) man.y = man.baseY;
+    /* ── Sayaç Animasyonu ── */
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.count, 10);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1800;
+      const step = Math.ceil(target / (duration / 16));
+      let current = 0;
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = (suffix.startsWith('%') ? '%' : '') + current + (suffix.startsWith('%') ? '' : suffix);
+        if (current >= target) clearInterval(timer);
+      }, 16);
     }
-
-    /* ────── Rulo Fırça Çizimi (başın üstünde) ────── */
-    function drawBrush(brushY, dir, alpha){
-      /* brushY: fırça ucunun canvas koordinatı (man.y - bodyTop - brushOffset)
-         Fırça başın tepesinde, kollar yukarı uzanmış */
-      ctx.save();
-      ctx.globalAlpha = alpha;
-
-      /* Sap: ince metal çubuk dikey */
-      const sapX = man.x + dir * SCALE * 2;
-      const sapTop = brushY - SCALE * 18;
-      const sapBot = man.y  - SCALE * 80; // omuz seviyesi
-
-      ctx.strokeStyle = '#546e7a';
-      ctx.lineWidth   = SCALE * 2.5;
-      ctx.lineCap     = 'round';
-      ctx.beginPath();
-      ctx.moveTo(sapX, sapTop + SCALE*16);
-      ctx.lineTo(sapX, sapBot);
-      ctx.stroke();
-
-      /* Bağlantı kafesi (metal kısmı) */
-      ctx.strokeStyle = '#90a4ae';
-      ctx.lineWidth   = SCALE * 1.5;
-      ctx.beginPath();
-      ctx.moveTo(sapX - SCALE*6, sapTop + SCALE*16);
-      ctx.lineTo(sapX - SCALE*6, sapTop + SCALE*6);
-      ctx.lineTo(sapX + SCALE*6, sapTop + SCALE*6);
-      ctx.lineTo(sapX + SCALE*6, sapTop + SCALE*16);
-      ctx.stroke();
-
-      /* Rulo gövdesi — büyük silindir */
-      const rW = SCALE * 14, rH = SCALE * 10;
-      ctx.save();
-      ctx.translate(sapX, sapTop + SCALE*11);
-      /* Silindir gövde — bej/kum rengi (dış cephe rulosu) */
-      ctx.fillStyle = '#d4b896';
-      ctx.beginPath();
-      ctx.ellipse(0, 0, rW, rH/2, 0, 0, Math.PI*2);
-      ctx.fill();
-      /* Mavi şerit detay */
-      ctx.strokeStyle = '#1976d2';
-      ctx.lineWidth   = SCALE * 1.8;
-      ctx.beginPath();
-      ctx.ellipse(0, 0, rW * 0.5, rH/2, 0, 0, Math.PI*2);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.ellipse(0, 0, rW * 0.85, rH/2, 0, 0, Math.PI*2);
-      ctx.stroke();
-      /* Kenarlık */
-      ctx.strokeStyle = '#a08060';
-      ctx.lineWidth   = SCALE * 1;
-      ctx.beginPath();
-      ctx.ellipse(0, 0, rW, rH/2, 0, 0, Math.PI*2);
-      ctx.stroke();
-      ctx.restore();
-
-      /* Boya izi — rulo alt kısmından damla efekti */
-      if(man.brushPainting){
-        ctx.fillStyle = 'rgba(201,162,39,0.35)';
-        ctx.beginPath();
-        ctx.ellipse(sapX, sapTop + SCALE*17, rW*0.9, SCALE*2.5, 0, 0, Math.PI*2);
-        ctx.fill();
-      }
-
-      ctx.restore();
-    }
-
-    /* ────── Usta Çizimi ────── */
-    function drawMan(alpha){
-      const x = man.x, y = man.y;
-      const s = SCALE;
-      const now = Date.now();
-
-      ctx.save();
-      ctx.globalAlpha = alpha;
-
-      /* yön */
-      ctx.save();
-      ctx.translate(x, y);
-      if(man.dir < 0) ctx.scale(-1, 1);
-
-      /* BACAKLAR — yürüyüş animasyonu */
-      const legSwing = Math.sin(now / 160) * 14;
-      /* sol bacak */
-      ctx.save();
-      ctx.translate(-s*4, -s*18);
-      ctx.rotate(legSwing * Math.PI/180);
-      ctx.fillStyle = '#1565c0';
-      ctx.fillRect(-s*3.5, 0, s*7, s*22);
-      ctx.fillStyle = '#0d1b2a';
-      ctx.fillRect(-s*4, s*20, s*9, s*5);
-      ctx.restore();
-      /* sağ bacak */
-      ctx.save();
-      ctx.translate(s*4, -s*18);
-      ctx.rotate(-legSwing * Math.PI/180);
-      ctx.fillStyle = '#1565c0';
-      ctx.fillRect(-s*3.5, 0, s*7, s*22);
-      ctx.fillStyle = '#0d1b2a';
-      ctx.fillRect(-s*4, s*20, s*9, s*5);
-      ctx.restore();
-
-      /* GÖVDE — turuncu tulum */
-      ctx.fillStyle = '#e65100';
-      ctx.fillRect(-s*11, -s*50, s*22, s*32);
-      /* göğüs şeridi */
-      ctx.fillStyle = 'rgba(255,255,255,0.35)';
-      ctx.fillRect(-s*2, -s*50, s*4, s*16);
-      /* kemer */
-      ctx.fillStyle = '#4e342e';
-      ctx.fillRect(-s*11, -s*22, s*22, s*4);
-      ctx.fillStyle = '#ffd54f';
-      ctx.fillRect(-s*3, -s*22, s*6, s*4);
-
-      /* KAFA */
-      ctx.shadowColor = 'rgba(0,0,0,0.2)';
-      ctx.shadowBlur  = s*4;
-      ctx.beginPath();
-      ctx.arc(0, -s*64, s*13, 0, Math.PI*2);
-      ctx.fillStyle = '#ffcc80';
-      ctx.fill();
-      ctx.shadowBlur = 0;
-
-      /* KASK — sarı inşaat kaskı */
-      ctx.beginPath();
-      ctx.ellipse(0, -s*74, s*16, s*9, 0, Math.PI, 0);
-      ctx.fillStyle = '#f9a825';
-      ctx.fill();
-      ctx.fillRect(-s*16, -s*75, s*32, s*6);
-      ctx.strokeStyle = '#f57f17';
-      ctx.lineWidth = s;
-      ctx.stroke();
-
-      /* Yüz */
-      ctx.fillStyle = '#5d4037';
-      ctx.beginPath(); ctx.arc(s*4.5, -s*63, s*2, 0, Math.PI*2); ctx.fill();
-      ctx.beginPath(); ctx.arc(-s*4.5, -s*63, s*2, 0, Math.PI*2); ctx.fill();
-      ctx.strokeStyle = '#bf360c'; ctx.lineWidth = s*1.2; ctx.lineCap='round';
-      ctx.beginPath(); ctx.arc(0, -s*59, s*4, 0.2, Math.PI-0.2); ctx.stroke();
-
-      /* KOLLAR — ikisi de yukarı kaldırılmış, ruloyu tutuyor */
-      const brushBob = Math.sin(man.brushPhase) * s * 8; // yukarı-aşağı
-      ctx.strokeStyle = '#e65100';
-      ctx.lineWidth   = s*6;
-      ctx.lineCap     = 'round';
-      /* sol kol (destek) */
-      ctx.save();
-      ctx.translate(-s*10, -s*46);
-      ctx.rotate(-70 * Math.PI/180);
-      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0, s*22); ctx.stroke();
-      ctx.restore();
-      /* sağ kol (fırça tutan) */
-      ctx.save();
-      ctx.translate(s*10, -s*46);
-      ctx.rotate(-110 * Math.PI/180);
-      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0, s*28); ctx.stroke();
-      ctx.restore();
-
-      ctx.restore(); /* translate/scale geri al */
-
-      /* Fırça konumu: başın tepesinde + bobing hareketi */
-      const brushTipY = y - s*87 + brushBob;
-      drawBrush(brushTipY, man.dir, alpha);
-
-      ctx.restore();
-      return brushTipY; /* boya izi için geri dön */
-    }
-
-    /* ────── Yazı Etiketi Çiz ────── */
-    function drawLabels(){
-      for(let i = labels.length-1; i >= 0; i--){
-        const lb = labels[i];
-        lb.life--;
-        if(lb.life <= 0){ labels.splice(i,1); continue; }
-
-        /* fade in */
-        if(lb.fadeIn) lb.alpha = Math.min(1, lb.alpha + 0.04);
-        /* fade out (son 60 frame) */
-        if(lb.life < 60) lb.alpha = lb.life / 60;
-
-        ctx.save();
-        ctx.globalAlpha = lb.alpha;
-        ctx.font = `900 ${SCALE*14}px 'Montserrat',sans-serif`;
-        ctx.textAlign   = 'center';
-        ctx.textBaseline = 'middle';
-
-        /* beyaz kontur */
-        ctx.strokeStyle = 'rgba(255,255,255,0.9)';
-        ctx.lineWidth   = SCALE * 4;
-        ctx.lineJoin    = 'round';
-        ctx.strokeText('AKDENİZ YAPI', lb.x, lb.y);
-
-        /* altın dolgu */
-        ctx.fillStyle = '#c9a227';
-        ctx.fillText('AKDENİZ YAPI', lb.x, lb.y);
-
-        /* hafif gölge çizgi altında */
-        ctx.strokeStyle = 'rgba(201,162,39,0.3)';
-        ctx.lineWidth   = SCALE;
-        ctx.beginPath();
-        const tw = ctx.measureText('AKDENİZ YAPI').width;
-        ctx.moveTo(lb.x - tw/2, lb.y + SCALE*10);
-        ctx.lineTo(lb.x + tw/2, lb.y + SCALE*10);
-        ctx.stroke();
-
-        ctx.restore();
-      }
-    }
-
-    /* ────── Update ────── */
-    let paintSpawn = false;
-
-    function update(){
-      /* fade */
-      if(man.fadeDir === 1){
-        man.opacity = Math.min(1, man.opacity + 0.03);
-        if(man.opacity >= 1) man.fadeDir = 0;
-      } else if(man.fadeDir === -1){
-        man.opacity = Math.max(0, man.opacity - 0.025);
-        if(man.opacity <= 0){
-          man.fadeDir  = 0;
-          man.visible  = false;
-          man.restTimer = 130 + Math.random()*100;
-        }
-      }
-
-      /* bekleme */
-      if(!man.visible){
-        if(man.restTimer > 0) man.restTimer--;
-        if(man.restTimer <= 0){
-          man.visible   = true;
-          man.opacity   = 0;
-          man.fadeDir   = 1;
-          man.baseY     = H * (0.48 + Math.random()*0.2);
-          man.y         = man.baseY;
-          man.t         = 0;
-          man.x         = man.dir > 0 ? -180 : W + 180;
-          man.brushPhase= 0;
-          paintSpawn    = false;
-        }
-        return;
-      }
-
-      /* Dalgalı yürüyüş — sinüs eğrisi */
-      man.t += 0.022;
-      man.x += man.speed * man.dir;
-      man.y  = man.baseY + Math.sin(man.t * 2.8) * 28;
-
-      /* Fırça yukarı-aşağı hareketi */
-      man.brushPhase += 0.07;
-      /* Boyama anı: fırça aşağıya inerken (sin > 0.6) */
-      const bobVal = Math.sin(man.brushPhase);
-      if(bobVal > 0.75 && !paintSpawn){
-        paintSpawn = true;
-        labels.push({
-          x     : man.x,
-          y     : man.y - SCALE * 105,
-          alpha : 0,
-          fadeIn: true,
-          life  : 220 + Math.random()*60,
+    /* IntersectionObserver ile sayfa görünüme girince tetikle */
+    const statEls = document.querySelectorAll('.stat-num[data-count]');
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            animateCounter(e.target);
+            obs.unobserve(e.target);
+          }
         });
-      }
-      if(bobVal < 0.3) paintSpawn = false;
-
-      /* ekran dışı */
-      if((man.dir > 0 && man.x > W + 180) || (man.dir < 0 && man.x < -180)){
-        if(man.fadeDir === 0){ man.fadeDir = -1; man.dir *= -1; }
-      }
-
-      /* rastgele kaybol */
-      if(man.visible && man.fadeDir === 0 && Math.random() < 0.002){
-        man.fadeDir = -1; man.dir *= -1;
-      }
+      }, { threshold: 0.5 });
+      statEls.forEach(el => obs.observe(el));
     }
 
-    /* ────── Render ────── */
-    function render(){
-      ctx.clearRect(0, 0, W, H);
-      drawLabels();
-      if(man.opacity > 0) drawMan(man.opacity);
-    }
-
-    /* init */
-    resize();
-    window.addEventListener('resize', resize);
-
-    function loop(){ update(); render(); requestAnimationFrame(loop); }
-    loop();
-  })();
+    /* ── Navbar hamburger ── */
+    const nt = document.getElementById('navToggle');
+    const nm = document.getElementById('navMenu');
+    if (nt && nm) nt.addEventListener('click', () => {
+      nm.classList.toggle('open');
+      const icon = nt.querySelector('i');
+      if (icon) icon.className = nm.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+    });
   </script>
+
 </body>
 </html>

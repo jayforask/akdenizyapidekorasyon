@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Referans Detay | Akdeniz Yapı Dekorasyon</title>
+  <meta name="description" content="Akdeniz Yapı Dekorasyon tamamlanan proje detayları." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .page-hero{background:linear-gradient(135deg,#1a1a1a 0%,#2d2a1e 60%,#3a2e00 100%);padding:72px 0 40px;position:relative;overflow:hidden;}
+    .page-hero::after{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=40&fit=crop') center/cover no-repeat;opacity:.08;pointer-events:none;}
+    .page-hero .container{position:relative;z-index:1;}
+
+    /* Detay layout */
+    .detay-layout{display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:start;margin-top:40px;}
+    @media(max-width:900px){.detay-layout{grid-template-columns:1fr;}}
+
+    /* Ana görsel */
+    .detay-hero-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.14);}
+
+    /* Galeri */
+    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:20px;}
+    .gallery-item{aspect-ratio:4/3;border-radius:10px;overflow:hidden;cursor:pointer;position:relative;}
+    .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .3s;}
+    .gallery-item:hover img{transform:scale(1.07);}
+    .gallery-item::after{content:'\f065';font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);color:#fff;font-size:1.1rem;opacity:0;transition:opacity .2s;}
+    .gallery-item:hover::after{opacity:1;}
+
+    /* Bilgi kutusu */
+    .info-box{background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px;box-shadow:var(--shadow);position:sticky;top:80px;}
+    .info-box h3{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:800;color:var(--gold);margin-bottom:18px;letter-spacing:.5px;text-transform:uppercase;}
+    .info-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+    .info-row:last-of-type{border-bottom:none;}
+    .info-icon{width:36px;height:36px;border-radius:10px;background:rgba(201,162,39,.1);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:.85rem;flex-shrink:0;}
+    .info-label{font-size:.72rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;}
+    .info-val{font-size:.92rem;font-weight:700;color:var(--text);}
+
+    /* CTA kutusu */
+    .cta-box{background:linear-gradient(135deg,#1a1a1a,#2d2a1e);border-radius:16px;padding:28px;margin-top:16px;text-align:center;}
+    .cta-box p{color:rgba(255,255,255,.75);font-size:.85rem;margin-bottom:16px;line-height:1.6;}
+    .cta-box .btn-wa{background:#25d366;color:#fff;width:100%;justify-content:center;margin-bottom:10px;}
+    .cta-box .btn-call{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);width:100%;justify-content:center;}
+
+    /* Lightbox */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s;}
+    .lightbox.open{opacity:1;pointer-events:all;}
+    .lightbox img{max-width:100%;max-height:90vh;border-radius:8px;object-fit:contain;}
+    .lightbox-close{position:absolute;top:20px;right:24px;color:#fff;font-size:1.8rem;cursor:pointer;line-height:1;}
+    .lightbox-prev,.lightbox-next{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:2rem;cursor:pointer;padding:12px;background:rgba(255,255,255,.1);border-radius:50%;transition:background .2s;}
+    .lightbox-prev{left:16px;} .lightbox-next{right:16px;}
+    .lightbox-prev:hover,.lightbox-next:hover{background:rgba(255,255,255,.25);}
+
+    /* Skeleton */
+    .skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;}
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .skel-hero{width:100%;aspect-ratio:16/9;border-radius:16px;}
+    .skel-line{height:14px;border-radius:6px;margin-bottom:10px;}
+  </style>
+</head>
+<body data-page="referans-detay">
+
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo">
+        <span class="logo-text">AKDENİZ YAPI</span>
+        <span class="logo-sub">DEKORASYON</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menü"><i class="fas fa-bars"></i></button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="/">Ana Sayfa</a></li>
+        <li><a href="/hizmetler.html">Hizmetler</a></li>
+        <li><a href="/kampanyalar.html">Kampanyalar</a></li>
+        <li><a href="/referanslar.html" class="active">Referanslar</a></li>
+        <li><a href="/iletisim.html">İletişim</a></li>
+        <li><a href="tel:05309361017" class="btn-call"><i class="fas fa-phone"></i> Hemen Ara</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/"><i class="fas fa-home"></i> Ana Sayfa</a>
+        <i class="fas fa-chevron-right" style="font-size:.6rem;"></i>
+        <a href="/referanslar.html">Referanslar</a>
+        <i class="fas fa-chevron-right" style="font-size:.6rem;"></i>
+        <span id="breadTitle">Proje Detayı</span>
+      </div>
+      <h1 id="heroTitle" style="font-family:'Montserrat',sans-serif;font-size:1.9rem;font-weight:900;color:#fff;margin-top:14px;">Yükleniyor...</h1>
+      <p id="heroSub" style="color:rgba(255,255,255,.65);font-size:.9rem;margin-top:6px;"></p>
+    </div>
+  </section>
+
+  <!-- DETAY -->
+  <section class="section">
+    <div class="container">
+      <div class="detay-layout">
+
+        <!-- Sol: görsel + galeri + açıklama -->
+        <div>
+          <!-- Skeleton -->
+          <div id="skeletonArea">
+            <div class="skeleton skel-hero"></div>
+            <div style="margin-top:20px;">
+              <div class="skeleton skel-line" style="width:60%;"></div>
+              <div class="skeleton skel-line" style="width:100%;"></div>
+              <div class="skeleton skel-line" style="width:85%;"></div>
+            </div>
+          </div>
+
+          <!-- Gerçek içerik -->
+          <div id="detayContent" style="display:none;">
+            <img id="mainImg" src="" alt="" class="detay-hero-img" />
+
+            <div class="gallery-grid" id="galleryGrid"></div>
+
+            <div style="margin-top:32px;">
+              <h2 style="font-family:'Montserrat',sans-serif;font-size:1.25rem;font-weight:800;margin-bottom:12px;">Proje Hakkında</h2>
+              <p id="descText" style="color:var(--text2);line-height:1.8;font-size:.95rem;"></p>
+              <div id="detailText" style="color:var(--text2);line-height:1.8;font-size:.92rem;margin-top:12px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sağ: bilgi + CTA -->
+        <div>
+          <div class="info-box">
+            <h3><i class="fas fa-info-circle" style="margin-right:6px;"></i>Proje Bilgileri</h3>
+
+            <div class="info-row" id="infoLocation" style="display:none;">
+              <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div>
+                <div class="info-label">Konum</div>
+                <div class="info-val" id="infoLocationVal">—</div>
+              </div>
+            </div>
+
+            <div class="info-row" id="infoYear" style="display:none;">
+              <div class="info-icon"><i class="fas fa-calendar-alt"></i></div>
+              <div>
+                <div class="info-label">Yıl</div>
+                <div class="info-val" id="infoYearVal">—</div>
+              </div>
+            </div>
+
+            <div class="info-row" id="infoArea" style="display:none;">
+              <div class="info-icon"><i class="fas fa-ruler-combined"></i></div>
+              <div>
+                <div class="info-label">Alan</div>
+                <div class="info-val" id="infoAreaVal">—</div>
+              </div>
+            </div>
+
+            <div class="info-row" id="infoService" style="display:none;">
+              <div class="info-icon"><i class="fas fa-tools"></i></div>
+              <div>
+                <div class="info-label">Hizmet Türü</div>
+                <div class="info-val" id="infoServiceVal">—</div>
+              </div>
+            </div>
+
+            <div class="info-row" id="infoClient" style="display:none;">
+              <div class="info-icon"><i class="fas fa-building"></i></div>
+              <div>
+                <div class="info-label">Müşteri</div>
+                <div class="info-val" id="infoClientVal">—</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cta-box">
+            <p>Benzer bir proje için ücretsiz keşif ve fiyat teklifi alın.</p>
+            <a id="ctaWa" href="https://wa.me/905309361017" target="_blank" class="btn btn-wa">
+              <i class="fab fa-whatsapp"></i> WhatsApp'tan Yaz
+            </a>
+            <a href="tel:05309361017" class="btn btn-call">
+              <i class="fas fa-phone"></i> 0530 936 10 17
+            </a>
+          </div>
+
+          <div style="margin-top:16px;text-align:center;">
+            <a href="/referanslar.html" style="color:var(--gold);font-size:.85rem;font-weight:700;">
+              <i class="fas fa-arrow-left"></i> Tüm Referanslar
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <span class="lightbox-close" id="lbClose" aria-label="Kapat">&times;</span>
+    <span class="lightbox-prev" id="lbPrev" aria-label="Önceki"><i class="fas fa-chevron-left"></i></span>
+    <img id="lbImg" src="" alt="Galeri görseli" />
+    <span class="lightbox-next" id="lbNext" aria-label="Sonraki"><i class="fas fa-chevron-right"></i></span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <span class="logo-text">AKDENİZ YAPI</span>
+        <span class="logo-sub">DEKORASYON</span>
+        <p>Yapınıza değer katıyoruz. Profesyonel ekip, garantili işçilik.</p>
+        <div class="social">
+          <a href="https://instagram.com/akdeniz.yapidekorasyon" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/905309361017" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Hızlı Bağlantılar</h4>
+        <ul>
+          <li><a href="/">Ana Sayfa</a></li>
+          <li><a href="/hizmetler.html">Hizmetler</a></li>
+          <li><a href="/kampanyalar.html">Kampanyalar</a></li>
+          <li><a href="/referanslar.html">Referanslar</a></li>
+          <li><a href="/iletisim.html">İletişim</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>İletişim</h4>
+        <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:05309361017">0530 936 10 17 (Yunus)</a></div>
+        <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:05358763504">0535 876 35 04 (Adem)</a></div>
+        <div class="contact-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/905309361017" target="_blank">WhatsApp</a></div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Kepez / Antalya</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Akdeniz Yapı Dekorasyon. Tüm hakları saklıdır.</span>
+      <span>🏆 Antalya'nın Güvenilir İnşaat Firması</span>
+    </div>
+  </footer>
+
+  <!-- Yüzen WhatsApp -->
+  <div class="wa-float">
+    <a href="https://wa.me/905309361017?text=Merhaba%2C%20referans%20projeler%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="wa-float-btn" aria-label="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    const API = '/api';
+    const PROJECT_FALLBACKS = [
+      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fit=crop',
+      'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80&fit=crop',
+      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80&fit=crop',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fit=crop',
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fit=crop',
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fit=crop',
+    ];
+
+    function escHtml(s) {
+      if (!s) return '';
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function getImg(p, seed) {
+      if (p) return p;
+      const idx = seed
+        ? Math.abs(String(seed).split('').reduce((a,c) => a + c.charCodeAt(0), 0)) % PROJECT_FALLBACKS.length
+        : 0;
+      return PROJECT_FALLBACKS[idx];
+    }
+
+    /* ── Lightbox ── */
+    let lbImages = [], lbIdx = 0;
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+
+    function openLightbox(images, idx) {
+      lbImages = images; lbIdx = idx;
+      lbImg.src = lbImages[lbIdx];
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('lbClose').onclick = closeLightbox;
+    document.getElementById('lbPrev').onclick = () => { lbIdx = (lbIdx - 1 + lbImages.length) % lbImages.length; lbImg.src = lbImages[lbIdx]; };
+    document.getElementById('lbNext').onclick = () => { lbIdx = (lbIdx + 1) % lbImages.length; lbImg.src = lbImages[lbIdx]; };
+    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft')  document.getElementById('lbPrev').click();
+      if (e.key === 'ArrowRight') document.getElementById('lbNext').click();
+    });
+
+    /* ── Proje yükle ── */
+    async function loadProject() {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('slug') || params.get('id');
+      if (!slug) { window.location.href = '/referanslar.html'; return; }
+
+      try {
+        const res = await fetch(`${API}/projects/${slug}`);
+        if (!res.ok) { window.location.href = '/referanslar.html'; return; }
+        const p = await res.json();
+
+        /* Başlık ve meta */
+        document.title = `${p.title} | Akdeniz Yapı Dekorasyon`;
+        document.getElementById('breadTitle').textContent = p.title;
+        document.getElementById('heroTitle').textContent = p.title;
+        if (p.location) {
+          document.getElementById('heroSub').innerHTML =
+            `<i class="fas fa-map-marker-alt"></i> ${escHtml(p.location)}` +
+            (p.year ? ` &nbsp;·&nbsp; <i class="fas fa-calendar"></i> ${p.year}` : '');
+        }
+
+        /* WhatsApp CTA */
+        document.getElementById('ctaWa').href =
+          `https://wa.me/905309361017?text=Merhaba%2C%20${encodeURIComponent(p.title)}%20projesi%20gibi%20bir%20%C3%A7al%C4%B1%C5%9Fma%20i%C3%A7in%20fiyat%20almak%20istiyorum.`;
+
+        /* Ana görsel */
+        const mainSrc = getImg(p.image, p.title);
+        document.getElementById('mainImg').src = mainSrc;
+        document.getElementById('mainImg').alt = p.title;
+
+        /* Galeri */
+        let galleryArr = [];
+        try { galleryArr = JSON.parse(p.gallery || '[]'); } catch {}
+        if (!galleryArr.length && p.image) galleryArr = [p.image];
+
+        /* Tüm görseller (lightbox için) */
+        const allImgs = [mainSrc, ...galleryArr.filter(g => g !== p.image)];
+
+        const grid = document.getElementById('galleryGrid');
+        if (galleryArr.length > 0) {
+          grid.innerHTML = galleryArr.map((src, i) => `
+            <div class="gallery-item" onclick="openLightbox(${JSON.stringify(allImgs)}, ${i + 1})">
+              <img src="${escHtml(src)}" alt="${escHtml(p.title)} - Fotoğraf ${i+1}" loading="lazy"
+                   onerror="this.src='${PROJECT_FALLBACKS[0]}'" />
+            </div>
+          `).join('');
+        } else {
+          grid.style.display = 'none';
+        }
+
+        /* Ana görsele tıklama */
+        document.getElementById('mainImg').style.cursor = 'pointer';
+        document.getElementById('mainImg').onclick = () => openLightbox(allImgs, 0);
+
+        /* Açıklama */
+        if (p.description) document.getElementById('descText').textContent = p.description;
+        if (p.detail_text) {
+          document.getElementById('detailText').innerHTML =
+            p.detail_text.split('\n').map(l => `<p>${escHtml(l)}</p>`).join('');
+        }
+
+        /* Bilgi satırları */
+        function showInfo(id, valId, val) {
+          if (val) {
+            document.getElementById(id).style.display = 'flex';
+            document.getElementById(valId).textContent = val;
+          }
+        }
+        showInfo('infoLocation', 'infoLocationVal', p.location);
+        showInfo('infoYear',     'infoYearVal',     p.year ? String(p.year) : null);
+        showInfo('infoArea',     'infoAreaVal',     p.area);
+        showInfo('infoService',  'infoServiceVal',  p.service_type);
+        showInfo('infoClient',   'infoClientVal',   p.client);
+
+        /* Skeleton kaldır */
+        document.getElementById('skeletonArea').style.display = 'none';
+        document.getElementById('detayContent').style.display = 'block';
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById('skeletonArea').innerHTML =
+          '<p style="text-align:center;color:#888;padding:40px 0;">Proje yüklenemedi.</p>';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggle = document.getElementById('navToggle');
+      const menu   = document.getElementById('navMenu');
+      if (toggle && menu) toggle.addEventListener('click', () => menu.classList.toggle('open'));
+      window.addEventListener('scroll', () => {
+        const nav = document.getElementById('navbar');
+        if (nav) nav.classList.toggle('scrolled', window.scrollY > 60);
+      });
+      loadProject();
+    });
+  </script>
+</body>
+</html>

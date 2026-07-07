@@ -4,19 +4,34 @@ const db = require('../database');
 const auth = require('../middleware/auth');
 
 // POST /api/messages - iletişim formu (public)
+// Rate limiting server.js'de contactLimiter ile uygulanıyor
 router.post('/', async (req, res) => {
   try {
     const { name, phone, email, subject, message } = req.body;
+
+    // ✅ Temel doğrulama
     if (!name || !message) {
       return res.status(400).json({ error: 'Ad ve mesaj alanları gerekli.' });
     }
+    // ✅ Alan uzunluk sınırları
+    if (String(name).length > 120 || String(message).length > 3000) {
+      return res.status(400).json({ error: 'Alan uzunluğu sınırı aşıldı.' });
+    }
+
     await db.runAsync(
       'INSERT INTO messages (name, phone, email, subject, message) VALUES (?, ?, ?, ?, ?)',
-      [name, phone || null, email || null, subject || null, message]
+      [
+        String(name).slice(0, 120),
+        phone    ? String(phone).slice(0, 30)    : null,
+        email    ? String(email).slice(0, 200)   : null,
+        subject  ? String(subject).slice(0, 200) : null,
+        String(message).slice(0, 3000),
+      ]
     );
     res.status(201).json({ message: 'Mesajınız iletildi. En kısa sürede dönüş yapılacaktır.' });
   } catch (err) {
-    res.status(500).json({ error: 'Sunucu hatası: ' + err.message });
+    console.error('[Messages] Kayıt hatası:', err.message);
+    res.status(500).json({ error: 'Sunucu hatası.' });
   }
 });
 

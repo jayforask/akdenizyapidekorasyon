@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kampanya Yönetimi | Admin Paneli</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="admin-page">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><span class="logo-text">AKDENİZ YAPI</span><span class="logo-sub">Admin Panel</span></div>
+    <nav class="sidebar-nav">
+      <a href="/admin/dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="/admin/hizmetler.html"><i class="fas fa-tools"></i> Hizmetler</a>
+      <a href="/admin/kategoriler.html"><i class="fas fa-tags"></i> Kategoriler</a>
+      <a href="/admin/referanslar.html"><i class="fas fa-building"></i> Referanslar</a>
+      <a href="/admin/kampanyalar.html" class="active"><i class="fas fa-percent"></i> Kampanyalar</a>
+      <a href="/admin/mesajlar.html"><i class="fas fa-envelope"></i> Mesajlar <span class="badge" id="unreadBadge"></span></a>
+      <a href="/admin/ayarlar.html"><i class="fas fa-cog"></i> Site Ayarları</a>
+      <a href="/admin/sifre.html"><i class="fas fa-key"></i> Şifre Değiştir</a>
+      <a href="/" target="_blank"><i class="fas fa-external-link-alt"></i> Siteyi Gör</a>
+    </nav>
+    <button class="sidebar-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-header">
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+      <h1 class="admin-page-title">Kampanya Yönetimi</h1>
+      <div class="admin-user"><i class="fas fa-user-circle"></i><span id="adminUsername">admin</span></div>
+    </header>
+
+    <div class="admin-content">
+      <div class="content-toolbar">
+        <button class="btn-admin btn-primary" onclick="openAddModal()">
+          <i class="fas fa-plus"></i> Yeni Kampanya Ekle
+        </button>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Görsel</th>
+              <th>Başlık</th>
+              <th>Fiyat</th>
+              <th>Kalan Gün</th>
+              <th>Durum</th>
+              <th>İşlemler</th>
+            </tr>
+          </thead>
+          <tbody id="campBody">
+            <tr><td colspan="6" class="loading-row"><i class="fas fa-spinner fa-spin"></i> Yükleniyor...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Kampanya Ekle/Düzenle -->
+  <div class="modal-overlay" id="campModal">
+    <div class="modal-box" style="max-width:600px">
+      <div class="modal-header">
+        <h3 id="campModalTitle">Kampanya Ekle</h3>
+        <button class="modal-close" onclick="closeModal('campModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="campForm" enctype="multipart/form-data">
+        <input type="hidden" id="campId" />
+
+        <div class="form-group">
+          <label>Başlık <span class="req">*</span></label>
+          <input type="text" id="cTitle" required placeholder="Örn: Dış Cephe EPS Mantolama Kampanyası" />
+        </div>
+
+        <div class="form-group">
+          <label>Açıklama</label>
+          <textarea id="cDesc" rows="3" placeholder="Kampanya detayları..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Rozet Metni</label>
+            <input type="text" id="cBadgeText" placeholder="Örn: 🔥 Çok Satan" />
+          </div>
+          <div class="form-group">
+            <label>Rozet Rengi</label>
+            <select id="cBadgeColor">
+              <option value="red">🔴 Kırmızı</option>
+              <option value="green">🟢 Yeşil</option>
+              <option value="blue">🔵 Mavi</option>
+              <option value="gold">🟡 Altın</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Eski Fiyat</label>
+            <input type="text" id="cOldPrice" placeholder="Örn: m² 420 ₺" />
+          </div>
+          <div class="form-group">
+            <label>Yeni Fiyat</label>
+            <input type="text" id="cNewPrice" placeholder="Örn: m² 349 ₺" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>İndirim Etiketi</label>
+            <input type="text" id="cDiscount" placeholder="Örn: %17 İndirim" />
+          </div>
+          <div class="form-group">
+            <label>Kalan Gün</label>
+            <input type="number" id="cDaysLeft" value="30" min="1" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Sıra</label>
+            <input type="number" id="cSortOrder" value="0" min="0" />
+          </div>
+          <div class="form-group form-check-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="cActive" checked /> Aktif (sitede göster)
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Görsel</label>
+          <input type="file" id="cImage" accept="image/jpeg,image/png,image/webp" />
+          <img id="cImagePreview" src="" alt="Önizleme" class="img-preview" style="display:none;" />
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn-admin btn-primary" id="campSubmitBtn">Kaydet</button>
+          <button type="button" class="btn-admin btn-secondary" onclick="closeModal('campModal')">İptal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+  <script>
+    let campaigns = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!await requireAuth()) return;
+      document.getElementById('sidebarToggle').addEventListener('click', () =>
+        document.getElementById('sidebar').classList.toggle('open')
+      );
+      previewImage(document.getElementById('cImage'), document.getElementById('cImagePreview'));
+      loadCampaigns();
+    });
+
+    async function loadCampaigns() {
+      const tbody = document.getElementById('campBody');
+      try {
+        const res = await fetch(`${API}/campaigns?all=1`, { headers: authHeaders() });
+        campaigns = await res.json();
+        if (!campaigns.length) {
+          tbody.innerHTML = '<tr><td colspan="6" class="empty-row">Henüz kampanya yok.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = campaigns.map(c => `
+          <tr>
+            <td>
+              <img src="${c.image || 'https://placehold.co/60x40/1a1a1a/c9a227?text=+'}"
+                   style="width:60px;height:40px;object-fit:cover;border-radius:4px;" />
+            </td>
+            <td>
+              <strong>${c.title}</strong>
+              ${c.badge_text ? `<br/><span class="badge-status">${c.badge_text}</span>` : ''}
+            </td>
+            <td>
+              ${c.old_price ? `<span style="text-decoration:line-through;color:#aaa;font-size:.8rem;">${c.old_price}</span><br/>` : ''}
+              ${c.new_price ? `<strong style="color:var(--gold);">${c.new_price}</strong>` : '—'}
+              ${c.discount_text ? `<br/><span class="badge-status read" style="font-size:.7rem;">${c.discount_text}</span>` : ''}
+            </td>
+            <td>
+              <span style="font-weight:700;">${c.days_left}</span>
+              <span style="font-size:.8rem;color:#888;"> gün</span>
+            </td>
+            <td>
+              <span class="badge-status ${c.active ? 'read' : 'unread'}">
+                ${c.active ? 'Aktif' : 'Pasif'}
+              </span>
+            </td>
+            <td class="actions-cell">
+              <button class="btn-admin btn-sm btn-primary" onclick="editCamp(${c.id})" title="Düzenle">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn-admin btn-sm btn-danger" onclick="deleteCamp(${c.id})" title="Sil">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      } catch {
+        tbody.innerHTML = '<tr><td colspan="6" class="empty-row">Yüklenemedi.</td></tr>';
+      }
+    }
+
+    function openAddModal() {
+      document.getElementById('campModalTitle').textContent = 'Kampanya Ekle';
+      document.getElementById('campId').value = '';
+      document.getElementById('campForm').reset();
+      document.getElementById('cActive').checked = true;
+      document.getElementById('cDaysLeft').value = 30;
+      document.getElementById('cSortOrder').value = 0;
+      document.getElementById('cImagePreview').style.display = 'none';
+      openModal('campModal');
+    }
+
+    function editCamp(id) {
+      const c = campaigns.find(x => x.id === id);
+      if (!c) return;
+      document.getElementById('campModalTitle').textContent = 'Kampanya Düzenle';
+      document.getElementById('campId').value = c.id;
+      document.getElementById('cTitle').value = c.title;
+      document.getElementById('cDesc').value = c.description || '';
+      document.getElementById('cBadgeText').value = c.badge_text || '';
+      document.getElementById('cBadgeColor').value = c.badge_color || 'red';
+      document.getElementById('cOldPrice').value = c.old_price || '';
+      document.getElementById('cNewPrice').value = c.new_price || '';
+      document.getElementById('cDiscount').value = c.discount_text || '';
+      document.getElementById('cDaysLeft').value = c.days_left || 30;
+      document.getElementById('cSortOrder').value = c.sort_order || 0;
+      document.getElementById('cActive').checked = !!c.active;
+      if (c.image) {
+        document.getElementById('cImagePreview').src = c.image;
+        document.getElementById('cImagePreview').style.display = 'block';
+      } else {
+        document.getElementById('cImagePreview').style.display = 'none';
+      }
+      openModal('campModal');
+    }
+
+    document.getElementById('campForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const id  = document.getElementById('campId').value;
+      const btn = document.getElementById('campSubmitBtn');
+      btn.disabled = true; btn.textContent = 'Kaydediliyor...';
+
+      const fd = new FormData();
+      fd.append('title',         document.getElementById('cTitle').value);
+      fd.append('description',   document.getElementById('cDesc').value);
+      fd.append('badge_text',    document.getElementById('cBadgeText').value);
+      fd.append('badge_color',   document.getElementById('cBadgeColor').value);
+      fd.append('old_price',     document.getElementById('cOldPrice').value);
+      fd.append('new_price',     document.getElementById('cNewPrice').value);
+      fd.append('discount_text', document.getElementById('cDiscount').value);
+      fd.append('days_left',     document.getElementById('cDaysLeft').value);
+      fd.append('sort_order',    document.getElementById('cSortOrder').value);
+      fd.append('active',        document.getElementById('cActive').checked ? '1' : '0');
+      const img = document.getElementById('cImage').files[0];
+      if (img) fd.append('image', img);
+
+      try {
+        const url = id ? `${API}/campaigns/${id}` : `${API}/campaigns`;
+        const res = await fetch(url, {
+          method: id ? 'PUT' : 'POST',
+          headers: authHeadersMultipart(),
+          body: fd
+        });
+        const data = await res.json();
+        if (res.ok) {
+          toast(id ? 'Kampanya güncellendi.' : 'Kampanya eklendi.');
+          closeModal('campModal');
+          loadCampaigns();
+        } else {
+          toast(data.error || 'Hata oluştu.', 'error');
+        }
+      } catch {
+        toast('Bağlantı hatası.', 'error');
+      } finally {
+        btn.disabled = false; btn.textContent = 'Kaydet';
+      }
+    });
+
+    async function deleteCamp(id) {
+      const ok = await confirm2('Bu kampanyayı silmek istediğinize emin misiniz?');
+      if (!ok) return;
+      const res = await fetch(`${API}/campaigns/${id}`, {
+        method: 'DELETE', headers: authHeaders()
+      });
+      if (res.ok) { toast('Kampanya silindi.'); loadCampaigns(); }
+      else toast('Silinemedi.', 'error');
+    }
+  </script>
+</body>
+</html>

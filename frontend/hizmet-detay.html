@@ -12,7 +12,7 @@
     .page-hero { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); }
   </style>
 </head>
-<body data-page="detay">
+<body data-page="hizmet-detay">
 
   <nav class="navbar" id="navbar">
     <div class="container nav-inner">
@@ -166,54 +166,64 @@
         const res  = await fetch(`/api/services/${slug}`);
         if (!res.ok) throw new Error('not found');
         const data = await res.json();
-        const svc  = data.service || data;
+        // API title alanı döndürüyor (name değil)
+        const svc = data.service || data;
+        const title = svc.title || svc.name || 'Hizmet';
 
         // Başlık güncelle
-        document.title = `${svc.name} | Akdeniz Yapı Dekorasyon`;
-        document.getElementById('breadcrumbTitle').textContent = svc.name;
-        document.getElementById('pageHeroTitle').textContent   = svc.name;
+        document.title = `${title} | Akdeniz Yapı Dekorasyon`;
+        document.getElementById('breadcrumbTitle').textContent = title;
+        document.getElementById('pageHeroTitle').textContent   = title;
 
         const imgSrc = svc.image
-          ? `/uploads/${svc.image}`
+          ? (svc.image.startsWith('http') ? svc.image : `/uploads/${svc.image}`)
           : 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80';
 
         document.getElementById('detayContent').innerHTML = `
           <div class="detay-image">
-            <img src="${imgSrc}" alt="${svc.name}" loading="lazy"
+            <img src="${imgSrc}" alt="${title}" loading="lazy"
                  style="width:100%;height:100%;object-fit:cover;border-radius:16px;"
                  onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80'" />
           </div>
           <div class="detay-body">
-            <h1 class="detay-title">${svc.name}</h1>
-            ${svc.category_name ? `<span class="badge-gold" style="display:inline-block;margin-bottom:16px;">${svc.category_name}</span>` : ''}
+            <h1 class="detay-title">${title}</h1>
+            ${svc.category_name ? `<span class="badge-gold" style="display:inline-block;margin-bottom:16px;">${svc.category_icon || ''} ${svc.category_name}</span>` : ''}
+            ${svc.short_desc ? `<p style="font-size:1.05rem;color:var(--text2);margin-bottom:20px;line-height:1.7;">${svc.short_desc}</p>` : ''}
             <div class="detay-desc">${(svc.description || '').replace(/\n/g, '<br>')}</div>
             <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;">
               <a href="tel:05309361017" class="btn btn-gold"><i class="fas fa-phone"></i> Bilgi Al</a>
-              <a href="https://wa.me/905309361017?text=Merhaba%2C%20${encodeURIComponent(svc.name)}%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
+              <a href="https://wa.me/905309361017?text=Merhaba%2C%20${encodeURIComponent(title)}%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
                  target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
             </div>
           </div>`;
 
         // İlgili hizmetleri yükle
         try {
-          const relRes  = await fetch('/api/services?limit=4');
+          const relRes  = await fetch('/api/services');
           const relData = await relRes.json();
-          const others  = (relData.services || relData).filter(s => s.slug !== svc.slug).slice(0, 3);
+          const allSvcs = Array.isArray(relData) ? relData : (relData.services || []);
+          const others  = allSvcs.filter(s => s.slug !== svc.slug).slice(0, 3);
           if (others.length > 0) {
             document.getElementById('relatedSection').style.display = 'block';
-            document.getElementById('relatedGrid').innerHTML = others.map(s => `
+            document.getElementById('relatedGrid').innerHTML = others.map(s => {
+              const sTitle = s.title || s.name || 'Hizmet';
+              const sDesc  = s.short_desc || s.description || '';
+              const sImg   = s.image
+                ? (s.image.startsWith('http') ? s.image : '/uploads/' + s.image)
+                : 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400&q=70';
+              return `
               <div class="service-card">
                 <div class="service-img">
-                  <img src="${s.image ? '/uploads/' + s.image : 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400&q=70'}"
-                       alt="${s.name}" loading="lazy"
+                  <img src="${sImg}" alt="${sTitle}" loading="lazy"
                        onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400&q=70'" />
                 </div>
                 <div class="service-body">
-                  <h3>${s.name}</h3>
-                  <p>${(s.description || '').substring(0, 80)}${s.description && s.description.length > 80 ? '…' : ''}</p>
+                  <h3>${sTitle}</h3>
+                  <p>${sDesc.substring(0, 90)}${sDesc.length > 90 ? '…' : ''}</p>
                   <a href="/hizmet-detay.html?slug=${s.slug}" class="btn btn-outline">Detaylar <i class="fas fa-arrow-right"></i></a>
                 </div>
-              </div>`).join('');
+              </div>`;
+            }).join('');
           }
         } catch (_) { /* ilgili hizmetler yüklenemedi, sessizce geç */ }
 
