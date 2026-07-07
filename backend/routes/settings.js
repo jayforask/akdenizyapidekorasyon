@@ -65,9 +65,9 @@ router.put('/', auth, async (req, res) => {
     for (const [key, value] of Object.entries(updates)) {
       await db.runAsync(
         `INSERT INTO site_settings (key, value, updated_at)
-         VALUES (?, ?, CURRENT_TIMESTAMP)
-         ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = CURRENT_TIMESTAMP`,
-        [key, String(value).slice(0, 2000)] // değer uzunluğunu da sınırla
+         VALUES (?, ?, NOW())
+         ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = NOW()`,
+        [key, String(value).slice(0, 2000)]
       );
     }
     res.json({ message: 'Ayarlar kaydedildi.' });

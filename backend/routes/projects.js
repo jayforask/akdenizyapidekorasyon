@@ -41,13 +41,13 @@ function makeSlug(text) {
     .replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
 }
 
-/* Benzersiz slug üret */
+/* Benzersiz slug üret — PostgreSQL $1/$2 parametreleri */
 async function uniqueSlug(base, excludeId = null) {
   let slug = base, i = 1;
   while (true) {
     const q = excludeId
-      ? 'SELECT id FROM projects WHERE slug = ? AND id != ?'
-      : 'SELECT id FROM projects WHERE slug = ?';
+      ? 'SELECT id FROM projects WHERE slug = $1 AND id != $2'
+      : 'SELECT id FROM projects WHERE slug = $1';
     const params = excludeId ? [slug, excludeId] : [slug];
     const row = await db.getAsync(q, params);
     if (!row) return slug;

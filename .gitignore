@@ -1,11 +1,22 @@
 node_modules/
-backend/akdeniz_yapi.db
-backend/akdeniz_yapi.db-shm
-backend/akdeniz_yapi.db-wal
+
+# SQLite (artık kullanılmıyor ama ihtiyat için)
+*.db
+*.db-shm
+*.db-wal
 backend/ig_cache.json
+
+# Uploads (sadece .gitkeep tutuluyor)
 backend/uploads/*
 !backend/uploads/.gitkeep
+
+# Ortam değişkenleri
 .env
-*.env.*
+.env.local
+.env.production
+
+# Log dosyaları
 *.log
+
+# Geliştirici araçları
 _gen_*.js
