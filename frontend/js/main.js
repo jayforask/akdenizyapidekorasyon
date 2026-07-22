@@ -211,14 +211,14 @@ async function loadFeaturedServices() {
       grid.innerHTML = services.slice(0, 6).map(s => `
         <div class="service-card">
           <div class="service-img">
-            <img src="${imgSrc(s.image)}" alt="${escapeHtml(s.title)}" loading="lazy" />
+            <img src="${imgSrc(s.image)}" alt="Antalya ${escapeHtml(s.title)} Uygulaması" loading="lazy" />
             ${s.category_name ? `<span class="service-cat-badge">${escapeHtml(s.category_icon || '')} ${escapeHtml(s.category_name)}</span>` : ''}
           </div>
           <div class="service-body">
             <h3>${escapeHtml(s.title)}</h3>
             <p>${escapeHtml(s.short_desc || '')}</p>
             <div class="service-actions">
-              <a href="/hizmet-detay.html?slug=${escapeHtml(s.slug)}" class="btn btn-sm btn-outline-gold">Detay</a>
+              <a href="/hizmetler/${escapeHtml(s.slug)}" class="btn btn-sm btn-outline-gold">Detay</a>
               <a href="https://wa.me/905309361017?text=Merhaba%2C%20${encodeURIComponent(s.title)}%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="btn btn-sm btn-whatsapp"><i class="fab fa-whatsapp"></i></a>
             </div>
           </div>
@@ -360,7 +360,7 @@ async function loadAllServices(kategori, search) {
     grid.innerHTML = services.map(s => `
       <div class="hizmet-card">
         <div class="hizmet-img">
-          <img src="${getDefaultImg(s)}" alt="${escapeHtml(s.title)}" loading="lazy"
+          <img src="${getDefaultImg(s)}" alt="Antalya ${escapeHtml(s.title)} Uygulaması" loading="lazy"
                onerror="this.src='${CAT_IMAGES.default}'" />
           ${s.category_name ? `<span class="hizmet-cat-badge">${escapeHtml(s.category_icon || '')} ${escapeHtml(s.category_name)}</span>` : ''}
         </div>
@@ -368,7 +368,7 @@ async function loadAllServices(kategori, search) {
           <h3>${escapeHtml(s.title)}</h3>
           <p>${escapeHtml(s.short_desc || '')}</p>
           <div class="hizmet-actions">
-            <a href="/hizmet-detay.html?slug=${escapeHtml(s.slug)}" class="btn-detay">Detayları Gör →</a>
+            <a href="/hizmetler/${escapeHtml(s.slug)}" class="btn-detay">Detayları Gör →</a>
             <a href="https://wa.me/905309361017?text=Merhaba%2C%20${encodeURIComponent(s.title)}%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
                target="_blank" class="btn-wa" aria-label="WhatsApp ile sor">
               <i class="fab fa-whatsapp"></i>
@@ -388,23 +388,30 @@ async function loadAllServices(kategori, search) {
 
 // ── HİZMET DETAY ─────────────────────────────────────────────────────────────
 async function initDetay() {
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get('slug');
+  let slug = '';
+  const pathSegments = window.location.pathname.split('/').filter(Boolean);
+  if (pathSegments.length >= 2 && pathSegments[0] === 'hizmetler') {
+    slug = pathSegments[1];
+  } else {
+    const params = new URLSearchParams(window.location.search);
+    slug = params.get('slug') || params.get('id');
+  }
+
   if (!slug) { window.location.href = '/hizmetler.html'; return; }
   try {
     const res = await fetch(`${API}/services/${slug}`);
     if (!res.ok) { window.location.href = '/hizmetler.html'; return; }
     const s = await res.json();
-    document.title = `${s.title} | Akdeniz Yapı Dekorasyon`;
+    document.title = `Antalya ${s.title} | Akdeniz Yapı Dekorasyon`;
     const container = document.getElementById('detayContent');
     if (!container) return;
     container.innerHTML = `
       <div class="detay-image">
-        <img src="${imgSrc(s.image)}" alt="${escapeHtml(s.title)}" />
+        <img src="${imgSrc(s.image)}" alt="Antalya ${escapeHtml(s.title)} Uygulaması" />
       </div>
       <div class="detay-body">
         ${s.category_name ? `<span class="service-cat-badge">${escapeHtml(s.category_icon || '')} ${escapeHtml(s.category_name)}</span>` : ''}
-        <h1>${escapeHtml(s.title)}</h1>
+        <h2 class="detay-title" style="font-size:1.8rem;font-weight:700;margin-bottom:16px;color:var(--gold);">${escapeHtml(s.title)}</h2>
         <p class="detay-short">${escapeHtml(s.short_desc || '')}</p>
         <div class="detay-desc">${escapeHtml(s.description || '').replace(/\n/g, '<br/>')}</div>
         <div class="detay-cta">
