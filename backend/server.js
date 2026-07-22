@@ -169,6 +169,10 @@ app.get('/hizmetler/:slug', async (req, res, next) => {
 
     let html = fs.readFileSync(filePath, 'utf8');
 
+    // Göreceli statik kaynak yollarını alt dizin rotaları (/hizmetler/:slug) için kök dizine zorla (/style.css, /js/main.js)
+    html = html.replace(/href="style\.css"/g, 'href="/style.css"')
+               .replace(/src="js\/main\.js"/g, 'src="/js/main.js"');
+
     if (service) {
       const pageTitle = `Antalya ${service.title} | Akdeniz Yapı Dekorasyon`;
       const cleanDesc = service.short_desc
